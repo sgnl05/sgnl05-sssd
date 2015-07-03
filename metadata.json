@@ -1,6 +1,6 @@
 {
   "name": "sgnl05-sssd",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "sgnl05",
   "summary": "Install and configure SSSD",
   "license": "Apache-2.0",
