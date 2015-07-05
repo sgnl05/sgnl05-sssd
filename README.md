@@ -124,9 +124,9 @@ config => {
     'domains'             => 'ad.example.com',
   },
     'domain/ad.example.com' => {
-    'id_provider'       => 'ad',
-    'krb5_realm'        => 'AD.EXAMPLE.COM',
-    'cache_credentials' => true,
+      'id_provider'       => 'ad',
+      'krb5_realm'        => 'AD.EXAMPLE.COM',
+      'cache_credentials' => true,
   },
 }
 ```
