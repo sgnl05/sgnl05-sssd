@@ -4,9 +4,9 @@
   "author": "sgnl05",
   "summary": "Install and configure SSSD",
   "license": "Apache-2.0",
-  "source": "git://github.com/sgnl05/sgnl05-racktables.git",
-  "project_page": "https://github.com/sgnl05/sgnl05-racktables",
-  "issues_url": "https://github.com/sgnl05/sgnl05-racktables/issues",
+  "source": "git://github.com/sgnl05/sgnl05-sssd.git",
+  "project_page": "https://github.com/sgnl05/sgnl05-sssd",
+  "issues_url": "https://github.com/sgnl05/sgnl05-sssd/issues",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
