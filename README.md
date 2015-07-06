@@ -10,7 +10,9 @@
 
 ## Overview
 
-This module installs and configures sssd.
+This module installs and configures SSSD (System Security Services Daemon)
+
+[SSSD][0] is used to provide access to identity and authentication remote resource through a common framework that can provide caching and offline support to the system.
 
 ## Usage
 
@@ -142,4 +144,7 @@ Testet on Fedora 22, RHEL6,7 and Ubuntu 14.04
 
 ## Credits
 
-* sssd.conf template and authconfig/mkhomedir code by Chadwick Banning - https://github.com/walkamongus/sssd
+* sssd.conf template and authconfig/mkhomedir code from [walkamongus-sssd][1] by Chadwick Banning
+
+[0]: https://fedorahosted.org/sssd/
+[1]: https://github.com/walkamongus/sssd
