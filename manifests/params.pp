@@ -14,9 +14,8 @@ class sssd::params {
       'cache_credentials' => true,
     },
   }
-  $enable_mkhomedir_cmd  = '/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --update'
-  $disable_mkhomedir_cmd = '/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --update'
-  $pam_mkhomedir_check   = '/bin/grep -E \'^USEMKHOMEDIR=yes$\' /etc/sysconfig/authconfig'
+  $enable_mkhomedir_flags  = ['--enablesssd', '--enablesssdauth', '--enablemkhomedir']
+  $disable_mkhomedir_flags = ['--enablesssd', '--enablesssdauth', '--disablemkhomedir']
 
   case $::osfamily {
 

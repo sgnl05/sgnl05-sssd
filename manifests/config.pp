@@ -1,13 +1,12 @@
 # See README.md for usage information
 class sssd::config (
-  $ensure                = $sssd::ensure,
-  $config                = $sssd::config,
-  $sssd_package          = $sssd::sssd_package,
-  $config_file           = $sssd::config_file,
-  $mkhomedir             = $sssd::mkhomedir,
-  $enable_mkhomedir_cmd  = $sssd::enable_mkhomedir_cmd,
-  $disable_mkhomedir_cmd = $sssd::disable_mkhomedir_cmd,
-  $pam_mkhomedir_check   = $sssd::pam_mkhomedir_check,
+  $ensure                  = $sssd::ensure,
+  $config                  = $sssd::config,
+  $sssd_package            = $sssd::sssd_package,
+  $config_file             = $sssd::config_file,
+  $mkhomedir               = $sssd::mkhomedir,
+  $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
+  $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
 ) {
 
   file { 'sssd.conf':
@@ -23,17 +22,17 @@ class sssd::config (
 
     'Redhat': {
 
-      if $mkhomedir {
-        exec { 'enable mkhomedir':
-          command => $enable_mkhomedir_cmd,
-          unless  => $pam_mkhomedir_check,
-        }
+      $authconfig_flags = $mkhomedir ? {
+        true  => join($enable_mkhomedir_flags, ' '),
+        false => join($disable_mkhomedir_flags, ' '),
       }
-      else {
-        exec { 'disable mkhomedir':
-          command => $disable_mkhomedir_cmd,
-          onlyif  => $pam_mkhomedir_check,
-        }
+      $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
+      $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} --test"
+      $authconfig_check_cmd  = "/usr/bin/test \"`${authconfig_test_cmd}`\" = \"`/usr/sbin/authconfig --test`\""
+
+      exec { 'authconfig-mkhomedir':
+        command => $authconfig_update_cmd,
+        unless  => $authconfig_check_cmd,
       }
 
     }
