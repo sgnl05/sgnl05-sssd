@@ -80,23 +80,10 @@ class sssd (
     $config
   )
 
-  class { '::sssd::install':
-    ensure         => $ensure,
-    sssd_package   => $sssd_package,
-    extra_packages => $extra_packages,
-  }
-
-  class { '::sssd::config':
-    ensure       => $ensure,
-    config       => $config,
-    sssd_package => $sssd_package,
-    config_file  => $config_file,
-    mkhomedir    => $mkhomedir,
-  }
-
-  class { '::sssd::service':
-    sssd_service => $sssd_service,
-    mkhomedir    => $mkhomedir,
-  }
+  anchor { 'sssd::begin': } ->
+  class { '::sssd::install': } ->
+  class { '::sssd::config': } ~>
+  class { '::sssd::service': } ->
+  anchor { 'sssd::end': }
 
 }

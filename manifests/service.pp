@@ -1,21 +1,24 @@
 # See README.md for usage information
 class sssd::service (
-  $sssd_service = $sssd::params::sssd_service,
-  $mkhomedir    = $sssd::params::mkhomedir,
+  $sssd_service = $sssd::sssd_service,
+  $mkhomedir    = $sssd::mkhomedir,
 ) {
 
-  service { $sssd_service :
-    ensure  => running,
-    enable  => true,
-    require => File['sssd.conf'],
+  service { $sssd_service:
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
   }
 
   if $mkhomedir {
 
     service { 'oddjobd':
-      ensure  => running,
-      enable  => true,
-      require => Service[$sssd_service],
+      ensure     => running,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      require    => Service[$sssd_service],
     }
 
   }
