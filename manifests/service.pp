@@ -1,7 +1,8 @@
 # See README.md for usage information
 class sssd::service (
-  $sssd_service = $sssd::sssd_service,
-  $mkhomedir    = $sssd::mkhomedir,
+  $sssd_service   = $sssd::sssd_service,
+  $mkhomedir      = $sssd::mkhomedir,
+  $manage_oddjobd = $sssd::manage_oddjobd,
 ) {
 
   service { $sssd_service:
@@ -11,7 +12,7 @@ class sssd::service (
     hasrestart => true,
   }
 
-  if $mkhomedir {
+  if $mkhomedir and $manage_oddjobd {
 
     service { 'oddjobd':
       ensure     => running,

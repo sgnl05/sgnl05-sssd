@@ -19,16 +19,25 @@ class sssd::params {
 
   case $::osfamily {
 
-    'Redhat': {
+    'RedHat': {
 
-      $sssd_package   = 'sssd'
-      $sssd_service   = 'sssd'
-      $config_file    = '/etc/sssd/sssd.conf'
-      $mkhomedir      = true
-      $extra_packages = [
-        'authconfig',
-        'oddjob-mkhomedir'
-      ]
+      $sssd_package = 'sssd'
+      $sssd_service = 'sssd'
+      $config_file  = '/etc/sssd/sssd.conf'
+      $mkhomedir    = true
+
+      if versioncmp($::operatingsystemrelease, '6.0') < 0 {
+        $extra_packages = [
+          'authconfig'
+        ]
+        $manage_oddjobd = false
+      } else {
+        $extra_packages = [
+          'authconfig',
+          'oddjob-mkhomedir'
+        ]
+        $manage_oddjobd = true
+      }
 
     }
 
@@ -37,12 +46,13 @@ class sssd::params {
       $sssd_package   = 'sssd'
       $sssd_service   = 'sssd'
       $config_file    = '/etc/sssd/sssd.conf'
-      $mkhomedir      = false
+      $mkhomedir      = true
       $extra_packages = [
         'libpam-runtime',
         'libpam-sss',
         'libnss-sss',
       ]
+      $manage_oddjobd = false
 
     }
 

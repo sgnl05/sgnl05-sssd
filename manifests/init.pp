@@ -51,6 +51,7 @@ class sssd (
   $extra_packages          = $sssd::params::extra_packages,
   $config_file             = $sssd::params::config_file,
   $mkhomedir               = $sssd::params::mkhomedir,
+  $manage_oddjobd          = $sssd::params::manage_oddjobd,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
 ) inherits sssd::params {
