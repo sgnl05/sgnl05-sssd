@@ -2,7 +2,6 @@
 class sssd::config (
   $ensure                  = $sssd::ensure,
   $config                  = $sssd::config,
-  $sssd_package            = $sssd::sssd_package,
   $config_file             = $sssd::config_file,
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
