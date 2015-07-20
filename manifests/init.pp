@@ -44,16 +44,15 @@
 # Copyright 2015 Gjermund Jensvoll
 #
 class sssd (
-  $ensure                = $sssd::params::ensure,
-  $config                = $sssd::params::config,
-  $sssd_package          = $sssd::params::sssd_package,
-  $sssd_service          = $sssd::params::sssd_service,
-  $extra_packages        = $sssd::params::extra_packages,
-  $config_file           = $sssd::params::config_file,
-  $mkhomedir             = $sssd::params::mkhomedir,
-  $enable_mkhomedir_cmd  = $sssd::params::enable_mkhomedir_cmd,
-  $disable_mkhomedir_cmd = $sssd::params::disable_mkhomedir_cmd,
-  $pam_mkhomedir_check   = $sssd::params::pam_mkhomedir_check,
+  $ensure                  = $sssd::params::ensure,
+  $config                  = $sssd::params::config,
+  $sssd_package            = $sssd::params::sssd_package,
+  $sssd_service            = $sssd::params::sssd_service,
+  $extra_packages          = $sssd::params::extra_packages,
+  $config_file             = $sssd::params::config_file,
+  $mkhomedir               = $sssd::params::mkhomedir,
+  $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
+  $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
 ) inherits sssd::params {
 
   validate_re($ensure, '^(present|absent)$',
@@ -62,14 +61,17 @@ class sssd (
 
   validate_string(
     $sssd_package,
-    $sssd_service,
-    $enable_mkhomedir_cmd,
-    $disable_mkhomedir_cmd,
-    $pam_mkhomedir_check
+    $sssd_service
   )
 
   validate_array(
-    $extra_packages
+    $extra_packages,
+    $enable_mkhomedir_flags,
+    $disable_mkhomedir_flags
+  )
+
+  validate_absolute_path(
+    $config_file
   )
 
   validate_bool(
