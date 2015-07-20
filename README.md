@@ -145,6 +145,8 @@ Testet on Fedora 22, RHEL6,7 and Ubuntu 14.04
 ## Credits
 
 * sssd.conf template and authconfig/mkhomedir code from [walkamongus-sssd][1] by Chadwick Banning
+* Anchor pattern and spec tests by [Chris Edester][2]
 
 [0]: https://fedorahosted.org/sssd/
 [1]: https://github.com/walkamongus/sssd
+[2]: https://github.com/edestecd
