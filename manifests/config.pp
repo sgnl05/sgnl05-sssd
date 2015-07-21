@@ -14,7 +14,7 @@ class sssd::config (
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
-    content => template('sssd/sssd.conf.erb'),
+    content => template("${module_name}/sssd.conf.erb"),
   }
 
   case $::osfamily {
@@ -38,18 +38,22 @@ class sssd::config (
 
     'Debian': {
 
-      exec { 'pam-auth-update':
-        path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-        refreshonly => true,
-      }
+      if $mkhomedir {
 
-      file { '/usr/share/pam-configs/pam_mkhomedir':
-        ensure => file,
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0644',
-        source => "puppet:///modules/${module_name}/pam_mkhomedir",
-        notify => Exec['pam-auth-update'],
+        exec { 'pam-auth-update':
+          path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+          refreshonly => true,
+        }
+
+        file { '/usr/share/pam-configs/pam_mkhomedir':
+          ensure => file,
+          owner  => 'root',
+          group  => 'root',
+          mode   => '0644',
+          source => "puppet:///modules/${module_name}/pam_mkhomedir",
+          notify => Exec['pam-auth-update'],
+        }
+
       }
 
     }
