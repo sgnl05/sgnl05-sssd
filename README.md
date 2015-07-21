@@ -134,9 +134,9 @@ config => {
 ```
 
 #####`mkhomedir`
-Set to 'true' to enable auto-creation of home directories on user login, using oddjobd-mkhomedir. This is only needed for RedHat/CentOS.
+Set to 'true' to enable auto-creation of home directories on user login.
 Type: boolean
-Default: true on osfamily RedHat, false on osfamily Debian.
+Default: true
 
 ## Limitations
 
@@ -144,8 +144,8 @@ Testet on Fedora 22, RHEL6,7 and Ubuntu 14.04
 
 ## Credits
 
-* sssd.conf template and authconfig/mkhomedir code from [walkamongus-sssd][1] by Chadwick Banning
-* Anchor pattern and spec tests by [Chris Edester][2]
+* Anchor pattern, mkhomedir code, RHEL5 support and spec tests by [Chris Edester][2]
+* sssd.conf template from [walkamongus-sssd][1] by Chadwick Banning
 
 [0]: https://fedorahosted.org/sssd/
 [1]: https://github.com/walkamongus/sssd
