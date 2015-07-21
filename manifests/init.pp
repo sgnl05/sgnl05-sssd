@@ -4,9 +4,27 @@
 #
 # === Parameters
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*ensure*]
+#   Ensure if sssd_package and extra_packages is to be present og absent.
+#
+# [*config*]
+#   Hash containing entire SSSD config.
+#
+# [*sssd_package*]
+#   Name of the sssd package. Only set this if your patform is not supported or
+#   you know what you're doing.
+#
+# [*extra_packages*]
+#   Array with extra packages to be installed
+#
+# [*mkhomedir*]
+#   Boolean. Manage auto-creation of home directories on user login.
+#
+# [*enable_mkhomedir_flags*]
+#   Flags to use with authconfig to enable auto-creation of home directories. 
+#
+# [*disable_mkhomedir_flags*]
+#   Flags to use with authconfig to disable auto-creation of home directories.
 #
 # === Examples
 #
