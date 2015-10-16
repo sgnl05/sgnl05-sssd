@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "author": "sgnl05",
   "summary": "Install and configure SSSD",
-  "license": "Apache-2.0",
+  "license": "GPL-3.0+",
   "source": "git://github.com/sgnl05/sgnl05-sssd.git",
   "project_page": "https://github.com/sgnl05/sgnl05-sssd",
   "issues_url": "https://github.com/sgnl05/sgnl05-sssd/issues",
