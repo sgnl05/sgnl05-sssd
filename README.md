@@ -144,9 +144,11 @@ Testet on Fedora 22, RHEL6,7 and Ubuntu 14.04
 
 ## Credits
 
-* Anchor pattern, mkhomedir code, RHEL5 support and spec tests by [Chris Edester][2]
 * sssd.conf template from [walkamongus-sssd][1] by Chadwick Banning
+* Anchor pattern, mkhomedir code, RHEL5 support and spec tests by [Chris Edester][2]
+* service_ensure option by [sd-robbruce][3]
 
 [0]: https://fedorahosted.org/sssd/
 [1]: https://github.com/walkamongus/sssd
 [2]: https://github.com/edestecd
+[3]: https://github.com/sd-robbruce
