@@ -10,6 +10,13 @@ describe 'sssd' do
 
       it { is_expected.not_to contain_package('oddjob-mkhomedir') }
       it { is_expected.not_to contain_service('oddjobd') }
+
+      it { is_expected.to contain_service('sssd').with_ensure('running') }
+    end
+
+    context 'with service ensure stopped' do
+      let (:params) { { :service_ensure => 'stopped' } }
+      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
     end
   end
   describe "on RedHat 6.6" do
@@ -22,6 +29,15 @@ describe 'sssd' do
 
       it { is_expected.to contain_package('oddjob-mkhomedir') }
       it { is_expected.to contain_service('oddjobd') }
+
+      it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_service('oddjobd').with_ensure('running') }
+    end
+
+    context 'with service ensure stopped' do
+      let (:params) { { :service_ensure => 'stopped' } }
+      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
+      it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
     end
   end
   describe "on RedHat 7.1" do
@@ -34,6 +50,15 @@ describe 'sssd' do
 
       it { is_expected.to contain_package('oddjob-mkhomedir') }
       it { is_expected.to contain_service('oddjobd') }
+
+      it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_service('oddjobd').with_ensure('running') }
+    end
+
+    context 'with service ensure stopped' do
+      let (:params) { { :service_ensure => 'stopped' } }
+      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
+      it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
     end
   end
   describe "on Debian 8.1" do
@@ -46,6 +71,13 @@ describe 'sssd' do
 
       it { is_expected.not_to contain_package('oddjob-mkhomedir') }
       it { is_expected.not_to contain_service('oddjobd') }
+
+      it { is_expected.to contain_service('sssd').with_ensure('running') }
+    end
+
+    context 'with service ensure stopped' do
+      let (:params) { { :service_ensure => 'stopped' } }
+      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
     end
   end
 end

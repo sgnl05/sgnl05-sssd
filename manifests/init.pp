@@ -21,10 +21,13 @@
 #   Boolean. Manage auto-creation of home directories on user login.
 #
 # [*enable_mkhomedir_flags*]
-#   Flags to use with authconfig to enable auto-creation of home directories. 
+#   Flags to use with authconfig to enable auto-creation of home directories.
 #
 # [*disable_mkhomedir_flags*]
 #   Flags to use with authconfig to disable auto-creation of home directories.
+#
+# [*service_ensure*]
+#   Ensure if services should be running/stopped
 #
 # === Examples
 #
@@ -65,11 +68,12 @@ class sssd (
   $ensure                  = $sssd::params::ensure,
   $config                  = $sssd::params::config,
   $sssd_package            = $sssd::params::sssd_package,
-  $sssd_service            = $sssd::params::sssd_service,
+  $sssd_ensure             = $sssd::params::sssd_ensure,
   $extra_packages          = $sssd::params::extra_packages,
   $config_file             = $sssd::params::config_file,
   $mkhomedir               = $sssd::params::mkhomedir,
   $manage_oddjobd          = $sssd::params::manage_oddjobd,
+  $service_ensure          = $sssd::params::service_ensure,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
 ) inherits sssd::params {
@@ -100,6 +104,8 @@ class sssd (
   validate_hash(
     $config
   )
+
+  validate_re($service_ensure, '^running|true|stopped|false$')
 
   anchor { 'sssd::begin': } ->
   class { '::sssd::install': } ->

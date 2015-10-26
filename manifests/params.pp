@@ -21,10 +21,11 @@ class sssd::params {
 
     'RedHat': {
 
-      $sssd_package = 'sssd'
-      $sssd_service = 'sssd'
-      $config_file  = '/etc/sssd/sssd.conf'
-      $mkhomedir    = true
+      $sssd_package   = 'sssd'
+      $sssd_service   = 'sssd'
+      $service_ensure = 'running'
+      $config_file    = '/etc/sssd/sssd.conf'
+      $mkhomedir      = true
 
       if versioncmp($::operatingsystemrelease, '6.0') < 0 {
         $extra_packages = [
@@ -45,6 +46,7 @@ class sssd::params {
 
       $sssd_package   = 'sssd'
       $sssd_service   = 'sssd'
+      $service_ensure = 'running'
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
       $extra_packages = [
