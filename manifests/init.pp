@@ -69,7 +69,6 @@ class sssd (
   $config                  = $sssd::params::config,
   $sssd_package            = $sssd::params::sssd_package,
   $sssd_service            = $sssd::params::sssd_service,
-  $sssd_ensure             = $sssd::params::sssd_ensure,
   $extra_packages          = $sssd::params::extra_packages,
   $config_file             = $sssd::params::config_file,
   $mkhomedir               = $sssd::params::mkhomedir,
