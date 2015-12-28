@@ -29,13 +29,13 @@ class sssd::params {
 
       if versioncmp($::operatingsystemrelease, '6.0') < 0 {
         $extra_packages = [
-          'authconfig'
+          'authconfig',
         ]
         $manage_oddjobd = false
       } else {
         $extra_packages = [
           'authconfig',
-          'oddjob-mkhomedir'
+          'oddjob-mkhomedir',
         ]
         $manage_oddjobd = true
       }

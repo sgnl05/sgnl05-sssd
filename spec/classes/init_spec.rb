@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe 'sssd' do
-  describe "on RedHat 5.11" do
+  describe 'on RedHat 5.11' do
     let(:facts) { { :osfamily => 'RedHat', :operatingsystemrelease => '5.11' } }
 
     context 'with defaults for all parameters' do
@@ -15,11 +15,11 @@ describe 'sssd' do
     end
 
     context 'with service ensure stopped' do
-      let (:params) { { :service_ensure => 'stopped' } }
+      let(:params) { { :service_ensure => 'stopped' } }
       it { is_expected.to contain_service('sssd').with_ensure('stopped') }
     end
   end
-  describe "on RedHat 6.6" do
+  describe 'on RedHat 6.6' do
     let(:facts) { { :osfamily => 'RedHat', :operatingsystemrelease => '6.6' } }
 
     context 'with defaults for all parameters' do
@@ -35,12 +35,12 @@ describe 'sssd' do
     end
 
     context 'with service ensure stopped' do
-      let (:params) { { :service_ensure => 'stopped' } }
+      let(:params) { { :service_ensure => 'stopped' } }
       it { is_expected.to contain_service('sssd').with_ensure('stopped') }
       it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
     end
   end
-  describe "on RedHat 7.1" do
+  describe 'on RedHat 7.1' do
     let(:facts) { { :osfamily => 'RedHat', :operatingsystemrelease => '7.1' } }
 
     context 'with defaults for all parameters' do
@@ -56,12 +56,12 @@ describe 'sssd' do
     end
 
     context 'with service ensure stopped' do
-      let (:params) { { :service_ensure => 'stopped' } }
+      let(:params) { { :service_ensure => 'stopped' } }
       it { is_expected.to contain_service('sssd').with_ensure('stopped') }
       it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
     end
   end
-  describe "on Debian 8.1" do
+  describe 'on Debian 8.1' do
     let(:facts) { { :osfamily => 'Debian', :operatingsystemrelease => '8.1' } }
 
     context 'with defaults for all parameters' do
@@ -76,7 +76,7 @@ describe 'sssd' do
     end
 
     context 'with service ensure stopped' do
-      let (:params) { { :service_ensure => 'stopped' } }
+      let(:params) { { :service_ensure => 'stopped' } }
       it { is_expected.to contain_service('sssd').with_ensure('stopped') }
     end
   end
