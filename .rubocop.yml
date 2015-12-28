@@ -23,7 +23,7 @@ AllCops:
 
 Metrics/LineLength:
   # Ruduce this... Max: 80
-  Max: 80
+  Max: 84
 
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.

@@ -1,13 +1,14 @@
 require 'spec_helper'
 describe 'sssd' do
   describe 'on RedHat 5.11' do
-    let(:facts) { { :osfamily => 'RedHat', :operatingsystemrelease => '5.11' } }
+    let(:facts) { { :osfamily => 'RedHat', :operatingsystemrelease => '5.7' } }
 
     context 'with defaults for all parameters' do
       it { is_expected.to contain_class('sssd::install') }
       it { is_expected.to contain_class('sssd::config') }
       it { is_expected.to contain_class('sssd::service') }
 
+      it { is_expected.to contain_package('authconfig').with_ensure('latest') }
       it { is_expected.not_to contain_package('oddjob-mkhomedir') }
       it { is_expected.not_to contain_service('oddjobd') }
 
@@ -27,6 +28,7 @@ describe 'sssd' do
       it { is_expected.to contain_class('sssd::config') }
       it { is_expected.to contain_class('sssd::service') }
 
+      it { is_expected.to contain_package('authconfig').with_ensure('present') }
       it { is_expected.to contain_package('oddjob-mkhomedir') }
       it { is_expected.to contain_service('oddjobd') }
 
@@ -48,6 +50,7 @@ describe 'sssd' do
       it { is_expected.to contain_class('sssd::config') }
       it { is_expected.to contain_class('sssd::service') }
 
+      it { is_expected.to contain_package('authconfig').with_ensure('present') }
       it { is_expected.to contain_package('oddjob-mkhomedir') }
       it { is_expected.to contain_service('oddjobd') }
 
@@ -69,7 +72,9 @@ describe 'sssd' do
       it { is_expected.to contain_class('sssd::config') }
       it { is_expected.to contain_class('sssd::service') }
 
+      it { is_expected.not_to contain_package('authconfig') }
       it { is_expected.not_to contain_package('oddjob-mkhomedir') }
+      it { is_expected.to contain_package('libpam-runtime').with_ensure('present') }
       it { is_expected.not_to contain_service('oddjobd') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }

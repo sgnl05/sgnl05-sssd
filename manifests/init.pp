@@ -70,6 +70,7 @@ class sssd (
   $sssd_package            = $sssd::params::sssd_package,
   $sssd_service            = $sssd::params::sssd_service,
   $extra_packages          = $sssd::params::extra_packages,
+  $extra_packages_ensure   = $sssd::params::extra_packages_ensure,
   $config_file             = $sssd::params::config_file,
   $mkhomedir               = $sssd::params::mkhomedir,
   $manage_oddjobd          = $sssd::params::manage_oddjobd,
