@@ -1,5 +1,11 @@
 # sssd
 
+[![Build Status](https://travis-ci.org/sgnl05/sgnl05-sssd.svg)](https://travis-ci.org/sgnl05/sgnl05-sssd)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/sgnl05/sssd.svg)](https://forge.puppetlabs.com/sgnl05/sssd)
+[![Puppet Forge Downloads](https://img.shields.io/puppetforge/dt/sgnl05/sssd.svg)](https://forge.puppetlabs.com/sgnl05/sssd)
+[![Puppet Forge Score](https://img.shields.io/puppetforge/f/sgnl05/sssd.svg)](https://forge.puppetlabs.com/sgnl05/sssd/scores)
+[![Issue Stats](http://issuestats.com/github/sgnl05/sgnl05-sssd/badge/pr?style=flat)](http://issuestats.com/github/sgnl05/sgnl05-sssd)
+
 #### Table of Contents
 
 1. [Overview](#overview)
@@ -90,7 +96,7 @@ krb5_realm = AD.EXAMPLE.COM
 realmd_tags = joined-with-samba
 cache_credentials = true
 id_provider = ad
-krb5_store_password_if_offline = true 
+krb5_store_password_if_offline = true
 default_shell = /bin/bash
 ldap_id_mapping = false
 use_fully_qualified_names = false
@@ -140,7 +146,7 @@ Default: true
 
 ## Limitations
 
-Testet on Fedora 22, RHEL6,7 and Ubuntu 14.04
+Tested on Fedora 22, (RHEL|CentOS|OracleLinux)5,6,7 and Ubuntu 14.04
 
 ## Credits
 
