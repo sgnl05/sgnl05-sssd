@@ -1,24 +1,24 @@
-(0.2.1)
-        * Licence info (#5)
+2015-12-30 (0.2.1)
+        * Licence info (Gjermund Jensvoll #5)
         * service_ensure option (Robert Bruce #6)
 	* RedHat 5 authconfig needs to be latest (Chris Edester #7)
-	* Update testing, linting and syntax suites (Chris Edester)
+	* Update testing, linting and syntax suites (Chris Edester #7)
 
-2015-07-21 (0.2.0)  Chris Edester
-        * Mkhomedir cmd (#2)
-	* RedHat 5 support (#3)
+2015-07-21 (0.2.0)
+        * Mkhomedir cmd (Chris Edester #2)
+	* RedHat 5 support (Chris Edester #3)
 
-2015-07-20 (0.1.4)  Chris Edester
-	* Anchor pattern, private class and spec tests (#1)
+2015-07-20 (0.1.4)
+	* Anchor pattern, private class and spec tests (Chris Edester #1)
 
-2015-07-06 (0.1.3)  Gjermund Jensvoll
-	* Added missing file pam_mkhomedir
+2015-07-06 (0.1.3)
+	* Added missing file pam_mkhomedir (Gjermund Jensvoll)
 
-2015-07-06 (0.1.2)  Gjermund Jensvoll
-	* Fixed metadata.json syntax errors
+2015-07-06 (0.1.2)
+	* Fixed metadata.json syntax errors (Gjermund Jensvoll)
 
-2015-07-04 (0.1.1)  Gjermund Jensvoll
-	* Added compatability data for Puppet forge
+2015-07-04 (0.1.1)
+	* Added compatability data for Puppet forge (Gjermund Jensvoll)
 
-2015-07-04 (0.1.0)  Gjermund Jensvoll
-	* Initial release
+2015-07-04 (0.1.0)
+	* First release
