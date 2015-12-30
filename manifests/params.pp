@@ -29,15 +29,17 @@ class sssd::params {
 
       if versioncmp($::operatingsystemrelease, '6.0') < 0 {
         $extra_packages = [
-          'authconfig'
+          'authconfig',
         ]
-        $manage_oddjobd = false
+        $extra_packages_ensure = 'latest'
+        $manage_oddjobd        = false
       } else {
         $extra_packages = [
           'authconfig',
-          'oddjob-mkhomedir'
+          'oddjob-mkhomedir',
         ]
-        $manage_oddjobd = true
+        $extra_packages_ensure = 'present'
+        $manage_oddjobd        = true
       }
 
     }
@@ -54,7 +56,8 @@ class sssd::params {
         'libpam-sss',
         'libnss-sss',
       ]
-      $manage_oddjobd = false
+      $extra_packages_ensure = 'present'
+      $manage_oddjobd        = false
 
     }
 
