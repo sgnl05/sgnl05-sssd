@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Ensure if sssd_package and extra_packages is to be present og absent.
+#   Ensure if sssd_package and extra_packages is to be present or absent.
 #
 # [*config*]
 #   Hash containing entire SSSD config.
