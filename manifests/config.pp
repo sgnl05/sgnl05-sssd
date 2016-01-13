@@ -33,7 +33,7 @@ class sssd::config (
         command => $authconfig_update_cmd,
         unless  => $authconfig_check_cmd,
       }
-      Exec[ 'authconfig-mkhomedir'] -> File [ 'sssd.conf']
+      Exec[ 'authconfig-mkhomedir' ] -> File[ 'sssd.conf' ]
     }
 
     'Debian': {
