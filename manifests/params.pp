@@ -17,6 +17,14 @@ class sssd::params {
   $enable_mkhomedir_flags  = ['--enablesssd', '--enablesssdauth', '--enablemkhomedir']
   $disable_mkhomedir_flags = ['--enablesssd', '--enablesssdauth', '--disablemkhomedir']
 
+  # Earlier versions of ruby didn't provide ordered hashs, so we need to sort
+  # the configuration ourselves to ensure a consistent config file.
+  if versioncmp($::rubyversion, '1.9.3') >= 0 {
+    $config_template = "${module_name}/sssd.conf.erb"
+  } else {
+    $config_template = "${module_name}/sssd.conf.sorted.erb"
+  }
+
   case $::osfamily {
 
     'RedHat': {
