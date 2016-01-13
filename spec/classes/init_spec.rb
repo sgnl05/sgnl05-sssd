@@ -46,7 +46,7 @@ describe 'sssd' do
         is_expected.to contain_file('sssd.conf') \
           .with_ensure('present') \
           .with_path('/etc/sssd/sssd.conf') \
-          .with_content(/^# Managed by Puppet.\n\n\[domain\/ad.example.com\]/)
+          .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
     end
   end
@@ -98,7 +98,7 @@ describe 'sssd' do
         is_expected.to contain_file('sssd.conf') \
           .with_ensure('present') \
           .with_path('/etc/sssd/sssd.conf') \
-          .with_content(/^# Managed by Puppet.\n\n\[domain\/ad.example.com\]/)
+          .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
     end
   end
@@ -150,7 +150,7 @@ describe 'sssd' do
         is_expected.to contain_file('sssd.conf') \
           .with_ensure('present') \
           .with_path('/etc/sssd/sssd.conf') \
-          .with_content(/^# Managed by Puppet.\n\n\[domain\/ad.example.com\]/)
+          .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
     end
   end
@@ -200,7 +200,7 @@ describe 'sssd' do
         is_expected.to contain_file('sssd.conf') \
           .with_ensure('present') \
           .with_path('/etc/sssd/sssd.conf') \
-          .with_content(/^# Managed by Puppet.\n\n\[domain\/ad.example.com\]/)
+          .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
     end
   end
