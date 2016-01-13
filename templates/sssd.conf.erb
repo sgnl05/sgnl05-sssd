@@ -1,9 +1,9 @@
 # Managed by Puppet.
 
-<% @config.sort.map do |k,v| -%>
+<% @config.map do |k,v| -%>
 <%   if v.is_a?(Hash) -%>
 [<%=  k %>]
-<%     v.sort.map do |ki, vi| -%>
+<%     v.map do |ki, vi| -%>
 <%       if vi.is_a?(Array) -%>
 <%=        ki %> = <%= vi.join(', ') %>
 <%       elsif vi != :undef -%>
@@ -12,5 +12,5 @@
 <%     end -%>
 <%   else -%>
 [<%=  k %>]
-<%   end %>
+<%   end -%>
 <% end -%>
