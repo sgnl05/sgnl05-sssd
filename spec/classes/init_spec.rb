@@ -11,10 +11,7 @@ describe 'sssd' do
       it { is_expected.to contain_package('authconfig').with_ensure('latest') }
       it { is_expected.not_to contain_package('oddjob-mkhomedir') }
       it { is_expected.not_to contain_service('oddjobd') }
-      it 'should pass' do
-        is_expected.to \
-        contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]')
-      end
+      it { is_expected.to contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
     end
@@ -35,10 +32,7 @@ describe 'sssd' do
       it { is_expected.to contain_package('authconfig').with_ensure('present') }
       it { is_expected.to contain_package('oddjob-mkhomedir') }
       it { is_expected.to contain_service('oddjobd') }
-      it 'should pass' do
-        is_expected.to \
-        contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]')
-      end
+      it { is_expected.to contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
       it { is_expected.to contain_service('oddjobd').with_ensure('running') }
@@ -61,10 +55,7 @@ describe 'sssd' do
       it { is_expected.to contain_package('authconfig').with_ensure('present') }
       it { is_expected.to contain_package('oddjob-mkhomedir') }
       it { is_expected.to contain_service('oddjobd') }
-      it 'should pass' do
-        is_expected.to \
-        contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]')
-      end
+      it { is_expected.to contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
       it { is_expected.to contain_service('oddjobd').with_ensure('running') }
