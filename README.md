@@ -31,7 +31,7 @@ class {'::sssd':
       'domains'             => 'ad.example.com',
       'config_file_version' => 2,
       'services'            => ['nss', 'pam'],
-    }
+    },
     'domain/ad.example.com' => {
       'ad_domain'                      => 'ad.example.com',
       'ad_server'                      => ['server01.ad.example.com', 'server02.ad.example.com'],
