@@ -7,6 +7,9 @@ class sssd::config (
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
+  $ad_join_username        = $sssd::ad_join_username,
+  $ad_join_password        = $sssd::ad_join_password,
+  $ad_join_ou              = $sssd::ad_join_ou,
 ) {
 
   file { 'sssd.conf':
@@ -16,6 +19,15 @@ class sssd::config (
     group   => 'root',
     mode    => '0600',
     content => template($config_template),
+  }
+
+  $sssd_domains = $config[sssd][domains]
+
+  sssd::join_ad_domains { $sssd_domains:
+    config           => $config,
+    ad_join_username => $ad_join_username,
+    ad_join_password => $ad_join_password,
+    ad_join_ou       => $ad_join_ou,
   }
 
   case $::osfamily {
