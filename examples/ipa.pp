@@ -11,7 +11,7 @@ class {'::sssd':
       'ipa_hostname'                   => 'client1.example.com',
       'id_provider'                    => 'ipa',
       'access_provider'                => 'ipa',
-      'chpass_provider'                => 'ipa'
+      'chpass_provider'                => 'ipa',
       'cache_credentials'              => true,
       'krb5_store_password_if_offline' => true,
       'ldap_tls_cacert'                => '/etc/ipa/ca.crt',
