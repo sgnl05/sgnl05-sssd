@@ -146,15 +146,22 @@ Default: true
 
 ## Limitations
 
-Tested on Fedora 22, (RHEL|CentOS|OracleLinux)5,6,7 and Ubuntu 14.04
+Tested on:
+* Fedora 22,23
+* (RHEL|CentOS|OracleLinux) 5,6,7
+* Ubuntu 14.04
 
 ## Credits
 
 * sssd.conf template from [walkamongus-sssd][1] by Chadwick Banning
 * Anchor pattern, mkhomedir code, RHEL5 support and spec tests by [Chris Edester][2]
 * service_ensure option by [sd-robbruce][3]
+* sssd.conf consistency during first Puppet run by [ndelic0][4]
+* Non-sorting config keys for newer ruby versions by [gizmoguy][5]
 
 [0]: https://fedorahosted.org/sssd/
 [1]: https://github.com/walkamongus/sssd
 [2]: https://github.com/edestecd
 [3]: https://github.com/sd-robbruce
+[4]: https://github.com/ndelic0
+[5]: https://github.com/gizmoguy
