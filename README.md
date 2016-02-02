@@ -28,7 +28,7 @@ Example configuration:
 class {'::sssd':
   config => {
     'sssd' => {
-      'domains'             => 'ad.example.com',
+      'domains'             => ['ad.example.com'],
       'config_file_version' => 2,
       'services'            => ['nss', 'pam'],
     },
@@ -56,7 +56,8 @@ class {'::sssd':
 ```yaml
 sssd::config:
   'sssd':
-    'domains': 'ad.example.com'
+    'domains':
+      - 'ad.example.com'
     'config_file_version': 2
     'services':
       - 'nss'
@@ -105,12 +106,19 @@ access_provider = simple
 simple_allow_groups = admins, users
 ```
 
-Tip: Using 'ad' as `id_provider` require you to run 'adcli join domain' on the target node. *adcli join* creates a computer account in the domain for the local machine, and sets up a keytab for the machine.
+Tip: Using 'ad' as `id_provider` requires you to pass `ad_join_username`, `ad_join_password`, and `ad_join_ou` parameters.
+This will cause the module to run 'adcli join domain' on the target node which creates a computer account in the domain for the local machine, and sets up a keytab.
 
 Example:
 
-```bash
-$ sudo adcli join ad.example.com
+```puppet
+class {'::sssd':
+  config           => $config,
+  ad_join_username => 'username',
+  ad_join_password => 'secret',
+  ad_join_ou       => 'ou=container,dc=example,dc=com'
+}
+
 ```
 
 ## Reference
@@ -128,8 +136,8 @@ Default:
 config => {
   'sssd' => {
     'config_file_version' => '2',
-    'services'            => 'nss, pam',
-    'domains'             => 'ad.example.com',
+    'services'            => ['nss', 'pam'],
+    'domains'             => ['ad.example.com'],
   },
     'domain/ad.example.com' => {
       'id_provider'       => 'ad',
@@ -143,6 +151,21 @@ config => {
 Set to 'true' to enable auto-creation of home directories on user login.
 Type: boolean
 Default: true
+
+#####`ad_join_username`
+Defines the Active Directory username to use during domain join operations.
+Type: string
+Default: undef
+
+#####`$ad_join_password`
+Defines the Active Directory password to use during domain join operations. hiera-eyaml should be used for secure storage of this password.
+Type: string
+Default: undef
+
+#####`$ad_join_ou`
+Defines the Active Directory organizational unit to use during domain join operations.
+Type: string
+Default: undef
 
 ## Limitations
 

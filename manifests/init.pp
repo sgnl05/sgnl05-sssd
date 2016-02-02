@@ -29,12 +29,24 @@
 # [*service_ensure*]
 #   Ensure if services should be running/stopped
 #
+# [*ad_join_username*]
+#   Username to use during AD join operation.
+#   Note: Required parameter when id_provider is set to 'ad'
+#
+# [*ad_join_password*]
+#   Password to use during AD join operation.
+#   Note: Required parameter when id_provider is set to 'ad'
+#
+# [*ad_join_ou*]
+#   OU to use for computer account creation during AD join operation.
+#   Note: Required parameter when id_provider is set to 'ad'
+#
 # === Examples
 #
 # class {'::sssd':
 #   config => {
 #     'sssd' => {
-#       'domains'             => 'ad.example.com',
+#       'domains'             => ['ad.example.com'],
 #       'config_file_version' => 2,
 #       'services'            => ['nss', 'pam'],
 #     }
@@ -78,6 +90,9 @@ class sssd (
   $service_ensure          = $sssd::params::service_ensure,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
+  $ad_join_username        = $sssd::params::ad_join_username,
+  $ad_join_password        = $sssd::params::ad_join_password,
+  $ad_join_ou              = $sssd::params::ad_join_ou,
 ) inherits sssd::params {
 
   validate_re($ensure, '^(present|absent)$',
@@ -87,7 +102,10 @@ class sssd (
   validate_string(
     $sssd_package,
     $sssd_service,
-    $config_template
+    $config_template,
+    $ad_join_username,
+    $ad_join_password,
+    $ad_join_ou
   )
 
   validate_array(

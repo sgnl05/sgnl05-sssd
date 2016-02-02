@@ -25,6 +25,10 @@ class sssd::params {
     $config_template = "${module_name}/sssd.conf.sorted.erb"
   }
 
+  $ad_join_username = undef
+  $ad_join_password = undef
+  $ad_join_ou       = undef
+
   case $::osfamily {
 
     'RedHat': {
@@ -45,6 +49,7 @@ class sssd::params {
         $extra_packages = [
           'authconfig',
           'oddjob-mkhomedir',
+          'adcli',
         ]
         $extra_packages_ensure = 'present'
         $manage_oddjobd        = true
@@ -63,6 +68,7 @@ class sssd::params {
         'libpam-runtime',
         'libpam-sss',
         'libnss-sss',
+        'adcli',
       ]
       $extra_packages_ensure = 'present'
       $manage_oddjobd        = false
