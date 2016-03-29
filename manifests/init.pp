@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*ensure*]
-#   Ensure if sssd_package and extra_packages is to be present og absent.
+#   Ensure if sssd_package and extra_packages is to be present or absent.
 #
 # [*config*]
 #   Hash containing entire SSSD config.
@@ -72,6 +72,7 @@ class sssd (
   $extra_packages            = $sssd::params::extra_packages,
   $extra_packages_ensure     = $sssd::params::extra_packages_ensure,
   $config_file               = $sssd::params::config_file,
+  $config_template           = $sssd::params::config_template,
   $mkhomedir                 = $sssd::params::mkhomedir,
   $manage_oddjobd            = $sssd::params::manage_oddjobd,
   $service_ensure            = $sssd::params::service_ensure,
@@ -103,7 +104,8 @@ class sssd (
 
   validate_string(
     $sssd_package,
-    $sssd_service
+    $sssd_service,
+    $config_template
   )
 
   validate_array(

@@ -1,3 +1,7 @@
+2016-02-01 (0.3.0)
+	* Stop sorting config keys for newer ruby versions (Brad Cowie #13)
+	* Ensure sssd.conf consistency during first Puppet run (Nemanja Delic #11)
+
 2015-12-30 (0.2.1)
         * Licence info (Gjermund Jensvoll #5)
         * service_ensure option (Robert Bruce #6)

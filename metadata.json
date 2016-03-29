@@ -1,13 +1,13 @@
 {
   "name": "sgnl05-sssd",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "sgnl05",
   "summary": "Install and configure SSSD",
   "license": "GPL-3.0+",
   "source": "git://github.com/sgnl05/sgnl05-sssd.git",
   "project_page": "https://github.com/sgnl05/sgnl05-sssd",
   "issues_url": "https://github.com/sgnl05/sgnl05-sssd/issues",
-  "tags": ["sssd", "authentication"],
+  "tags": ["sssd", "authentication", "ldap", "active-directory", "ad", "freeipa", "ipa"],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
