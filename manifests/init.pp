@@ -128,6 +128,34 @@ class sssd (
 
   validate_re($service_ensure, '^running|true|stopped|false$')
 
+  validate_string(
+    $logindefs_mail_dir,
+  )
+
+  validate_integer([
+    $logindefs_pass_max_days,
+    $logindefs_pass_min_days,
+    $logindefs_pass_min_len,
+    $logindefs_pass_warn_age,
+    $logindefs_uid_min,
+    $logindefs_uid_max,
+    $logindefs_sys_uid_min,
+    $logindefs_sys_uid_max,
+    $logindefs_gid_min,
+    $logindefs_gid_max,
+    $logindefs_sys_gid_min,
+    $logindefs_sys_gid_max,
+    $logindefs_umask,
+    ]
+  )
+
+  # Lame that validate_re will not accept an array of strings to validate...
+  validate_re("$logindefs_create_home", '^(no|NO|yes|YES)$')
+  validate_re("$logindefs_usergroups_enab", '^(no|NO|yes|YES)$')
+  validate_re("$logindefs_md5_crypt_enab", '^(no|NO|yes|YES)$')
+
+  validate_re("$logindefs_encrypt_method", '^DES|MD5|SHA256|SHA512$')
+
   anchor { 'sssd::begin': } ->
   class { '::sssd::install': } ->
   class { '::sssd::config': } ~>
