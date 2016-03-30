@@ -56,14 +56,26 @@ class sssd::params {
       $logindefs_pass_min_days   = '0'
       $logindefs_pass_min_len    = '5'
       $logindefs_pass_warn_age   = '7'
-      $logindefs_uid_min         = '1000' # case for 6/7
-      $logindefs_uid_max         = '60000' # case for 6/7
-      $logindefs_sys_uid_min     = '201' # case for 6/7
-      $logindefs_sys_uid_max     = '999' # case for 6/7
-      $logindefs_gid_min         = '1000' # case for 6/7
-      $logindefs_gid_max         = '60000' # case for 6/7
-      $logindefs_sys_gid_min     = '201' # case for 6/7
-      $logindefs_sys_gid_max     = '999' # case for 6/7
+      # Default values for user vs system UID/GID changed with RHEL/CentOS 7
+      if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+        $logindefs_uid_min         = '500'
+        $logindefs_uid_max         = '60000'
+        $logindefs_sys_uid_min     = '201'
+        $logindefs_sys_uid_max     = '499'
+        $logindefs_gid_min         = '500'
+        $logindefs_gid_max         = '60000'
+        $logindefs_sys_gid_min     = '201'
+        $logindefs_sys_gid_max     = '499'
+      } else {
+        $logindefs_uid_min         = '1000'
+        $logindefs_uid_max         = '60000'
+        $logindefs_sys_uid_min     = '201'
+        $logindefs_sys_uid_max     = '999'
+        $logindefs_gid_min         = '1000'
+        $logindefs_gid_max         = '60000'
+        $logindefs_sys_gid_min     = '201'
+        $logindefs_sys_gid_max     = '999'
+      }
       $logindefs_create_home     = 'yes'
       $logindefs_umask           = '077'
       $logindefs_usergroups_enab = 'yes'

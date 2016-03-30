@@ -33,18 +33,22 @@ PASS_WARN_AGE	<%=@logindefs_pass_warn_age%>
 #
 UID_MIN                  <%=@logindefs_uid_min%>
 UID_MAX                  <%=@logindefs_uid_max%>
+<% if scope.function_versioncmp(['6.99999', @operatingsystemrelease]) < 0 -%>
 # System accounts
 SYS_UID_MIN               <%=@logindefs_sys_uid_min%>
 SYS_UID_MAX               <%=@logindefs_sys_uid_max%>
+<% end -%>
 
 #
 # Min/max values for automatic gid selection in groupadd
 #
 GID_MIN                  <%=@logindefs_gid_min%>
 GID_MAX                  <%=@logindefs_gid_max%>
+<% if scope.function_versioncmp(['6.99999', @operatingsystemrelease]) < 0 -%>
 # System accounts
 SYS_GID_MIN               <%=@logindefs_sys_gid_min%>
 SYS_GID_MAX               <%=@logindefs_sys_gid_max%>
+<% end -%>
 
 #
 # If defined, this command is run when removing a user.
