@@ -50,6 +50,38 @@ class sssd::params {
         $manage_oddjobd        = true
       }
 
+      # Default variables for /etc/login.defs
+      $logindefs_mail_dir        = '/var/spool/mail'
+      $logindefs_pass_max_days   = '99999'
+      $logindefs_pass_min_days   = '0'
+      $logindefs_pass_min_len    = '5'
+      $logindefs_pass_warn_age   = '7'
+      # Default values for user vs system UID/GID changed with RHEL/CentOS 7
+      if versioncmp($::operatingsystemrelease, '7.0') < 0 {
+        $logindefs_uid_min         = '500'
+        $logindefs_uid_max         = '60000'
+        $logindefs_sys_uid_min     = '201'
+        $logindefs_sys_uid_max     = '499'
+        $logindefs_gid_min         = '500'
+        $logindefs_gid_max         = '60000'
+        $logindefs_sys_gid_min     = '201'
+        $logindefs_sys_gid_max     = '499'
+      } else {
+        $logindefs_uid_min         = '1000'
+        $logindefs_uid_max         = '60000'
+        $logindefs_sys_uid_min     = '201'
+        $logindefs_sys_uid_max     = '999'
+        $logindefs_gid_min         = '1000'
+        $logindefs_gid_max         = '60000'
+        $logindefs_sys_gid_min     = '201'
+        $logindefs_sys_gid_max     = '999'
+      }
+      $logindefs_create_home     = 'yes'
+      $logindefs_umask           = '077'
+      $logindefs_usergroups_enab = 'yes'
+      $logindefs_encrypt_method  = 'MD5'
+      $logindefs_md5_crypt_enab  = 'yes'
+
     }
 
     'Debian': {

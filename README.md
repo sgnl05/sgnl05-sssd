@@ -121,7 +121,7 @@ Type: string
 Default: present
 
 #####`config`
-Configuration options stuctured like the sssd.conf file. Array values will be joined into comma-separated lists.
+Configuration options structured like the sssd.conf file. Array values will be joined into comma-separated lists.
 Type: hash
 Default:
 ```puppet
@@ -143,6 +143,9 @@ config => {
 Set to 'true' to enable auto-creation of home directories on user login.
 Type: boolean
 Default: true
+
+#####`logindefs_*`
+These parameters adjust the settings with the same names in `/etc/login.defs` on systems in the RedHat family.
 
 ## Limitations
 
