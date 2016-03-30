@@ -144,6 +144,9 @@ Set to 'true' to enable auto-creation of home directories on user login.
 Type: boolean
 Default: true
 
+#####`logindefs_*`
+These parameters adjust the settings with the same names in `/etc/login.defs` on systems in the RedHat family.
+
 ## Limitations
 
 Tested on:

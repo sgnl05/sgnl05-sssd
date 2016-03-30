@@ -29,6 +29,9 @@
 # [*service_ensure*]
 #   Ensure if services should be running/stopped
 #
+# [*logindefs_\**]
+#   These parameters adjust the settings with the same names in `/etc/login.defs` on systems in the RedHat family.
+#
 # === Examples
 #
 # class {'::sssd':
@@ -150,11 +153,11 @@ class sssd (
   )
 
   # Lame that validate_re will not accept an array of strings to validate...
-  validate_re("$logindefs_create_home", '^(no|NO|yes|YES)$')
-  validate_re("$logindefs_usergroups_enab", '^(no|NO|yes|YES)$')
-  validate_re("$logindefs_md5_crypt_enab", '^(no|NO|yes|YES)$')
+  validate_re($logindefs_create_home, '^(no|NO|yes|YES)$')
+  validate_re($logindefs_usergroups_enab, '^(no|NO|yes|YES)$')
+  validate_re($logindefs_md5_crypt_enab, '^(no|NO|yes|YES)$')
 
-  validate_re("$logindefs_encrypt_method", '^DES|MD5|SHA256|SHA512$')
+  validate_re($logindefs_encrypt_method, '^DES|MD5|SHA256|SHA512$')
 
   anchor { 'sssd::begin': } ->
   class { '::sssd::install': } ->
