@@ -7,6 +7,10 @@ class sssd::config (
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
+  $join_ad_domain          = $sssd::join_ad_domain,
+  $ad_domain               = $sssd::ad_domain, 
+  $ad_join_user            = $sssd::ad_join_user,
+  $ad_join_pass            = $ad_join_pass,
 ) {
 
   file { 'sssd.conf':
@@ -34,7 +38,21 @@ class sssd::config (
         command => $authconfig_update_cmd,
         unless  => $authconfig_check_cmd,
       }
-      Exec[ 'authconfig-mkhomedir' ] -> File[ 'sssd.conf' ]
+
+      if $join_ad_domain == 'true' {
+        package { 'adcli':
+          ensure => present,
+        }
+        exec { 'join-computer-to-domain':
+          command => "/bin/echo -n '${ad_join_pass}' |  /usr/sbin/adcli join ${ad_domain} -U ${ad_join_user} --stdin-password",
+          creates => '/etc/krb5.keytab',
+          require => Package['adcli'],
+        } 
+        Exec[ 'authconfig-mkhomedir' ] -> File[ 'sssd.conf' ] -> Exec[ 'join-computer-to-domain' ]
+      }
+      else {
+        Exec[ 'authconfig-mkhomedir' ] -> File[ 'sssd.conf' ]
+      }
     }
 
     'Debian': {
