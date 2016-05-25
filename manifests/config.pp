@@ -10,7 +10,7 @@ class sssd::config (
   $join_ad_domain          = $sssd::join_ad_domain,
   $ad_domain               = $sssd::ad_domain, 
   $ad_join_user            = $sssd::ad_join_user,
-  $ad_join_pass            = $ad_join_pass,
+  $ad_join_pass            = $sssd::ad_join_pass,
 ) {
 
   file { 'sssd.conf':
