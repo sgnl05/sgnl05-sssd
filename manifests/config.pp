@@ -39,7 +39,7 @@ class sssd::config (
         unless  => $authconfig_check_cmd,
       }
 
-      if $join_ad_domain == 'true' {
+      if $join_ad_domain {
         package { 'adcli':
           ensure => present,
         }
