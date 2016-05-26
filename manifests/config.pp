@@ -4,9 +4,13 @@ class sssd::config (
   $config                  = $sssd::config,
   $config_file             = $sssd::config_file,
   $config_template         = $sssd::config_template,
+  $base_flags              = $sssd::base_flags,
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
+  $pamaccess               = $sssd::pamaccess,
+  $enable_pamaccess_flags  = $sssd::enable_pamaccess_flags,
+  $disable_pamaccess_flags = $sssd::disable_pamaccess_flags,
   $join_ad_domain          = $sssd::join_ad_domain,
   $ad_domain               = $sssd::ad_domain, 
   $ad_join_user            = $sssd::ad_join_user,
@@ -26,9 +30,15 @@ class sssd::config (
 
     'Redhat': {
 
-      $authconfig_flags = $mkhomedir ? {
+      $authconfig_flags = join($base_flags, ' ')
+
+      $authconfig_flags = $authconfig_flags + $mkhomedir ? {
         true  => join($enable_mkhomedir_flags, ' '),
         false => join($disable_mkhomedir_flags, ' '),
+      }
+      $authconfig_flags = $authconfig_flags + $pamaccess ? {
+        true  => join($enable_pamaccess_flags, ' '),
+        false => join($disable_pamaccess_flags, ' '),
       }
       $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
       $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} --test"

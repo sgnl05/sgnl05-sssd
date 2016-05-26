@@ -73,15 +73,19 @@ class sssd (
   $extra_packages_ensure   = $sssd::params::extra_packages_ensure,
   $config_file             = $sssd::params::config_file,
   $config_template         = $sssd::params::config_template,
+  $base_flags              = $sssd::params::base_flags,
   $mkhomedir               = $sssd::params::mkhomedir,
   $manage_oddjobd          = $sssd::params::manage_oddjobd,
   $service_ensure          = $sssd::params::service_ensure,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
-  $join_ad_domain          = false,
-  $ad_domain               = undef,
-  $ad_join_user            = undef,
-  $ad_join_pass            = undef,
+  $pamaccess               = $sssd::params::pamaccess,
+  $enable_pamaccess_flags  = $sssd::params::enable_pamaccess_flags,
+  $disable_pamaccess_flags = $sssd::params::disable_pamaccess_flags,
+  $join_ad_domain          = $sssd::params::join_ad_domain,
+  $ad_domain               = $sssd::params::ad_domain,
+  $ad_join_user            = $sssd::params::ad_join_user,
+  $ad_join_pass            = $sssd::params::ad_join_pass
 
 ) inherits sssd::params {
 
@@ -100,8 +104,11 @@ class sssd (
 
   validate_array(
     $extra_packages,
+    $base_flags,
     $enable_mkhomedir_flags,
-    $disable_mkhomedir_flags
+    $disable_mkhomedir_flags,
+    $enable_pamaccess_flags,
+    $disable_pamaccess_flags
   )
 
   validate_absolute_path(
@@ -110,6 +117,7 @@ class sssd (
 
   validate_bool(
     $mkhomedir,
+    $pamaccess,
     $join_ad_domain
   )
 
