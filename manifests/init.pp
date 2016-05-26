@@ -17,6 +17,9 @@
 # [*extra_packages*]
 #   Array with extra packages to be installed
 #
+# [*$base_flags*]
+#   Array with flags to use with authconfig for basic settings.
+#
 # [*mkhomedir*]
 #   Boolean. Manage auto-creation of home directories on user login.
 #
@@ -28,6 +31,27 @@
 #
 # [*service_ensure*]
 #   Ensure if services should be running/stopped
+#
+# [*pam_access*]
+#   Boolean. Manage pam_access configuration
+#
+# [*enable_pam_access_flags*]
+#   Flags to use with authconfig to enable pam_access.
+#
+# [*disable_pam_access_flags*]
+#   Flags to use with authconfig to disable pam_access.
+#
+# [*join_ad_domain*]
+#   Boolean. Join Active Directory.  Requires ad_domain, ad_join_user and ad_join_pass.
+#
+# [*ad_domain*]
+#   Active Directory domain to join.
+#
+# [*ad_join_user*]
+#   Active Directory user with permissions to add computer to domain.
+#
+# [*join_ad_pass*]
+#   Password for ad_join_user.
 #
 # === Examples
 #
@@ -65,19 +89,28 @@
 # Copyright 2015 Gjermund Jensvoll
 #
 class sssd (
-  $ensure                  = $sssd::params::ensure,
-  $config                  = $sssd::params::config,
-  $sssd_package            = $sssd::params::sssd_package,
-  $sssd_service            = $sssd::params::sssd_service,
-  $extra_packages          = $sssd::params::extra_packages,
-  $extra_packages_ensure   = $sssd::params::extra_packages_ensure,
-  $config_file             = $sssd::params::config_file,
-  $config_template         = $sssd::params::config_template,
-  $mkhomedir               = $sssd::params::mkhomedir,
-  $manage_oddjobd          = $sssd::params::manage_oddjobd,
-  $service_ensure          = $sssd::params::service_ensure,
-  $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
-  $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
+  $ensure                   = $sssd::params::ensure,
+  $config                   = $sssd::params::config,
+  $sssd_package             = $sssd::params::sssd_package,
+  $sssd_service             = $sssd::params::sssd_service,
+  $extra_packages           = $sssd::params::extra_packages,
+  $extra_packages_ensure    = $sssd::params::extra_packages_ensure,
+  $config_file              = $sssd::params::config_file,
+  $config_template          = $sssd::params::config_template,
+  $base_flags               = $sssd::params::base_flags,
+  $mkhomedir                = $sssd::params::mkhomedir,
+  $manage_oddjobd           = $sssd::params::manage_oddjobd,
+  $service_ensure           = $sssd::params::service_ensure,
+  $enable_mkhomedir_flags   = $sssd::params::enable_mkhomedir_flags,
+  $disable_mkhomedir_flags  = $sssd::params::disable_mkhomedir_flags,
+  $pam_access               = $sssd::params::pam_access,
+  $enable_pam_access_flags  = $sssd::params::enable_pam_access_flags,
+  $disable_pam_access_flags = $sssd::params::disable_pam_access_flags,
+  $join_ad_domain           = $sssd::params::join_ad_domain,
+  $ad_domain                = $sssd::params::ad_domain,
+  $ad_join_user             = $sssd::params::ad_join_user,
+  $ad_join_pass             = $sssd::params::ad_join_pass
+
 ) inherits sssd::params {
 
   validate_re($ensure, '^(present|absent)$',
@@ -87,13 +120,19 @@ class sssd (
   validate_string(
     $sssd_package,
     $sssd_service,
-    $config_template
+    $config_template,
+    $ad_domain,
+    $ad_join_user,
+    $ad_join_pass
   )
 
   validate_array(
     $extra_packages,
+    $base_flags,
     $enable_mkhomedir_flags,
-    $disable_mkhomedir_flags
+    $disable_mkhomedir_flags,
+    $enable_pam_access_flags,
+    $disable_pam_access_flags
   )
 
   validate_absolute_path(
@@ -101,7 +140,9 @@ class sssd (
   )
 
   validate_bool(
-    $mkhomedir
+    $mkhomedir,
+    $pam_access,
+    $join_ad_domain
   )
 
   validate_hash(

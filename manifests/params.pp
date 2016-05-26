@@ -14,8 +14,11 @@ class sssd::params {
       'cache_credentials' => true,
     },
   }
-  $enable_mkhomedir_flags  = ['--enablesssd', '--enablesssdauth', '--enablemkhomedir']
-  $disable_mkhomedir_flags = ['--enablesssd', '--enablesssdauth', '--disablemkhomedir']
+  $base_flags               = ['--enablesssd', '--enablesssdauth']
+  $enable_mkhomedir_flags   = ['--enablemkhomedir']
+  $disable_mkhomedir_flags  = ['--disablemkhomedir']
+  $enable_pam_access_flags  = ['--enablepamaccess']
+  $disable_pam_access_flags = ['--disablepamaccess']
 
   # Earlier versions of ruby didn't provide ordered hashs, so we need to sort
   # the configuration ourselves to ensure a consistent config file.
@@ -34,6 +37,11 @@ class sssd::params {
       $service_ensure = 'running'
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
+      $pam_access     = false
+      $join_ad_domain = false
+      $ad_domain      = undef
+      $ad_join_user   = undef
+      $ad_join_pass   = undef
 
       if versioncmp($::operatingsystemrelease, '6.0') < 0 {
         $extra_packages = [
