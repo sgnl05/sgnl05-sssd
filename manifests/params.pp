@@ -14,7 +14,7 @@ class sssd::params {
       'cache_credentials' => true,
     },
   }
-  $default_flags           = ['--enablesssd', '--enablesssdauth']
+  $base_flags              = ['--enablesssd', '--enablesssdauth']
   $enable_mkhomedir_flags  = ['--enablemkhomedir']
   $disable_mkhomedir_flags = ['--disablemkhomedir']
   $enable_pamaccess_flags  = ['--enablepamaccess']
