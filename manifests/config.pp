@@ -30,16 +30,19 @@ class sssd::config (
 
     'Redhat': {
 
-      $authconfig_flags = join($base_flags, ' ')
+      $authconfig_base_flags = join($base_flags, ' ')
 
-      $authconfig_flags = $authconfig_flags + $mkhomedir ? {
+      $authconfig_mkhomedir_flags = $mkhomedir ? {
         true  => join($enable_mkhomedir_flags, ' '),
         false => join($disable_mkhomedir_flags, ' '),
       }
-      $authconfig_flags = $authconfig_flags + $pamaccess ? {
+      $authconfig_pamaccess_flags = $pamaccess ? {
         true  => join($enable_pamaccess_flags, ' '),
         false => join($disable_pamaccess_flags, ' '),
       }
+
+      $authconfig_flags = "${authconfig_base_flags} ${authconfig_mkhomedir_flags} ${authconfig_pamaccess_flags}"
+
       $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
       $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} --test"
       $authconfig_check_cmd  = "/usr/bin/test \"`${authconfig_test_cmd}`\" = \"`/usr/sbin/authconfig --test`\""
