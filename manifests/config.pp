@@ -8,9 +8,9 @@ class sssd::config (
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
-  $pamaccess               = $sssd::pamaccess,
-  $enable_pamaccess_flags  = $sssd::enable_pamaccess_flags,
-  $disable_pamaccess_flags = $sssd::disable_pamaccess_flags,
+  $pam_access               = $sssd::pam_access,
+  $enable_pam_access_flags  = $sssd::enable_pam_access_flags,
+  $disable_pam_access_flags = $sssd::disable_pam_access_flags,
   $join_ad_domain          = $sssd::join_ad_domain,
   $ad_domain               = $sssd::ad_domain, 
   $ad_join_user            = $sssd::ad_join_user,
@@ -36,12 +36,12 @@ class sssd::config (
         true  => join($enable_mkhomedir_flags, ' '),
         false => join($disable_mkhomedir_flags, ' '),
       }
-      $authconfig_pamaccess_flags = $pamaccess ? {
-        true  => join($enable_pamaccess_flags, ' '),
-        false => join($disable_pamaccess_flags, ' '),
+      $authconfig_pam_access_flags = $pam_access ? {
+        true  => join($enable_pam_access_flags, ' '),
+        false => join($disable_pam_access_flags, ' '),
       }
 
-      $authconfig_flags = "${authconfig_base_flags} ${authconfig_mkhomedir_flags} ${authconfig_pamaccess_flags}"
+      $authconfig_flags = "${authconfig_base_flags} ${authconfig_mkhomedir_flags} ${authconfig_pam_access_flags}"
 
       $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
       $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} --test"
@@ -52,7 +52,7 @@ class sssd::config (
         unless  => $authconfig_check_cmd,
       }
 
-      if $join_ad_domain {
+      if $join_ad_domain and $ad_domain and $ad_join_user and $ad_join_pass {
         package { 'adcli':
           ensure => present,
         }
