@@ -12,7 +12,7 @@ class sssd::config (
   $enable_pam_access_flags  = $sssd::enable_pam_access_flags,
   $disable_pam_access_flags = $sssd::disable_pam_access_flags,
   $join_ad_domain          = $sssd::join_ad_domain,
-  $ad_domain               = $sssd::ad_domain, 
+  $ad_domain               = $sssd::ad_domain,
   $ad_join_user            = $sssd::ad_join_user,
   $ad_join_pass            = $sssd::ad_join_pass,
 ) {
@@ -60,7 +60,7 @@ class sssd::config (
           command => "/bin/echo -n '${ad_join_pass}' |  /usr/sbin/adcli join ${ad_domain} -U ${ad_join_user} --stdin-password",
           creates => '/etc/krb5.keytab',
           require => Package['adcli'],
-        } 
+        }
         Exec[ 'authconfig-mkhomedir' ] -> File[ 'sssd.conf' ] -> Exec[ 'join-computer-to-domain' ]
       }
       else {
