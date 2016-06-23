@@ -5,23 +5,24 @@ class sssd::service (
   $manage_oddjobd = $sssd::manage_oddjobd,
   $service_ensure = $sssd::service_ensure,
 ) {
-  service { $sssd_service:
-    ensure     => $service_ensure,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-  }
+  ensure_resource('service', $sssd_service,
+    {
+      ensure     => $service_ensure,
+      enable     => true,
+    }
+  )
 
   if $mkhomedir and $manage_oddjobd {
 
-    service { 'oddjobd':
-      ensure     => $service_ensure,
-      enable     => true,
-      hasstatus  => true,
-      hasrestart => true,
-      require    => Service[$sssd_service],
-    }
-
+    ensure_resource('service', 'oddjobd',
+      {
+        ensure     => $service_ensure,
+        enable     => true,
+        hasstatus  => true,
+        hasrestart => true,
+        require    => Service[$sssd_service],
+      }
+    )
   }
 
 }
