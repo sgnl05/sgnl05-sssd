@@ -32,6 +32,7 @@ class sssd::params {
       $sssd_package   = 'sssd'
       $sssd_service   = 'sssd'
       $service_ensure = 'running'
+      $service_dependencies = ['messagebus']
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
 
@@ -57,6 +58,7 @@ class sssd::params {
       $sssd_package   = 'sssd'
       $sssd_service   = 'sssd'
       $service_ensure = 'running'
+      $service_dependencies = []
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
       $extra_packages = [

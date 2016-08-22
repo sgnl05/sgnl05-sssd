@@ -46,7 +46,7 @@ else
 end
 
 # Fix Travis failures related to MRI <> Gem compatibilities.
-if RUBY_VERSION >= '1.8.7' and RUBY_VERSION < '1.9'
+if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
   # rspec must be v2 for ruby 1.8.7
   gem 'rspec', '~> 2.0'
   # rake >= 11 does not support ruby 1.8.7
