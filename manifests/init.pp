@@ -29,6 +29,11 @@
 # [*service_ensure*]
 #   Ensure if services should be running/stopped
 #
+# [*service_dependencies*]
+#   Array of service resource names to manage before managing sssd related
+#   services.  Intended to be used to manage messagebus service to prevent
+#   `Error: Could not start Service[oddjobd]`.
+#
 # === Examples
 #
 # class {'::sssd':
@@ -76,6 +81,7 @@ class sssd (
   $mkhomedir               = $sssd::params::mkhomedir,
   $manage_oddjobd          = $sssd::params::manage_oddjobd,
   $service_ensure          = $sssd::params::service_ensure,
+  $service_dependencies    = $sssd::params::service_dependencies,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
 ) inherits sssd::params {
@@ -93,7 +99,8 @@ class sssd (
   validate_array(
     $extra_packages,
     $enable_mkhomedir_flags,
-    $disable_mkhomedir_flags
+    $disable_mkhomedir_flags,
+    $service_dependencies
   )
 
   validate_absolute_path(
