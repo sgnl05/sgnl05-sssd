@@ -1,3 +1,7 @@
+(0.3.1)
+	* Fix Service[oddjobd] failing to start (Jeff McCune #22)
+	* Fix newline under each section in sssd.conf (Gjermund Jensvoll #18)
+
 2016-02-01 (0.3.0)
 	* Stop sorting config keys for newer ruby versions (Brad Cowie #13)
 	* Ensure sssd.conf consistency during first Puppet run (Nemanja Delic #11)
