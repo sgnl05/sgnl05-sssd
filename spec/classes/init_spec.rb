@@ -27,6 +27,7 @@ describe 'sssd' do
       it { is_expected.to contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_package('sssd').with_ensure('present') }
     end
 
     context 'with service ensure stopped' do
@@ -48,6 +49,11 @@ describe 'sssd' do
           .with_path('/etc/sssd/sssd.conf') \
           .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
+    end
+
+    context 'with package_ensure set to specific version' do
+      let(:params) { { :sssd_package_ensure => '1.1.1' } }
+      it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
     end
   end
   describe 'on RedHat 6.6' do
@@ -77,6 +83,7 @@ describe 'sssd' do
       it { is_expected.to contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_package('sssd').with_ensure('present') }
       it { is_expected.to contain_service('oddjobd').with_ensure('running') }
     end
 
@@ -100,6 +107,11 @@ describe 'sssd' do
           .with_path('/etc/sssd/sssd.conf') \
           .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
+    end
+
+    context 'with package_ensure set to specific version' do
+      let(:params) { { :sssd_package_ensure => '1.1.1' } }
+      it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
     end
   end
   describe 'on RedHat 7.1' do
@@ -129,6 +141,7 @@ describe 'sssd' do
       it { is_expected.to contain_exec('authconfig-mkhomedir').that_comes_before('File[sssd.conf]') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_package('sssd').with_ensure('present') }
       it { is_expected.to contain_service('oddjobd').with_ensure('running') }
     end
 
@@ -152,6 +165,11 @@ describe 'sssd' do
           .with_path('/etc/sssd/sssd.conf') \
           .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
+    end
+
+    context 'with package_ensure set to specific version' do
+      let(:params) { { :sssd_package_ensure => '1.1.1' } }
+      it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
     end
   end
   describe 'on Debian 8.1' do
@@ -181,6 +199,7 @@ describe 'sssd' do
       it { is_expected.not_to contain_service('oddjobd') }
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_package('sssd').with_ensure('present') }
     end
 
     context 'with service ensure stopped' do
@@ -202,6 +221,11 @@ describe 'sssd' do
           .with_path('/etc/sssd/sssd.conf') \
           .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
       end
+    end
+
+    context 'with package_ensure set to specific version' do
+      let(:params) { { :sssd_package_ensure => '1.1.1' } }
+      it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
     end
   end
 end

@@ -14,6 +14,9 @@
 #   Name of the sssd package. Only set this if your patform is not supported or
 #   you know what you're doing.
 #
+# [*sssd_package_ensure*]
+#   Sets the ensure parameter of the sssd package.
+#
 # [*extra_packages*]
 #   Array with extra packages to be installed
 #
@@ -73,6 +76,7 @@ class sssd (
   $ensure                  = $sssd::params::ensure,
   $config                  = $sssd::params::config,
   $sssd_package            = $sssd::params::sssd_package,
+  $sssd_package_ensure     = $sssd::params::sssd_package_ensure,
   $sssd_service            = $sssd::params::sssd_service,
   $extra_packages          = $sssd::params::extra_packages,
   $extra_packages_ensure   = $sssd::params::extra_packages_ensure,
@@ -91,6 +95,7 @@ class sssd (
   Allowed values are 'present' and 'absent'.")
 
   validate_string(
+    $sssd_package_ensure,
     $sssd_package,
     $sssd_service,
     $config_template
