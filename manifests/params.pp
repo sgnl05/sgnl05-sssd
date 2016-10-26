@@ -25,6 +25,8 @@ class sssd::params {
     $config_template = "${module_name}/sssd.conf.sorted.erb"
   }
 
+  $sssd_package_ensure = 'present'
+
   case $::osfamily {
 
     'RedHat': {
