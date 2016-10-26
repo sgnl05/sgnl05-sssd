@@ -59,6 +59,19 @@ class sssd::config (
 
     }
 
+    'Suse': {
+      if $mkhomedir {
+        exec { 'pam-config -a --mkhomedir':
+          path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+          refreshonly => true,
+        }
+      }
+      exec { 'pam-config -a --sss':
+        path        => '/bin:/usr/bin:/sbin:/usr/sbin',
+        refreshonly => true,
+      }
+    }
+
     default: { }
 
   }

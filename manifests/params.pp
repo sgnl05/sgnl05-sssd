@@ -25,8 +25,6 @@ class sssd::params {
     $config_template = "${module_name}/sssd.conf.sorted.erb"
   }
 
-  $sssd_package_ensure = 'present'
-
   case $::osfamily {
 
     'RedHat': {
@@ -67,6 +65,21 @@ class sssd::params {
         'libpam-runtime',
         'libpam-sss',
         'libnss-sss',
+      ]
+      $extra_packages_ensure = 'present'
+      $manage_oddjobd        = false
+
+    }
+
+    'Suse': {
+
+      $sssd_package   = 'sssd'
+      $sssd_service   = 'sssd'
+      $service_ensure = 'running'
+      $service_dependencies = []
+      $config_file    = '/etc/sssd/sssd.conf'
+      $mkhomedir      = true
+      $extra_packages = [
       ]
       $extra_packages_ensure = 'present'
       $manage_oddjobd        = false
