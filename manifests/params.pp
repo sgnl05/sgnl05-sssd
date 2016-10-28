@@ -50,6 +50,8 @@ class sssd::params {
           'oddjob-mkhomedir',
         ]
         $extra_packages_ensure = 'present'
+      $absent_packages = []
+      $absent_packages_ensure = 'absent'
         $manage_oddjobd        = true
       }
 
@@ -69,6 +71,8 @@ class sssd::params {
         'libnss-sss',
       ]
       $extra_packages_ensure = 'present'
+      $absent_packages = []
+      $absent_packages_ensure = 'absent'
       $manage_oddjobd        = false
 
     }
@@ -87,8 +91,10 @@ class sssd::params {
           'sssd-ad',
           'sssd-ipa',
         ]
-        $extra_packages_ensure = 'latest'
+      } else {
+        $extra_packages = []
       }
+      $extra_packages_ensure = 'latest'
       $absent_packages = [
         'nscd',
       ]
