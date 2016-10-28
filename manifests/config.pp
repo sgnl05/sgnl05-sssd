@@ -79,7 +79,7 @@ class sssd::config (
         unless      => $pamconfig_check_cmd,
       }
 
-      exec { 'echo "sudoers: file sss" >> /etc/nsswitch.conf':
+      exec { 'echo "sudoers: files sss" >> /etc/nsswitch.conf':
         path        => '/bin:/usr/bin:/sbin:/usr/sbin',
         unless      => 'grep sudoers: /etc/nsswitch.conf',
       }
