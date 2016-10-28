@@ -5,6 +5,7 @@ class sssd::config (
   $config_file             = $sssd::config_file,
   $config_template         = $sssd::config_template,
   $mkhomedir               = $sssd::mkhomedir,
+  $nsconfig                = $sssd::nsconfig,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
 ) {
@@ -60,33 +61,38 @@ class sssd::config (
     }
 
     'Suse': {
-      $pamconfig_mkhomedir_check_cmd  = '/usr/sbin/pam-config -q --mkhomedir | grep session:'
-      $pamconfig_check_cmd            = '/usr/sbin/pam-config -q --sss | grep session:'
-      $nsconfig_check_cmd             = '/usr/bin/test $( /bin/grep -cE "(passwd|group|sudoers).*sss" /etc/nsswitch.conf ) -gt 2'
-      $nsconfig_cmd                   = '/bin/sed -i -e \'/^\(passwd\|group\|sudoers\):/{/sss\b/ b;s/^\(.*\)$/\1 sss/}\' /etc/nsswitch.conf'
+      $pamconfig_mkhomedir_check_cmd = '/usr/sbin/pam-config -q --mkhomedir | grep session:'
+      $pamconfig_check_cmd           = '/usr/sbin/pam-config -q --sss | grep session:'
 
       if $mkhomedir {
 
         exec { 'pam-config -a --mkhomedir':
-          path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-          unless      => $pamconfig_mkhomedir_check_cmd,
+          path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+          unless => $pamconfig_mkhomedir_check_cmd,
         }
 
       }
 
       exec { 'pam-config -a --sss':
-        path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-        unless      => $pamconfig_check_cmd,
+        path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+        unless => $pamconfig_check_cmd,
       }
 
-      exec { 'echo "sudoers: files sss" >> /etc/nsswitch.conf':
-        path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-        unless      => 'grep sudoers: /etc/nsswitch.conf',
-      }
+      if $nsconfig {
 
-      exec { "$nsconfig_cmd":
-        path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-        unless      => $nsconfig_check_cmd,
+        $nsconfig_check_cmd = '/usr/bin/test $( /bin/grep -cE "(passwd|group|sudoers).*sss" /etc/nsswitch.conf ) -gt 2'
+        $nsconfig_cmd       = '/bin/sed -i -e \'/^\(passwd\|group\|sudoers\):/{/sss\b/ b;s/^\(.*\)$/\1 sss/}\' /etc/nsswitch.conf'
+
+        exec { 'echo "sudoers: files sss" >> /etc/nsswitch.conf':
+          path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+          unless => 'grep sudoers: /etc/nsswitch.conf',
+        }
+
+        exec { $nsconfig_cmd:
+          path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+          unless => $nsconfig_check_cmd,
+        }
+
       }
 
     }
