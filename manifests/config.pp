@@ -5,7 +5,7 @@ class sssd::config (
   $config_file             = $sssd::config_file,
   $config_template         = $sssd::config_template,
   $mkhomedir               = $sssd::mkhomedir,
-  $nsconfig                = $sssd::nsconfig,
+  $manage_nsswitch         = $sssd::manage_nsswitch,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
 ) {
