@@ -60,10 +60,10 @@ class sssd::config (
     }
 
     'Suse': {
-      $pamconfig_mkhomedir_check_cmd  = "/usr/sbin/pam-config -q --mkhomedir | grep session:"
-      $pamconfig_check_cmd  = "/usr/sbin/pam-config -q --sss | grep session:"
-      $nsconfig_check_cmd = "/usr/bin/test $( /bin/grep -cE '(passwd|group|sudoers).*sss' /etc/nsswitch.conf ) -gt 2"
-      $nsconfig_cmd = "/bin/sed -i -e '/^\(passwd\|group\|sudoers\):/{/sss\b/ b;s/^\(.*\)$/\1 sss/}' /etc/nsswitch.conf"
+      $pamconfig_mkhomedir_check_cmd  = '/usr/sbin/pam-config -q --mkhomedir | grep session:'
+      $pamconfig_check_cmd            = '/usr/sbin/pam-config -q --sss | grep session:'
+      $nsconfig_check_cmd             = '/usr/bin/test $( /bin/grep -cE "(passwd|group|sudoers).*sss" /etc/nsswitch.conf ) -gt 2'
+      $nsconfig_cmd                   = '/bin/sed -i -e \'/^\(passwd\|group\|sudoers\):/{/sss\b/ b;s/^\(.*\)$/\1 sss/}\' /etc/nsswitch.conf'
 
       if $mkhomedir {
 
