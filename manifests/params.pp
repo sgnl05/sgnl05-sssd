@@ -50,8 +50,8 @@ class sssd::params {
           'oddjob-mkhomedir',
         ]
         $extra_packages_ensure = 'present'
-      $absent_packages = []
-      $absent_packages_ensure = 'absent'
+        $absent_packages = []
+        $absent_packages_ensure = 'absent'
         $manage_oddjobd        = true
       }
 
