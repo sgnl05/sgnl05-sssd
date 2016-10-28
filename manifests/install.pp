@@ -1,9 +1,11 @@
 # See README.md for usage information
 class sssd::install (
-  $sssd_package          = $sssd::sssd_package,
-  $sssd_package_ensure   = $sssd::sssd_package_ensure,
-  $extra_packages        = $sssd::extra_packages,
-  $extra_packages_ensure = $sssd::extra_packages_ensure,
+  $sssd_package           = $sssd::sssd_package,
+  $sssd_package_ensure    = $sssd::sssd_package_ensure,
+  $extra_packages         = $sssd::extra_packages,
+  $extra_packages_ensure  = $sssd::extra_packages_ensure,
+  $absent_packages        = $sssd::absent_packages,
+  $absent_packages_ensure = $sssd::absent_packages_ensure,
 ) {
 
   package { $sssd_package:
@@ -14,6 +16,12 @@ class sssd::install (
     package { $extra_packages:
       ensure  => $extra_packages_ensure,
       require => Package[$sssd_package],
+    }
+  }
+
+  if $absent_packages {
+    package { $absent_packages:
+      ensure  => $absent_packages_ensure,
     }
   }
 

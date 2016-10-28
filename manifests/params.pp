@@ -81,9 +81,18 @@ class sssd::params {
       $service_dependencies = []
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
-      $extra_packages = [
+      if versioncmp($::operatingsystemrelease, '12.0') > 0 {
+        $extra_packages = [
+          'sssd-krb5',
+          'sssd-ad',
+          'sssd-ipa',
+        ]
+        $extra_packages_ensure = 'latest'
+      }
+      $absent_packages = [
+        'nscd',
       ]
-      $extra_packages_ensure = 'present'
+      $absent_packages_ensure = 'absent'
       $manage_oddjobd        = false
 
     }
