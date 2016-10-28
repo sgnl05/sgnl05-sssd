@@ -78,7 +78,7 @@ class sssd::config (
         unless => $pamconfig_check_cmd,
       }
 
-      if $nsconfig {
+      if $manage_nsswitch {
 
         $nsconfig_check_cmd = '/usr/bin/test $( /bin/grep -cE "(passwd|group|sudoers).*sss" /etc/nsswitch.conf ) -gt 2'
         $nsconfig_cmd       = '/bin/sed -i -e \'/^\(passwd\|group\|sudoers\):/{/sss\b/ b;s/^\(.*\)$/\1 sss/}\' /etc/nsswitch.conf'
