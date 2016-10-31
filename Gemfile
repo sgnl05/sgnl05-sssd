@@ -22,15 +22,14 @@ group :unit_tests do
 end
 
 group :development do
-  gem 'simplecov',        :require => false
+  gem 'simplecov', :require => false
   # gem 'guard-rake',       :require => false
   gem 'librarian-puppet', :require => false
 end
 
 group :system_tests do
   # gem 'vagrant-wrapper', :require => false
-  gem 'beaker-rspec',    :require => false
-  gem 'serverspec',      :require => false
+  gem 'serverspec', :require => false
 end
 
 if (facterversion = ENV['FACTER_GEM_VERSION'])
@@ -60,4 +59,10 @@ if RUBY_VERSION < '2.0'
   gem 'json_pure', '= 2.0.1'
 end
 
+if RUBY_VERSION < '2.2.5'
+  # beaker 3.1+ requires ruby 2.2.5.  Lock to 2.0
+  gem 'beaker', '~> 2.0', :require => false
+  # beaker-rspec 6.0.0 requires beaker 3.0. Lock to 5.6.0
+  gem 'beaker-rspec', '= 5.6.0', :require => false
+end
 # vim:ft=ruby
