@@ -6,7 +6,7 @@ class sssd::install (
   $extra_packages_ensure = $sssd::extra_packages_ensure,
 ) {
 
-  ensure_packages([$sssd_package],{ ensure => $ensure })
+  ensure_packages({$sssd_package => { 'ensure' => $ensure } } )
 
   if $extra_packages {
     ensure_packages($extra_packages,
