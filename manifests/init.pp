@@ -123,9 +123,7 @@ class sssd (
   validate_re($service_ensure, '^running|true|stopped|false$')
 
   anchor { 'sssd::begin': } ->
-  class { '::sssd::install':
-    ensure => $sssd_package_ensure,
-  } ->
+  class { '::sssd::install': } ->
   class { '::sssd::config': } ~>
   class { '::sssd::service': } ->
   anchor { 'sssd::end': }
