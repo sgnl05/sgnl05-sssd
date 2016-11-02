@@ -8,27 +8,27 @@ class sssd::config::suse inherits sssd::config {
   if $::mkhomedir {
 
     exec { 'pam-config -a --mkhomedir':
-      path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-      unless      => $pamconfig_mkhomedir_check_cmd,
+      path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+      unless => $pamconfig_mkhomedir_check_cmd,
     }
 
   }
 
   exec { 'pam-config -a --sss':
-    path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-    unless      => $pamconfig_check_cmd,
+    path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+    unless => $pamconfig_check_cmd,
   }
 
- if $::manage_nsswitch {
+  if $::manage_nsswitch {
 
     exec { 'echo "sudoers: files sss" >> /etc/nsswitch.conf':
-      path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-      unless      => 'grep sudoers: /etc/nsswitch.conf',
+      path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+      unless => 'grep sudoers: /etc/nsswitch.conf',
     }
 
-    exec { "$nsconfig_cmd":
-      path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-      unless      => $nsconfig_check_cmd,
+    exec { $nsconfig_cmd:
+      path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+      unless => $nsconfig_check_cmd,
     }
 
   }
