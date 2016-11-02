@@ -5,7 +5,7 @@ class sssd::config::suse inherits sssd::config {
   $nsconfig_check_cmd             = '/usr/bin/test $( /bin/grep -cE "(passwd|group|sudoers).*sss" /etc/nsswitch.conf ) -gt 2'
   $nsconfig_cmd                   = '/bin/sed -i -e "/^\\(passwd\\|group\\|sudoers\\):/{/sss\\b/ b;s/^\\(.*\\)$/\\1 sss/}" /etc/nsswitch.conf'
 
-  if $mkhomedir {
+  if $::mkhomedir {
 
     exec { 'pam-config -a --mkhomedir':
       path        => '/bin:/usr/bin:/sbin:/usr/sbin',
@@ -19,7 +19,7 @@ class sssd::config::suse inherits sssd::config {
     unless      => $pamconfig_check_cmd,
   }
 
- if $manage_nsswitch {
+ if $::manage_nsswitch {
 
     exec { 'echo "sudoers: files sss" >> /etc/nsswitch.conf':
       path        => '/bin:/usr/bin:/sbin:/usr/sbin',

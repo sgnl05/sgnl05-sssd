@@ -1,7 +1,7 @@
 class sssd::config::redhat inherits sssd::config {
   $authconfig_flags = $mkhomedir ? {
-    true  => join($enable_mkhomedir_flags, ' '),
-    false => join($disable_mkhomedir_flags, ' '),
+    true  => join($::enable_mkhomedir_flags, ' '),
+    false => join($::disable_mkhomedir_flags, ' '),
   }
   $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
   $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} --test"
