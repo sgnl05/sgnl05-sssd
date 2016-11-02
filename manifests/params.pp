@@ -37,6 +37,8 @@ class sssd::params {
       $service_dependencies = ['messagebus']
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
+      $absent_packages = []
+      $absent_packages_ensure = 'absent'
 
       if versioncmp($::operatingsystemrelease, '6.0') < 0 {
         $extra_packages = [
@@ -50,8 +52,6 @@ class sssd::params {
           'oddjob-mkhomedir',
         ]
         $extra_packages_ensure = 'present'
-        $absent_packages = []
-        $absent_packages_ensure = 'absent'
         $manage_oddjobd        = true
       }
 
