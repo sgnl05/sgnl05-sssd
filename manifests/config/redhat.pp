@@ -1,5 +1,5 @@
 class sssd::config::redhat inherits sssd::config {
-  $authconfig_flags = $mkhomedir ? {
+  $authconfig_flags = $::mkhomedir ? {
     true  => join($::enable_mkhomedir_flags, ' '),
     false => join($::disable_mkhomedir_flags, ' '),
   }
