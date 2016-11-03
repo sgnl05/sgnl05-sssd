@@ -8,32 +8,35 @@ class sssd::service (
 ) {
 
   if ! empty($service_dependencies) {
-    service { $service_dependencies:
-      ensure     => running,
-      hasstatus  => true,
-      hasrestart => true,
-      enable     => true,
-      before     => Service[$sssd_service],
-    }
+    ensure_resource('service', $service_dependencies,
+      {
+        ensure     => running,
+        hasstatus  => true,
+        hasrestart => true,
+        enable     => true,
+        before     => Service[$sssd_service],
+      }
+    )
   }
 
-  service { $sssd_service:
-    ensure     => $service_ensure,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-  }
-
-  if $mkhomedir and $manage_oddjobd {
-
-    service { 'oddjobd':
+  ensure_resource('service', $sssd_service,
+    {
       ensure     => $service_ensure,
       enable     => true,
       hasstatus  => true,
       hasrestart => true,
-      require    => Service[$sssd_service],
     }
+  )
 
+  if $mkhomedir and $manage_oddjobd {
+    ensure_resource('service', 'oddjobd',
+      {
+        ensure     => $service_ensure,
+        enable     => true,
+        hasstatus  => true,
+        hasrestart => true,
+        require    => Service[$sssd_service],
+      }
+    )
   }
-
 }
