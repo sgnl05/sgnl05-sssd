@@ -53,6 +53,9 @@ class sssd::params {
         $manage_oddjobd        = true
       }
 
+      $absent_packages = []
+      $absent_packages_ensure = 'absent'
+
     }
 
     'Debian': {
@@ -70,6 +73,9 @@ class sssd::params {
       ]
       $extra_packages_ensure = 'present'
       $manage_oddjobd        = false
+
+      $absent_packages = []
+      $absent_packages_ensure = 'absent'
 
     }
 
