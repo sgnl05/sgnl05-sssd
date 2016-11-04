@@ -23,10 +23,6 @@
 # [*mkhomedir*]
 #   Boolean. Manage auto-creation of home directories on user login.
 #
-# [*manage_nsswitch*]
-#   Boolean. Manage /etc/nsswitch.conf under Suse Linux Enterprise Server
-#   Default: false
-#
 # [*enable_mkhomedir_flags*]
 #   Flags to use with authconfig to enable auto-creation of home directories.
 #
@@ -90,7 +86,6 @@ class sssd (
   $config_template         = $sssd::params::config_template,
   $mkhomedir               = $sssd::params::mkhomedir,
   $manage_oddjobd          = $sssd::params::manage_oddjobd,
-  $manage_nsswitch         = $sssd::params::manage_nsswitch,
   $service_ensure          = $sssd::params::service_ensure,
   $service_dependencies    = $sssd::params::service_dependencies,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
