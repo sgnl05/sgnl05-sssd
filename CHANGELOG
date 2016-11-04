@@ -1,4 +1,4 @@
-(0.3.1)
+2016-08-24 (0.3.1)
 	* Fix Service[oddjobd] failing to start (Jeff McCune #22)
 	* Fix newline under each section in sssd.conf (Gjermund Jensvoll #18)
 

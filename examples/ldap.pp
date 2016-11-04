@@ -1,6 +1,6 @@
 class {'::sssd':
   config => {
-    'sssd' => {
+    'sssd'               => {
       'domains'             => 'example.com',
       'config_file_version' => 2,
       'services'            => ['nss', 'pam'],
