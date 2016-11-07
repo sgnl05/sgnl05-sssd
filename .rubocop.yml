@@ -18,8 +18,10 @@ AllCops:
     - 'pkg/**/*'
     - 'spec/fixtures/**/*'
     - 'vendor/**/*'
-  RunRailsCops: false
   DisplayCopNames: true
+
+Rails:
+  Enabled: false
 
 Metrics/LineLength:
   # Ruduce this... Max: 80
@@ -35,3 +37,6 @@ Style/HashSyntax:
 Style/LeadingCommentSpace:
   Exclude:
     - Puppetfile
+
+Style/TrailingCommaInLiteral:
+  Enabled: false

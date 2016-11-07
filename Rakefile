@@ -1,11 +1,12 @@
-require 'rubygems' if RUBY_VERSION < '1.9.0'
-# require 'rubocop/rake_task'
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'metadata-json-lint/rake_task'
 
-# RuboCop::RakeTask.new
+if RUBY_VERSION >= '2.0'
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+end
 
 exclude_paths = [
   'modules/**/*',
@@ -50,11 +51,9 @@ task :all => [
   :success
 ]
 
-desc 'Run rubocop, syntax, lint, and spec tests'
-task :test => [
-  :rubocop,
-  :syntax,
-  :lint,
-  :metadata_lint,
-  :spec
-]
+desc 'Run validate, lint and spec tests.'
+task :test do
+  [:lint, :validate, :syntax, :spec].each do |test|
+    Rake::Task[test].invoke
+  end
+end

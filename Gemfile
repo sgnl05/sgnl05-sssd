@@ -1,10 +1,9 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 group :unit_tests do
-  gem 'rubocop', '0.34.2',                                :require => false
+  gem 'rubocop',                                          :require => false if RUBY_VERSION >= '2.0.0'
   gem 'puppetlabs_spec_helper',                           :require => false
   gem 'rspec-puppet-facts',                               :require => false
-  gem 'metadata-json-lint',                               :require => false
   gem 'puppet-lint-trailing_newline-check',               :require => false
   gem 'puppet-lint-variable_contains_upcase',             :require => false
   gem 'puppet-lint-absolute_template_path',               :require => false
@@ -20,6 +19,13 @@ group :unit_tests do
   gem 'puppet-lint-version_comparison-check',             :require => false
   gem 'puppet-lint-appends-check',                        :require => false
 end
+
+gem 'rspec', '~> 2.0', :require => false              if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
+gem 'rake', '~> 10.0', :require => false              if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
+gem 'json', '<= 1.8', :require => false               if RUBY_VERSION < '2.0.0'
+gem 'json_pure', '<= 2.0.1', :require => false        if RUBY_VERSION < '2.0.0'
+gem 'metadata-json-lint', '0.0.11', :require => false if RUBY_VERSION < '1.9'
+gem 'metadata-json-lint', :require => false           if RUBY_VERSION >= '1.9'
 
 group :development do
   gem 'simplecov', :require => false
@@ -44,25 +50,13 @@ else
   gem 'puppet', '~> 3.8', :require => false
 end
 
-# Fix Travis failures related to MRI <> Gem compatibilities.
-if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
-  # rspec must be v2 for ruby 1.8.7
-  gem 'rspec', '~> 2.0'
-  # rake >= 11 does not support ruby 1.8.7
-  gem 'rake', '~> 10.0'
-end
-
-if RUBY_VERSION < '2.0'
-  # json 2.x requires ruby 2.0. Lock to 1.8
-  gem 'json', '~> 1.8'
-  # json_pure 2.0.2 requires ruby 2.0. Lock to 2.0.1
-  gem 'json_pure', '= 2.0.1'
-end
-
 if RUBY_VERSION < '2.2.5'
   # beaker 3.1+ requires ruby 2.2.5.  Lock to 2.0
   gem 'beaker', '~> 2.0', :require => false
   # beaker-rspec 6.0.0 requires beaker 3.0. Lock to 5.6.0
   gem 'beaker-rspec', '= 5.6.0', :require => false
 end
+
+gem 'public_suffix', '1.4.6', :require => false if RUBY_VERSION <= '1.9.3'
+gem 'public_suffix',          :require => false if RUBY_VERSION > '1.9.3'
 # vim:ft=ruby
