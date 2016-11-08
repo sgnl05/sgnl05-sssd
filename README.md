@@ -121,7 +121,7 @@ Type: string
 Default: present
 
 #####`config`
-Configuration options stuctured like the sssd.conf file. Array values will be joined into comma-separated lists.
+Configuration options structured like the sssd.conf file. Array values will be joined into comma-separated lists.
 Type: hash
 Default:
 ```puppet
