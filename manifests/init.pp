@@ -1,76 +1,56 @@
 # == Class: sssd
 #
-# Configures and installs SSSD
+# Installs and configures SSSD
 #
 # === Parameters
 #
 # [*ensure*]
-#   Ensure if sssd_package and extra_packages is to be present or absent.
+#   Ensure if the sssd config file is to be present or absent.
 #
 # [*config*]
 #   Hash containing entire SSSD config.
 #
 # [*sssd_package*]
-#   Name of the sssd package. Only set this if your patform is not supported or
+#   Name of the sssd package. Only set this if your platform is not supported or
 #   you know what you're doing.
 #
 # [*sssd_package_ensure*]
 #   Sets the ensure parameter of the sssd package.
 #
+# [*sssd_service*]
+#   Name of the sssd service.
+#
 # [*extra_packages*]
-#   Array with extra packages to be installed
+#   Array of extra packages.
+#
+# [*extra_packages_ensure*]
+#   Boolean. Ensure if extra packages are to be installed.
+#
+# [*config_file*]
+#   Path to the sssd config file.
+#
+# [*config_template*]
+#   Defines the template used for the sssd config.
 #
 # [*mkhomedir*]
 #   Boolean. Manage auto-creation of home directories on user login.
 #
-# [*enable_mkhomedir_flags*]
-#   Flags to use with authconfig to enable auto-creation of home directories.
-#
-# [*disable_mkhomedir_flags*]
-#   Flags to use with authconfig to disable auto-creation of home directories.
+# [*manage_oddjobd*]
+#   Boolean. Manage the oddjobd service.
 #
 # [*service_ensure*]
 #   Ensure if services should be running/stopped
 #
 # [*service_dependencies*]
 #   Array of service resource names to manage before managing sssd related
-#   services.  Intended to be used to manage messagebus service to prevent
+#   services. Intended to be used to manage messagebus service to prevent
 #   `Error: Could not start Service[oddjobd]`.
 #
-# === Examples
+# [*enable_mkhomedir_flags*]
+#   Flags to use with authconfig to enable auto-creation of home directories.
 #
-# class {'::sssd':
-#   config => {
-#     'sssd' => {
-#       'domains'             => 'ad.example.com',
-#       'config_file_version' => 2,
-#       'services'            => ['nss', 'pam'],
-#     }
-#     'domain/ad.example.com' => {
-#       'ad_domain'                      => 'ad.example.com',
-#       'ad_server'                      => ['server01.ad.example.com', 'server02.ad.example.com'],
-#       'krb5_realm'                     => 'AD.EXAMPLE.COM',
-#       'realmd_tags'                    => 'joined-with-samba',
-#       'cache_credentials'              => true,
-#       'id_provider'                    => 'ad',
-#       'krb5_store_password_if_offline' => true,
-#       'default_shell'                  => '/bin/bash',
-#       'ldap_id_mapping'                => false,
-#       'use_fully_qualified_names'      => false,
-#       'fallback_homedir'               => '/home/%d/%u',
-#       'access_provider'                => 'simple',
-#       'simple_allow_groups'            => ['admins', 'users'],
-#     }
-#   }
-# }
-#
-# === Authors
-#
-# Gjermund Jensvoll <gjerjens@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2015 Gjermund Jensvoll
+# [*disable_mkhomedir_flags*]
+#   Flags to use with authconfig to disable auto-creation of home directories.
 #
 class sssd (
   $ensure                  = $sssd::params::ensure,
