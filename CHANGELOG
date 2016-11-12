@@ -1,23 +1,28 @@
+2016-11-12 (0.4.0)
+	* #27 Add support for Ruby 2.3.1 (Garrett Honeycutt) 
+	* #26 Add ensure_resources and ensure_packages to avoid collisions (Daniel James Goulder)
+	* #24 Add sssd_package_ensure parameter (Taylan Develioglu)
+
 2016-08-24 (0.3.1)
-	* Fix Service[oddjobd] failing to start (Jeff McCune #22)
-	* Fix newline under each section in sssd.conf (Gjermund Jensvoll #18)
+	* #22 Fix Service[oddjobd] failing to start (Jeff McCune)
+	* #18 Fix newline under each section in sssd.conf (Gjermund Jensvoll)
 
 2016-02-01 (0.3.0)
-	* Stop sorting config keys for newer ruby versions (Brad Cowie #13)
-	* Ensure sssd.conf consistency during first Puppet run (Nemanja Delic #11)
+	* #13 Stop sorting config keys for newer ruby versions (Brad Cowie)
+	* #11 Ensure sssd.conf consistency during first Puppet run (Nemanja Delic)
 
 2015-12-30 (0.2.1)
-        * Licence info (Gjermund Jensvoll #5)
-        * service_ensure option (Robert Bruce #6)
-	* RedHat 5 authconfig needs to be latest (Chris Edester #7)
-	* Update testing, linting and syntax suites (Chris Edester #7)
+	* #7 Update testing, linting and syntax suites (Chris Edester)
+	* #7 RedHat 5 authconfig needs to be latest (Chris Edester)
+	* #6 service_ensure option (Robert Bruce)
+	* #5 Licence info (Gjermund Jensvoll)
 
 2015-07-21 (0.2.0)
-        * Mkhomedir cmd (Chris Edester #2)
-	* RedHat 5 support (Chris Edester #3)
+	* #3 RedHat 5 support (Chris Edester)
+	* #2 Mkhomedir cmd (Chris Edester)
 
 2015-07-20 (0.1.4)
-	* Anchor pattern, private class and spec tests (Chris Edester #1)
+	* #1 Anchor pattern, private class and spec tests (Chris Edester)
 
 2015-07-06 (0.1.3)
 	* Added missing file pam_mkhomedir (Gjermund Jensvoll)
@@ -29,4 +34,4 @@
 	* Added compatability data for Puppet forge (Gjermund Jensvoll)
 
 2015-07-04 (0.1.0)
-	* First release
+	* First release (Gjermund Jensvoll)
