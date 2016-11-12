@@ -113,6 +113,8 @@ Example:
 $ sudo adcli join ad.example.com
 ```
 
+Or you can use a relevant [module][1] for automation.
+
 ## Reference
 
 #####`ensure`
@@ -153,15 +155,9 @@ Tested on:
 
 ## Credits
 
-* sssd.conf template from [walkamongus-sssd][1] by Chadwick Banning
-* Anchor pattern, mkhomedir code, RHEL5 support and spec tests by [Chris Edester][2]
-* service_ensure option by [sd-robbruce][3]
-* sssd.conf consistency during first Puppet run by [ndelic0][4]
-* Non-sorting config keys for newer ruby versions by [gizmoguy][5]
+* sssd.conf template from [walkamongus-sssd][2] by Chadwick Banning
+* See CHANGELOG file for additional credits
 
 [0]: https://fedorahosted.org/sssd/
-[1]: https://github.com/walkamongus/sssd
-[2]: https://github.com/edestecd
-[3]: https://github.com/sd-robbruce
-[4]: https://github.com/ndelic0
-[5]: https://github.com/gizmoguy
+[1]: https://forge.puppet.com/modules?sort=rank&q=adcli
+[2]: https://github.com/walkamongus/sssd
