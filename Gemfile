@@ -52,7 +52,7 @@ end
 
 if RUBY_VERSION < '2.1.0'
   # nokogiri 1.7+ requires ruby >= 2.1.0.  Lock to 1.6
-  gem 'nokogiri', '~> 1.6', :require => false
+  gem 'nokogiri', '~> 1.6.8', :require => false
 end
 
 if RUBY_VERSION < '2.2.5'
