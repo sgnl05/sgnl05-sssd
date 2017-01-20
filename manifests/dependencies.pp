@@ -1,5 +1,5 @@
 # See README.md for usage information
-class sssd::dependency (
+class sssd::dependencies (
   $mkhomedir            = $sssd::mkhomedir,
   $manage_oddjobd       = $sssd::manage_oddjobd,
   $service_dependencies = $sssd::service_dependencies,

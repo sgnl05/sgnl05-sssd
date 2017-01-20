@@ -104,7 +104,7 @@ class sssd (
 
   anchor { 'sssd::begin': } ->
   class { '::sssd::install': } ->
-  class { '::sssd::dependency': } ->
+  class { '::sssd::dependencies': } ->
   class { '::sssd::config': } ~>
   class { '::sssd::service': } ->
   anchor { 'sssd::end': }
