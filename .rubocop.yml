@@ -24,8 +24,10 @@ Rails:
   Enabled: false
 
 Metrics/LineLength:
-  # Ruduce this... Max: 80
-  Max: 105
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
 
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.
