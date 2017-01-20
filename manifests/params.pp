@@ -34,17 +34,18 @@ class sssd::params {
       $sssd_package   = 'sssd'
       $sssd_service   = 'sssd'
       $service_ensure = 'running'
-      $service_dependencies = ['messagebus']
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
 
       if versioncmp($::operatingsystemrelease, '6.0') < 0 {
+        $service_dependencies = ['messagebus']
         $extra_packages = [
           'authconfig',
         ]
         $extra_packages_ensure = 'latest'
         $manage_oddjobd        = false
       } else {
+        $service_dependencies = []
         $extra_packages = [
           'authconfig',
           'oddjob-mkhomedir',
