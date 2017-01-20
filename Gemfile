@@ -50,6 +50,11 @@ else
   gem 'puppet', '~> 3.8', :require => false
 end
 
+if RUBY_VERSION < '2.1.0'
+  # nokogiri 1.7+ requires ruby >= 2.1.0.  Lock to 1.6.8.1
+  gem 'nokogiri', '= 1.6.8.1', :require => false
+end
+
 if RUBY_VERSION < '2.2.5'
   # beaker 3.1+ requires ruby 2.2.5.  Lock to 2.0
   gem 'beaker', '~> 2.0', :require => false
