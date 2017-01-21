@@ -29,6 +29,10 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Enabled: false
 
+# Workaround until https://github.com/bbatsov/rubocop/issues/3752 is resolved
+Bundler/DuplicatedGem:
+  Enabled: false
+
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.
 # Support ruby 1.8.7

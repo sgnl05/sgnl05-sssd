@@ -22,8 +22,6 @@ end
 
 gem 'json', '<= 1.8', :require => false               if RUBY_VERSION < '2.0.0'
 gem 'json_pure', '<= 2.0.1', :require => false        if RUBY_VERSION < '2.0.0'
-gem 'metadata-json-lint', '0.0.11', :require => false if RUBY_VERSION < '1.9'
-gem 'metadata-json-lint', :require => false           if RUBY_VERSION >= '1.9'
 gem 'rake', '~> 10.0', :require => false              if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
 gem 'rspec', '~> 2.0', :require => false              if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
 
@@ -50,6 +48,14 @@ else
   gem 'puppet', '~> 3.8', :require => false
 end
 
+if RUBY_VERSION < '1.9'
+  gem 'metadata-json-lint', '0.0.11', :require => false
+  gem 'public_suffix',                :require => false
+else
+  gem 'metadata-json-lint',           :require => false
+  em 'public_suffix', '1.4.6',        :require => false
+end
+
 if RUBY_VERSION < '2.1.0'
   # nokogiri 1.7+ requires ruby >= 2.1.0.  Lock to 1.6
   gem 'nokogiri', '~> 1.6.8', :require => false
@@ -62,6 +68,4 @@ if RUBY_VERSION < '2.2.5'
   gem 'beaker-rspec', '= 5.6.0', :require => false
 end
 
-gem 'public_suffix', '1.4.6', :require => false if RUBY_VERSION <= '1.9.3'
-gem 'public_suffix',          :require => false if RUBY_VERSION > '1.9.3'
 # vim:ft=ruby
