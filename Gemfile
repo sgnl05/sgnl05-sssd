@@ -53,7 +53,7 @@ if RUBY_VERSION < '1.9'
   gem 'public_suffix',                :require => false
 else
   gem 'metadata-json-lint',           :require => false
-  em 'public_suffix', '1.4.6',        :require => false
+  gem 'public_suffix', '1.4.6',        :require => false
 end
 
 if RUBY_VERSION < '2.1.0'
