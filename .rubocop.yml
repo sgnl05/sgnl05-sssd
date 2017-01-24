@@ -24,8 +24,14 @@ Rails:
   Enabled: false
 
 Metrics/LineLength:
-  # Ruduce this... Max: 80
-  Max: 105
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+# Workaround until https://github.com/bbatsov/rubocop/issues/3752 is resolved
+Bundler/DuplicatedGem:
+  Enabled: false
 
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.
