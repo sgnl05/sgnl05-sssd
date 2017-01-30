@@ -4,7 +4,6 @@
 [![Puppet Forge](https://img.shields.io/puppetforge/v/sgnl05/sssd.svg)](https://forge.puppetlabs.com/sgnl05/sssd)
 [![Puppet Forge Downloads](https://img.shields.io/puppetforge/dt/sgnl05/sssd.svg)](https://forge.puppetlabs.com/sgnl05/sssd)
 [![Puppet Forge Score](https://img.shields.io/puppetforge/f/sgnl05/sssd.svg)](https://forge.puppetlabs.com/sgnl05/sssd/scores)
-[![Issue Stats](http://issuestats.com/github/sgnl05/sgnl05-sssd/badge/pr?style=flat)](http://issuestats.com/github/sgnl05/sgnl05-sssd)
 
 #### Table of Contents
 
