@@ -16,6 +16,7 @@ class sssd::params {
   }
   $enable_mkhomedir_flags  = ['--enablesssd', '--enablesssdauth', '--enablemkhomedir']
   $disable_mkhomedir_flags = ['--enablesssd', '--enablesssdauth', '--disablemkhomedir']
+  $ensure_absent_flags = ['--disablesssd', '--disablesssdauth']
 
   # Earlier versions of ruby didn't provide ordered hashs, so we need to sort
   # the configuration ourselves to ensure a consistent config file.
