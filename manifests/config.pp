@@ -7,6 +7,7 @@ class sssd::config (
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
+  $pamaccess               = $sssd::pamaccess,
 ) {
 
   file { 'sssd.conf':
@@ -26,8 +27,14 @@ class sssd::config (
         true  => join($enable_mkhomedir_flags, ' '),
         false => join($disable_mkhomedir_flags, ' '),
       }
-      $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
-      $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} --test"
+
+      $pamaccess_flag = $pamaccess ? {
+        true  => '--enablepamaccess',
+        false => '--disablepamaccess',
+      }
+
+      $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} ${pamaccess_flag} --update"
+      $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} ${pamaccess_flag} --test"
       $authconfig_check_cmd  = "/usr/bin/test \"`${authconfig_test_cmd}`\" = \"`/usr/sbin/authconfig --test`\""
 
       exec { 'authconfig-mkhomedir':

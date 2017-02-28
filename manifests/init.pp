@@ -35,6 +35,9 @@
 # [*mkhomedir*]
 #   Boolean. Manage auto-creation of home directories on user login.
 #
+# [*pamaccess*]
+#   Boolean. Check access.conf during account authorization.
+#
 # [*manage_oddjobd*]
 #   Boolean. Manage the oddjobd service.
 #
@@ -64,6 +67,7 @@ class sssd (
   $config_template         = $sssd::params::config_template,
   $mkhomedir               = $sssd::params::mkhomedir,
   $manage_oddjobd          = $sssd::params::manage_oddjobd,
+  $pamaccess               = $sssd::params::pamacesss,
   $service_ensure          = $sssd::params::service_ensure,
   $service_dependencies    = $sssd::params::service_dependencies,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
