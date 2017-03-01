@@ -36,6 +36,7 @@ class sssd::params {
       $service_ensure = 'running'
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
+      $pamaccess      = false
 
       if versioncmp($::operatingsystemrelease, '6.0') < 0 {
         $service_dependencies = ['messagebus']
