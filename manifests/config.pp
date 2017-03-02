@@ -7,6 +7,7 @@ class sssd::config (
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
+  $ensure_absent_flags     = $sssd::ensure_absent_flags,
 ) {
 
   file { 'sssd.conf':
@@ -22,10 +23,16 @@ class sssd::config (
 
     'Redhat': {
 
-      $authconfig_flags = $mkhomedir ? {
-        true  => join($enable_mkhomedir_flags, ' '),
-        false => join($disable_mkhomedir_flags, ' '),
+      if $ensure == 'present' {
+        $authconfig_flags = $mkhomedir ? {
+          true  => join($enable_mkhomedir_flags, ' '),
+          false => join($disable_mkhomedir_flags, ' '),
+        }
       }
+      else {
+        $authconfig_flags = join($ensure_absent_flags, ' ')
+      }
+
       $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
       $authconfig_test_cmd   = "/usr/sbin/authconfig ${authconfig_flags} --test"
       $authconfig_check_cmd  = "/usr/bin/test \"`${authconfig_test_cmd}`\" = \"`/usr/sbin/authconfig --test`\""

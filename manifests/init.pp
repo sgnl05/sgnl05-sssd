@@ -68,6 +68,7 @@ class sssd (
   $service_dependencies    = $sssd::params::service_dependencies,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
+  $ensure_absent_flags     = $sssd::params::ensure_absent_flags,
 ) inherits sssd::params {
 
   validate_re($ensure, '^(present|absent)$',
