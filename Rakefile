@@ -3,11 +3,6 @@ require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'metadata-json-lint/rake_task'
 
-if RUBY_VERSION >= '2.0'
-  require 'rubocop/rake_task'
-  RuboCop::RakeTask.new
-end
-
 exclude_paths = [
   'modules/**/*',
   'pkg/**/*',
@@ -28,11 +23,6 @@ task :default => :all
 desc 'Run acceptance tests'
 RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
-end
-
-desc 'Run RuboCop'
-task :rubocop do
-  sh 'rubocop'
 end
 
 desc 'Clean up modules / pkg'
