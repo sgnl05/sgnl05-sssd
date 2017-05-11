@@ -55,6 +55,9 @@ class sssd::params {
         $manage_oddjobd        = true
       }
 
+      $absent_packages = []
+      $absent_packages_ensure = 'absent'
+
     }
 
     'Debian': {
@@ -71,6 +74,33 @@ class sssd::params {
         'libnss-sss',
       ]
       $extra_packages_ensure = 'present'
+      $manage_oddjobd        = false
+
+      $absent_packages = []
+      $absent_packages_ensure = 'absent'
+
+    }
+
+    'Suse': {
+
+      $sssd_package   = 'sssd'
+      $sssd_service   = 'sssd'
+      $service_ensure = 'running'
+      $service_dependencies = []
+      $config_file    = '/etc/sssd/sssd.conf'
+      $mkhomedir      = true
+      if versioncmp($::operatingsystemrelease, '12.0') > 0 {
+        $extra_packages = [
+          'sssd-krb5',
+          'sssd-ad',
+          'sssd-ipa',
+        ]
+        $extra_packages_ensure = 'latest'
+      }
+      $absent_packages = [
+        'nscd',
+      ]
+      $absent_packages_ensure = 'absent'
       $manage_oddjobd        = false
 
     }

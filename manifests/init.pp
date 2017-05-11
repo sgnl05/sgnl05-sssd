@@ -60,6 +60,8 @@ class sssd (
   $sssd_service            = $sssd::params::sssd_service,
   $extra_packages          = $sssd::params::extra_packages,
   $extra_packages_ensure   = $sssd::params::extra_packages_ensure,
+  $absent_packages         = $sssd::params::absent_packages,
+  $absent_packages_ensure  = $sssd::params::absent_packages_ensure,
   $config_file             = $sssd::params::config_file,
   $config_template         = $sssd::params::config_template,
   $mkhomedir               = $sssd::params::mkhomedir,
@@ -83,7 +85,6 @@ class sssd (
   )
 
   validate_array(
-    $extra_packages,
     $enable_mkhomedir_flags,
     $disable_mkhomedir_flags,
     $service_dependencies
