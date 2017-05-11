@@ -152,6 +152,10 @@ Tested on:
 * (RHEL|CentOS|OracleLinux) 5,6,7
 * Ubuntu 14.04
 
+## Versioning
+The v1 series of this module will support both Puppet v3 and v4. The v2
+series of this module will drop support for Puppet v3.
+
 ## Credits
 
 * sssd.conf template from [walkamongus-sssd][2] by Chadwick Banning
