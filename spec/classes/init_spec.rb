@@ -28,6 +28,7 @@ describe 'sssd' do
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
       it { is_expected.to contain_package('sssd').with_ensure('present') }
+      it { is_expected.to contain_service('messagebus').with_ensure('running') }
     end
 
     context 'with service ensure stopped' do
@@ -102,6 +103,7 @@ describe 'sssd' do
       it { is_expected.to contain_service('sssd').with_ensure('running') }
       it { is_expected.to contain_package('sssd').with_ensure('present') }
       it { is_expected.to contain_service('oddjobd').with_ensure('running') }
+      it { is_expected.to contain_service('messagebus').with_ensure('running') }
     end
 
     context 'with service ensure stopped' do
@@ -160,6 +162,7 @@ describe 'sssd' do
       it { is_expected.to contain_service('sssd').with_ensure('running') }
       it { is_expected.to contain_package('sssd').with_ensure('present') }
       it { is_expected.to contain_service('oddjobd').with_ensure('running') }
+      it { is_expected.not_to contain_service('messagebus') }
     end
 
     context 'with service ensure stopped' do
@@ -217,6 +220,7 @@ describe 'sssd' do
 
       it { is_expected.to contain_service('sssd').with_ensure('running') }
       it { is_expected.to contain_package('sssd').with_ensure('present') }
+      it { is_expected.not_to contain_service('messagebus') }
     end
 
     context 'with service ensure stopped' do

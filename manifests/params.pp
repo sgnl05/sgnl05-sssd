@@ -51,7 +51,7 @@ class sssd::params {
           $manage_oddjobd        = false
         }
         /^6/: {
-          $service_dependencies = []
+          $service_dependencies = ['messagebus']
           $extra_packages = [
             'authconfig',
             'oddjob-mkhomedir',
