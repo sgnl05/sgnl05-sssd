@@ -56,6 +56,23 @@ describe 'sssd' do
       it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
     end
   end
+
+  describe 'on unsupported version of RedHat (not 5, 6 or 7)' do
+    let(:facts) do
+      {
+        :osfamily => 'RedHat',
+        :operatingsystemrelease => '4.0',
+        :rubyversion => '1.9.3'
+      }
+    end
+
+    it 'should fail' do
+      expect do
+        should contain_class('sssd')
+      end.to raise_error(Puppet::Error, /operatingsystemrelease is <4\.0> and must be in 5, 6 or 7/)
+    end
+  end
+
   describe 'on RedHat 6.6' do
     let(:facts) do
       {
