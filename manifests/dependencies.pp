@@ -6,6 +6,12 @@ class sssd::dependencies (
   $service_ensure       = $sssd::service_ensure,
 ) {
 
+  if $manage_oddjobd == true {
+    $before = 'Service[oddjobd]'
+  } else {
+    $before = undef
+  }
+
   if ! empty($service_dependencies) {
     ensure_resource('service', $service_dependencies,
       {
@@ -13,6 +19,7 @@ class sssd::dependencies (
         hasstatus  => true,
         hasrestart => true,
         enable     => true,
+        before     => $before,
       }
     )
   }

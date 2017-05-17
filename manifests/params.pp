@@ -38,23 +38,37 @@ class sssd::params {
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
 
-      if versioncmp($::operatingsystemrelease, '6.0') < 0 {
-        $service_dependencies = ['messagebus']
-        $extra_packages = [
-          'authconfig',
-        ]
-        $extra_packages_ensure = 'latest'
-        $manage_oddjobd        = false
-      } else {
-        $service_dependencies = []
-        $extra_packages = [
-          'authconfig',
-          'oddjob-mkhomedir',
-        ]
-        $extra_packages_ensure = 'present'
-        $manage_oddjobd        = true
+      case $::operatingsystemrelease {
+        default: {
+          fail("operatingsystemrelease is <${::operatingsystemrelease}> and must be in 5, 6 or 7.")
+        }
+        /^5/: {
+          $service_dependencies = ['messagebus']
+          $extra_packages = [
+            'authconfig',
+          ]
+          $extra_packages_ensure = 'latest'
+          $manage_oddjobd        = false
+        }
+        /^6/: {
+          $service_dependencies = ['messagebus']
+          $extra_packages = [
+            'authconfig',
+            'oddjob-mkhomedir',
+          ]
+          $extra_packages_ensure = 'present'
+          $manage_oddjobd        = true
+        }
+        /^7/: {
+          $service_dependencies = []
+          $extra_packages = [
+            'authconfig',
+            'oddjob-mkhomedir',
+          ]
+          $extra_packages_ensure = 'present'
+          $manage_oddjobd        = true
+        }
       }
-
     }
 
     'Debian': {
