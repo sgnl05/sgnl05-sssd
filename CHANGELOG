@@ -1,5 +1,9 @@
+2017-05-18 (1.0.1)
+  * Messagebus fix #39 (Garrett Honeycutt)
+
 2017-05-09 (1.0.0)
-  * Release the module as v1.0.0 (Garrett Honeycutt)
+  * Release the module as v1.0.0 #38 (Garrett Honeycutt)
+  * Setting ensure => 'absent' now further disables sssd #32 (Marc Chadwick)
 
 2017-01-24 (0.4.1)
   * Fix service restart issue #30 (Gjermund Jensvoll)
