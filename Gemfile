@@ -44,7 +44,7 @@ end
 if (puppetversion = ENV['PUPPET_GEM_VERSION'])
   gem 'puppet', puppetversion, :require => false
 else
-  gem 'puppet', '~> 3.8', :require => false
+  gem 'puppet', '~> 4.9', :require => false
 end
 
 if RUBY_VERSION < '1.9'
