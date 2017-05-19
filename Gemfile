@@ -17,7 +17,6 @@ group :unit_tests do
   gem 'puppet-lint-version_comparison-check',             :require => false
   gem 'puppetlabs_spec_helper',                           :require => false
   gem 'rspec-puppet-facts',                               :require => false
-  gem 'rubocop',                                          :require => false if RUBY_VERSION >= '2.0.0'
 end
 
 gem 'json', '<= 1.8', :require => false               if RUBY_VERSION < '2.0.0'
@@ -45,7 +44,7 @@ end
 if (puppetversion = ENV['PUPPET_GEM_VERSION'])
   gem 'puppet', puppetversion, :require => false
 else
-  gem 'puppet', '~> 3.8', :require => false
+  gem 'puppet', '~> 4.9', :require => false
 end
 
 if RUBY_VERSION < '1.9'

@@ -56,56 +56,24 @@
 #   Flags to use with authconfig to disable auto-creation of home directories.
 #
 class sssd (
-  $ensure                  = $sssd::params::ensure,
-  $config                  = $sssd::params::config,
-  $sssd_package            = $sssd::params::sssd_package,
-  $sssd_package_ensure     = $sssd::params::sssd_package_ensure,
-  $sssd_service            = $sssd::params::sssd_service,
-  $extra_packages          = $sssd::params::extra_packages,
-  $extra_packages_ensure   = $sssd::params::extra_packages_ensure,
-  $config_file             = $sssd::params::config_file,
-  $config_template         = $sssd::params::config_template,
-  $mkhomedir               = $sssd::params::mkhomedir,
-  $manage_oddjobd          = $sssd::params::manage_oddjobd,
-  $pamaccess               = $sssd::params::pamaccess,
-  $service_ensure          = $sssd::params::service_ensure,
-  $service_dependencies    = $sssd::params::service_dependencies,
-  $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
-  $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
+  Enum['present', 'absent']$ensure  = $sssd::params::ensure,
+  Hash $config = $sssd::params::config,
+  String $sssd_package = $sssd::params::sssd_package,
+  String $sssd_package_ensure = $sssd::params::sssd_package_ensure,
+  String $sssd_service = $sssd::params::sssd_service,
+  Array $extra_packages = $sssd::params::extra_packages,
+  $extra_packages_ensure = $sssd::params::extra_packages_ensure,
+  $config_file = $sssd::params::config_file,
+  String $config_template = $sssd::params::config_template,
+  Boolean $mkhomedir = $sssd::params::mkhomedir,
+  $manage_oddjobd = $sssd::params::manage_oddjobd,
+  Boolean $pamaccess = $sssd::params::pamaccess,
+  Variant[Boolean, Enum['running', 'stopped']]$service_ensure = $sssd::params::service_ensure,
+  Array $service_dependencies = $sssd::params::service_dependencies,
+  Array $enable_mkhomedir_flags = $sssd::params::enable_mkhomedir_flags,
+  Array $disable_mkhomedir_flags = $sssd::params::disable_mkhomedir_flags,
+  $ensure_absent_flags = $sssd::params::ensure_absent_flags,
 ) inherits sssd::params {
-
-  validate_re($ensure, '^(present|absent)$',
-  "${ensure} is not supported for ensure.
-  Allowed values are 'present' and 'absent'.")
-
-  validate_string(
-    $sssd_package_ensure,
-    $sssd_package,
-    $sssd_service,
-    $config_template
-  )
-
-  validate_array(
-    $extra_packages,
-    $enable_mkhomedir_flags,
-    $disable_mkhomedir_flags,
-    $service_dependencies
-  )
-
-  validate_absolute_path(
-    $config_file
-  )
-
-  validate_bool(
-    $mkhomedir,
-    $pamaccess
-  )
-
-  validate_hash(
-    $config
-  )
-
-  validate_re($service_ensure, '^running|true|stopped|false$')
 
   anchor { 'sssd::begin': } ->
   class { '::sssd::install': } ->
@@ -113,5 +81,4 @@ class sssd (
   class { '::sssd::config': } ~>
   class { '::sssd::service': } ->
   anchor { 'sssd::end': }
-
 }

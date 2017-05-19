@@ -7,6 +7,7 @@ class sssd::config (
   $mkhomedir               = $sssd::mkhomedir,
   $enable_mkhomedir_flags  = $sssd::enable_mkhomedir_flags,
   $disable_mkhomedir_flags = $sssd::disable_mkhomedir_flags,
+  $ensure_absent_flags     = $sssd::ensure_absent_flags,
   $pamaccess               = $sssd::pamaccess,
 ) {
 
@@ -23,9 +24,14 @@ class sssd::config (
 
     'Redhat': {
 
-      $authconfig_flags = $mkhomedir ? {
-        true  => join($enable_mkhomedir_flags, ' '),
-        false => join($disable_mkhomedir_flags, ' '),
+      if $ensure == 'present' {
+        $authconfig_flags = $mkhomedir ? {
+          true  => join($enable_mkhomedir_flags, ' '),
+          false => join($disable_mkhomedir_flags, ' '),
+        }
+      }
+      else {
+        $authconfig_flags = join($ensure_absent_flags, ' ')
       }
 
       $pamaccess_flag = $pamaccess ? {

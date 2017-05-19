@@ -1,41 +1,51 @@
+2017-05-19 (2.0.0)
+  * Updated Module to Puppet >= 4.X #40 (Dennis Pattmann)
+
+2017-05-18 (1.0.1)
+  * Messagebus fix #39 (Garrett Honeycutt)
+
+2017-05-09 (1.0.0)
+  * Release the module as v1.0.0 #38 (Garrett Honeycutt)
+  * Setting ensure => 'absent' now further disables sssd #32 (Marc Chadwick)
+
 2017-01-24 (0.4.1)
-	* Fix service restart issue #30 (Gjermund Jensvoll)
-	* Fix messagebus service related error #29 (Gjermund Jensvoll)
+  * Fix service restart issue #30 (Gjermund Jensvoll)
+  * Fix messagebus service related error #29 (Gjermund Jensvoll)
 
 2016-11-12 (0.4.0)
-	* Add support for Ruby 2.3.1 #27 (Garrett Honeycutt)
-	* Add ensure_resources and ensure_packages to avoid collisions #26 (Daniel James Goulder)
-	* Add sssd_package_ensure parameter #24 (Taylan Develioglu)
+  * Add support for Ruby 2.3.1 #27 (Garrett Honeycutt)
+  * Add ensure_resources and ensure_packages to avoid collisions #26 (Daniel James Goulder)
+  * Add sssd_package_ensure parameter #24 (Taylan Develioglu)
 
 2016-08-24 (0.3.1)
-	* Fix Service[oddjobd] failing to start #22 (Jeff McCune)
-	* Fix newline under each section in sssd.conf #18 (Gjermund Jensvoll)
+  * Fix Service[oddjobd] failing to start #22 (Jeff McCune)
+  * Fix newline under each section in sssd.conf #18 (Gjermund Jensvoll)
 
 2016-02-01 (0.3.0)
-	* Stop sorting config keys for newer ruby versions #13 (Brad Cowie)
-	* Ensure sssd.conf consistency during first Puppet run #11 (Nemanja Delic)
+  * Stop sorting config keys for newer ruby versions #13 (Brad Cowie)
+  * Ensure sssd.conf consistency during first Puppet run #11 (Nemanja Delic)
 
 2015-12-30 (0.2.1)
-	* Update testing, linting and syntax suites #7 (Chris Edester)
-	* RedHat 5 authconfig needs to be latest #7 (Chris Edester)
-	* service_ensure option #6 (Robert Bruce)
-	* Licence info #5 (Gjermund Jensvoll)
+  * Update testing, linting and syntax suites #7 (Chris Edester)
+  * RedHat 5 authconfig needs to be latest #7 (Chris Edester)
+  * service_ensure option #6 (Robert Bruce)
+  * Licence info #5 (Gjermund Jensvoll)
 
 2015-07-21 (0.2.0)
-	* RedHat 5 support #3 (Chris Edester)
-	* Mkhomedir cmd #2 (Chris Edester)
+  * RedHat 5 support #3 (Chris Edester)
+  * Mkhomedir cmd #2 (Chris Edester)
 
 2015-07-20 (0.1.4)
-	* Anchor pattern, private class and spec tests #1 (Chris Edester)
+  * Anchor pattern, private class and spec tests #1 (Chris Edester)
 
 2015-07-06 (0.1.3)
-	* Added missing file pam_mkhomedir (Gjermund Jensvoll)
+  * Added missing file pam_mkhomedir (Gjermund Jensvoll)
 
 2015-07-06 (0.1.2)
-	* Fixed metadata.json syntax errors (Gjermund Jensvoll)
+  * Fixed metadata.json syntax errors (Gjermund Jensvoll)
 
 2015-07-04 (0.1.1)
-	* Added compatability data for Puppet forge (Gjermund Jensvoll)
+  * Added compatability data for Puppet forge (Gjermund Jensvoll)
 
 2015-07-04 (0.1.0)
-	* First release (Gjermund Jensvoll)
+  * First release (Gjermund Jensvoll)
