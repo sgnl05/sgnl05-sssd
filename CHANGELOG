@@ -1,3 +1,6 @@
+2017-05-19 (2.0.0)
+  * Updated Module to Puppet >= 4.X #40 (Dennis Pattmann)
+
 2017-05-18 (1.0.1)
   * Messagebus fix #39 (Garrett Honeycutt)
 
