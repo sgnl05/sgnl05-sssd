@@ -37,6 +37,7 @@ class sssd::params {
       $service_ensure = 'running'
       $config_file    = '/etc/sssd/sssd.conf'
       $mkhomedir      = true
+      $pamaccess      = false
 
       case $::operatingsystemrelease {
         default: {
@@ -86,6 +87,7 @@ class sssd::params {
       ]
       $extra_packages_ensure = 'present'
       $manage_oddjobd        = false
+      $pamaccess             = false
 
     }
 
