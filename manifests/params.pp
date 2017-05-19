@@ -72,6 +72,7 @@ class sssd::params {
       ]
       $extra_packages_ensure = 'present'
       $manage_oddjobd        = false
+      $pamaccess             = false
 
     }
 
