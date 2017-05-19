@@ -67,7 +67,7 @@ class sssd (
   $config_template         = $sssd::params::config_template,
   $mkhomedir               = $sssd::params::mkhomedir,
   $manage_oddjobd          = $sssd::params::manage_oddjobd,
-  $pamaccess               = $sssd::params::pamacesss,
+  $pamaccess               = $sssd::params::pamaccess,
   $service_ensure          = $sssd::params::service_ensure,
   $service_dependencies    = $sssd::params::service_dependencies,
   $enable_mkhomedir_flags  = $sssd::params::enable_mkhomedir_flags,
@@ -97,7 +97,8 @@ class sssd (
   )
 
   validate_bool(
-    $mkhomedir
+    $mkhomedir,
+    $pamaccess
   )
 
   validate_hash(
