@@ -4,8 +4,9 @@ describe 'sssd' do
     let(:facts) do
       {
         :osfamily => 'RedHat',
-        :operatingsystemrelease => '5.7',
         :operatingsystem => 'RedHat',
+        :operatingsystemrelease => '5.7',
+        :operatingsystemmajrelease => '5',
         :rubyversion => '1.9.3',
       }
     end
@@ -41,8 +42,9 @@ describe 'sssd' do
       let(:facts) do
         {
           :osfamily => 'RedHat',
-          :operatingsystemrelease => '5.7',
           :operatingsystem => 'RedHat',
+          :operatingsystemrelease => '5.7',
+          :operatingsystemmajrelease => '5',
           :rubyversion => '1.8.7',
         }
       end
@@ -66,6 +68,7 @@ describe 'sssd' do
         :osfamily => 'RedHat',
         :operatingsystem => 'RedHat',
         :operatingsystemrelease => '4.0',
+        :operatingsystemmajrelease => '4',
         :rubyversion => '1.9.3',
       }
     end
@@ -83,6 +86,7 @@ describe 'sssd' do
         :osfamily => 'RedHat',
         :operatingsystem => 'RedHat',
         :operatingsystemrelease => '6.6',
+        :operatingsystemmajrelease => '6',
         :rubyversion => '1.9.3',
       }
     end
@@ -122,6 +126,7 @@ describe 'sssd' do
           :osfamily => 'RedHat',
           :operatingsystem => 'RedHat',
           :operatingsystemrelease => '6.6',
+          :operatingsystemmajrelease => '6',
           :rubyversion => '1.8.7',
         }
       end
@@ -144,6 +149,7 @@ describe 'sssd' do
         :osfamily => 'RedHat',
         :operatingsystem => 'RedHat',
         :operatingsystemrelease => '7.1',
+        :operatingsystemmajrelease => '7',
         :rubyversion => '1.9.3',
       }
     end
@@ -181,7 +187,9 @@ describe 'sssd' do
       let(:facts) do
         {
           :osfamily => 'RedHat',
+          :operatingsystem => 'RedHat',
           :operatingsystemrelease => '7.1',
+          :operatingsystemmajrelease => '7',
           :rubyversion => '1.8.7'
         }
       end
@@ -204,6 +212,7 @@ describe 'sssd' do
         :osfamily => 'Debian',
         :operatingsystem => 'Debian',
         :operatingsystemrelease => '8.1',
+        :operatingsystemmajrelease => '8',
         :rubyversion => '1.9.3',
       }
     end
@@ -239,7 +248,9 @@ describe 'sssd' do
       let(:facts) do
         {
           :osfamily => 'Debian',
+          :operatingsystem => 'Debian',
           :operatingsystemrelease => '8.1',
+          :operatingsystemmajrelease => '8',
           :rubyversion => '1.8.7'
         }
       end
