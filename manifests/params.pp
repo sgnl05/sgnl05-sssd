@@ -39,6 +39,9 @@ class sssd::params {
       $mkhomedir            = true
 
       case $::operatingsystem {
+        default: {
+              fail("operatingsystem is <${::operatingsystem}> which is not supported")
+        }
         'RedHat', 'CentOS': {
           case $::operatingsystemmajrelease {
             default: {
