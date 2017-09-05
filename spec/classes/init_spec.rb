@@ -5,7 +5,8 @@ describe 'sssd' do
       {
         :osfamily => 'RedHat',
         :operatingsystemrelease => '5.7',
-        :rubyversion => '1.9.3'
+        :operatingsystem => 'RedHat',
+        :rubyversion => '1.9.3',
       }
     end
 
@@ -41,7 +42,8 @@ describe 'sssd' do
         {
           :osfamily => 'RedHat',
           :operatingsystemrelease => '5.7',
-          :rubyversion => '1.8.7'
+          :operatingsystem => 'RedHat',
+          :rubyversion => '1.8.7',
         }
       end
       it do
@@ -62,8 +64,9 @@ describe 'sssd' do
     let(:facts) do
       {
         :osfamily => 'RedHat',
+        :operatingsystem => 'RedHat',
         :operatingsystemrelease => '4.0',
-        :rubyversion => '1.9.3'
+        :rubyversion => '1.9.3',
       }
     end
 
@@ -78,8 +81,9 @@ describe 'sssd' do
     let(:facts) do
       {
         :osfamily => 'RedHat',
+        :operatingsystem => 'RedHat',
         :operatingsystemrelease => '6.6',
-        :rubyversion => '1.9.3'
+        :rubyversion => '1.9.3',
       }
     end
 
@@ -116,8 +120,9 @@ describe 'sssd' do
       let(:facts) do
         {
           :osfamily => 'RedHat',
+          :operatingsystem => 'RedHat',
           :operatingsystemrelease => '6.6',
-          :rubyversion => '1.8.7'
+          :rubyversion => '1.8.7',
         }
       end
       it do
@@ -137,8 +142,9 @@ describe 'sssd' do
     let(:facts) do
       {
         :osfamily => 'RedHat',
+        :operatingsystem => 'RedHat',
         :operatingsystemrelease => '7.1',
-        :rubyversion => '1.9.3'
+        :rubyversion => '1.9.3',
       }
     end
 
@@ -196,8 +202,9 @@ describe 'sssd' do
     let(:facts) do
       {
         :osfamily => 'Debian',
+        :operatingsystem => 'Debian',
         :operatingsystemrelease => '8.1',
-        :rubyversion => '1.9.3'
+        :rubyversion => '1.9.3',
       }
     end
 
