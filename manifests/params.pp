@@ -37,7 +37,6 @@ class sssd::params {
       $service_ensure       = 'running'
       $config_file          = '/etc/sssd/sssd.conf'
       $mkhomedir            = true
-      $service_dependencies = []
 
       case $::operatingsystem {
         'RedHat', 'CentOS': {
@@ -63,6 +62,7 @@ class sssd::params {
               $manage_oddjobd        = true
             }
             '7': {
+              $service_dependencies = []
               $extra_packages = [
                 'authconfig',
                 'oddjob-mkhomedir',
@@ -78,6 +78,7 @@ class sssd::params {
               fail("operatingsystemrelease is <${::operatingsystemrelease}> and must be in 25 or 26.")
             }
             '25', '26': {
+              $service_dependencies = []
               $extra_packages = [
                 'authconfig',
                 'oddjob-mkhomedir',
