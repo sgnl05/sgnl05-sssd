@@ -1,5 +1,17 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
+if (facterversion = ENV['FACTER_GEM_VERSION'])
+  gem 'facter', facterversion, :require => false
+else
+  gem 'facter', :require => false
+end
+
+if (puppetversion = ENV['PUPPET_GEM_VERSION'])
+  gem 'puppet', puppetversion, :require => false
+else
+  gem 'puppet', :require => false
+end
+
 group :unit_tests do
   gem 'puppet-lint-absolute_classname-check',             :require => false
   gem 'puppet-lint-absolute_template_path',               :require => false
@@ -19,11 +31,6 @@ group :unit_tests do
   gem 'rspec-puppet-facts',                               :require => false
 end
 
-gem 'json', '<= 1.8', :require => false               if RUBY_VERSION < '2.0.0'
-gem 'json_pure', '<= 2.0.1', :require => false        if RUBY_VERSION < '2.0.0'
-gem 'rake', '~> 10.0', :require => false              if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
-gem 'rspec', '~> 2.0', :require => false              if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
-
 group :development do
   gem 'simplecov', :require => false
   # gem 'guard-rake',       :require => false
@@ -35,30 +42,12 @@ group :system_tests do
   gem 'serverspec', :require => false
 end
 
-if (facterversion = ENV['FACTER_GEM_VERSION'])
-  gem 'facter', facterversion, :require => false
-else
-  gem 'facter', :require => false
+if puppetversion && puppetversion < '5.0'
+  gem 'semantic_puppet', :require => false
 end
 
-if (puppetversion = ENV['PUPPET_GEM_VERSION'])
-  gem 'puppet', puppetversion, :require => false
-else
-  gem 'puppet', '~> 4.9', :require => false
-end
-
-if RUBY_VERSION < '1.9'
-  gem 'metadata-json-lint', '0.0.11', :require => false
-  gem 'public_suffix',                :require => false
-else
-  gem 'metadata-json-lint',           :require => false
-  gem 'public_suffix', '1.4.6',        :require => false
-end
-
-if RUBY_VERSION < '2.1.0'
-  # nokogiri 1.7+ requires ruby >= 2.1.0.  Lock to 1.6
-  gem 'nokogiri', '~> 1.6.8', :require => false
-end
+gem 'metadata-json-lint',           :require => false
+gem 'public_suffix', '1.4.6',        :require => false
 
 if RUBY_VERSION < '2.2.5'
   # beaker 3.1+ requires ruby 2.2.5.  Lock to 2.0
