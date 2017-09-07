@@ -109,7 +109,50 @@ class sssd::params {
       ]
       $extra_packages_ensure = 'present'
       $manage_oddjobd        = false
+    }
 
+    'Suse': {
+
+      $sssd_package   = 'sssd'
+      $sssd_service   = 'sssd'
+      $service_ensure = 'running'
+      $config_file    = '/etc/sssd/sssd.conf'
+      $mkhomedir      = true
+      #case $::operatingsystemrelease {
+      case $::operatingsystemmajrelease {
+        default: {
+          fail("operatingsystemrelease is <${::operatingsystemmajrelease}> and must be in 11 or 12.")
+        }
+        '11': {
+          case $::operatingsystemrelease {
+            default: {
+              fail("operatingsystemrelease is <${::operatingsystemrelease}> and must be in 11.3 or 11.4.")
+            }
+            /^11.[34]/: {
+              $service_dependencies = []
+              $extra_packages = [
+                'sssd-32bit',
+                'sssd-tools',
+              ]
+              $extra_packages_ensure = 'present'
+              $manage_oddjobd        = false
+            }
+          }
+        }
+        '12': {
+          $service_dependencies = []
+          $extra_packages = [
+            'sssd-krb5',
+            'sssd-ad',
+            'sssd-ipa',
+            'sssd-32bit',
+            'sssd-tools',
+            'sssd-ldap',
+          ]
+          $extra_packages_ensure = 'present'
+          $manage_oddjobd        = false
+        }
+      }
     }
 
     default: {

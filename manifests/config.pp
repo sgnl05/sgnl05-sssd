@@ -66,6 +66,25 @@ class sssd::config (
 
     }
 
+    'Suse': {
+      $pamconfig_mkhomedir_check_cmd  = '/usr/sbin/pam-config -q --mkhomedir | grep session:'
+      $pamconfig_check_cmd  = '/usr/sbin/pam-config -q --sss | grep session:'
+
+      if $mkhomedir {
+
+        exec { 'pam-config -a --mkhomedir':
+          path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+          unless => $pamconfig_mkhomedir_check_cmd,
+        }
+      }
+
+      exec { 'pam-config -a --sss':
+        path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+        unless => $pamconfig_check_cmd,
+      }
+
+    }
+
     default: { }
 
   }
