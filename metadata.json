@@ -28,6 +28,10 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": ["7", "8"]
+    },
+    {
+      "operatingsystem": "Suse",
+      "operatingsystemrelease": ["11", "12"]
     }
   ],
   "requirements": [

@@ -267,4 +267,122 @@ describe 'sssd' do
       it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
     end
   end
+  describe 'on Suse 11.4' do
+    let(:facts) do
+      {
+        :osfamily => 'Suse',
+        :operatingsystem => 'SLES',
+        :operatingsystemrelease => '11.4',
+        :operatingsystemmajrelease => '11',
+        :rubyversion => '2.1.9',
+      }
+    end
+
+    context 'with defaults for all parameters' do
+      it { is_expected.to contain_class('sssd::install') }
+      it { is_expected.to contain_class('sssd::config') }
+      it { is_expected.to contain_class('sssd::service') }
+
+      it do
+        is_expected.to contain_file('sssd.conf') \
+          .with_ensure('present') \
+          .with_path('/etc/sssd/sssd.conf') \
+          .with_content(/^# Managed by Puppet.\n\n\[sssd\]/)
+      end
+
+      it { is_expected.to contain_package('sssd-32bit').with_ensure('present') }
+      it { is_expected.to contain_package('sssd-tools').with_ensure('present') }
+
+      it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_package('sssd').with_ensure('present') }
+    end
+
+    context 'with service ensure stopped' do
+      let(:params) { { :service_ensure => 'stopped' } }
+      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
+    end
+
+    context 'with ruby without ordered hashes' do
+      let(:facts) do
+        {
+          :osfamily => 'Suse',
+          :operatingsystem => 'SLES',
+          :operatingsystemrelease => '11.4',
+          :operatingsystemmajrelease => '11',
+          :rubyversion => '1.8.7'
+        }
+      end
+      it do
+        is_expected.to contain_file('sssd.conf') \
+          .with_ensure('present') \
+          .with_path('/etc/sssd/sssd.conf') \
+          .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
+      end
+    end
+    context 'with package_ensure set to specific version' do
+      let(:params) { { :sssd_package_ensure => '1.1.1' } }
+      it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
+    end
+  end
+  describe 'on Suse 12.1' do
+    let(:facts) do
+      {
+        :osfamily => 'Suse',
+        :operatingsystem => 'SLES',
+        :operatingsystemrelease => '12.1',
+        :operatingsystemmajrelease => '12',
+        :rubyversion => '2.1.9',
+      }
+    end
+
+    context 'with defaults for all parameters' do
+      it { is_expected.to contain_class('sssd::install') }
+      it { is_expected.to contain_class('sssd::config') }
+      it { is_expected.to contain_class('sssd::service') }
+
+      it do
+        is_expected.to contain_file('sssd.conf') \
+          .with_ensure('present') \
+          .with_path('/etc/sssd/sssd.conf') \
+          .with_content(/^# Managed by Puppet.\n\n\[sssd\]/)
+      end
+      
+      it { is_expected.to contain_package('sssd-krb5').with_ensure('present') }
+      it { is_expected.to contain_package('sssd-ad').with_ensure('present') }
+      it { is_expected.to contain_package('sssd-ipa').with_ensure('present') }
+      it { is_expected.to contain_package('sssd-32bit').with_ensure('present') }
+      it { is_expected.to contain_package('sssd-tools').with_ensure('present') }
+      it { is_expected.to contain_package('sssd-ldap').with_ensure('present') }
+
+      it { is_expected.to contain_service('sssd').with_ensure('running') }
+      it { is_expected.to contain_package('sssd').with_ensure('present') }
+    end
+
+    context 'with service ensure stopped' do
+      let(:params) { { :service_ensure => 'stopped' } }
+      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
+    end
+
+    context 'with ruby without ordered hashes' do
+      let(:facts) do
+        {
+          :osfamily => 'Suse',
+          :operatingsystem => 'SLES',
+          :operatingsystemrelease => '12.1',
+          :operatingsystemmajrelease => '12',
+          :rubyversion => '1.8.7'
+        }
+      end
+      it do
+        is_expected.to contain_file('sssd.conf') \
+          .with_ensure('present') \
+          .with_path('/etc/sssd/sssd.conf') \
+          .with_content(%r{^# Managed by Puppet.\n\n\[domain/ad.example.com\]})
+      end
+    end
+    context 'with package_ensure set to specific version' do
+      let(:params) { { :sssd_package_ensure => '1.1.1' } }
+      it { is_expected.to contain_package('sssd').with_ensure('1.1.1') }
+    end
+  end
 end
