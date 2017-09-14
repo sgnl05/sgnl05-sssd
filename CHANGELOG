@@ -1,3 +1,8 @@
+2017-09-14 (2.1.0)
+  * Add support for Puppet 5 #46 (Garrett Honeycutt)
+  * Add support for Suse 11.3, 11.4 and 12.x #45 (Ben Kevan)
+  * Add support for Fedora 25 and 26 releases #44 (Marin Atanasov Nikolov)
+
 2017-05-19 (2.0.0)
   * Updated Module to Puppet >= 4.X #40 (Dennis Pattmann)
 

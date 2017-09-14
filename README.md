@@ -148,9 +148,10 @@ Default: true
 ## Limitations
 
 Tested on:
-* Fedora 22,23
+* Fedora 22-25
 * (RHEL|CentOS|OracleLinux) 5,6,7
-* Ubuntu 14.04
+* Ubuntu 14.04 & 16.04
+* Suse 11 & 12
 
 ## Versioning
 The v1 series of this module will support both Puppet v3 and v4. The v2
