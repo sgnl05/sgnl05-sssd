@@ -155,6 +155,19 @@ class sssd::params {
       }
     }
 
+    'Gentoo': {
+
+      $sssd_package   = 'sssd'
+      $sssd_service   = 'sssd'
+      $service_ensure = 'running'
+      $service_dependencies = []
+      $config_file    = '/etc/sssd/sssd.conf'
+      $mkhomedir      = true
+      $extra_packages = []
+      $extra_packages_ensure = 'present'
+      $manage_oddjobd        = false
+    }
+
     default: {
       fail("Unsupported osfamily: ${::osfamily}")
     }
