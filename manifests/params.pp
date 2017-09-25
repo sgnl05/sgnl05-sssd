@@ -38,58 +38,44 @@ class sssd::params {
       $config_file          = '/etc/sssd/sssd.conf'
       $mkhomedir            = true
 
-      case $::operatingsystem {
+      case $::operatingsystemmajrelease {
         default: {
-          fail("operatingsystem is <${::operatingsystem}> which is not supported")
+          fail("operatingsystemrelease is <${::operatingsystemrelease}> and must be in 5, 6 or 7 for EL and 25 or 26 for Fedora.")
         }
-        'RedHat', 'CentOS': {
-          case $::operatingsystemmajrelease {
-            default: {
-              fail("operatingsystemrelease is <${::operatingsystemrelease}> and must be in 5, 6 or 7.")
-            }
-            '5': {
-              $service_dependencies = ['messagebus']
-              $extra_packages = [
-                'authconfig',
-              ]
-              $extra_packages_ensure = 'latest'
-              $manage_oddjobd        = false
-            }
-            '6': {
-              $service_dependencies = ['messagebus']
-              $extra_packages = [
-                'authconfig',
-                'oddjob-mkhomedir',
-              ]
-              $extra_packages_ensure = 'present'
-              $manage_oddjobd        = true
-            }
-            '7': {
-              $service_dependencies = []
-              $extra_packages = [
-                'authconfig',
-                'oddjob-mkhomedir',
-              ]
-              $extra_packages_ensure = 'present'
-              $manage_oddjobd        = true
-            }
-          }
+        '5': {
+          $service_dependencies = ['messagebus']
+          $extra_packages = [
+            'authconfig',
+          ]
+          $extra_packages_ensure = 'latest'
+          $manage_oddjobd        = false
         }
-        'Fedora': {
-          case $::operatingsystemmajrelease {
-            default: {
-              fail("operatingsystemrelease is <${::operatingsystemrelease}> and must be in 25 or 26.")
-            }
-            '25', '26': {
-              $service_dependencies = []
-              $extra_packages = [
-                'authconfig',
-                'oddjob-mkhomedir',
-              ]
-              $extra_packages_ensure = 'present'
-              $manage_oddjobd        = true
-            }
-          }
+        '6': {
+          $service_dependencies = ['messagebus']
+          $extra_packages = [
+            'authconfig',
+            'oddjob-mkhomedir',
+          ]
+          $extra_packages_ensure = 'present'
+          $manage_oddjobd        = true
+        }
+        '7': {
+          $service_dependencies = []
+          $extra_packages = [
+            'authconfig',
+            'oddjob-mkhomedir',
+          ]
+          $extra_packages_ensure = 'present'
+          $manage_oddjobd        = true
+        }
+        '25', '26': {
+          $service_dependencies = []
+          $extra_packages = [
+            'authconfig',
+            'oddjob-mkhomedir',
+          ]
+          $extra_packages_ensure = 'present'
+          $manage_oddjobd        = true
         }
       }
     }
