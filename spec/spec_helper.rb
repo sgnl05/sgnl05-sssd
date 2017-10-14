@@ -4,7 +4,7 @@ include RspecPuppetFacts
 
 RSpec.configure do |config|
   config.formatter = :documentation
-  config.hiera_config = 'spec/fixtures/hiera/hiera.yaml'
+  config.hiera_config = 'spec/hiera.yaml'
   config.before :each do
     # Ensure that we don't accidentally cache facts and environment between
     # test cases.  This requires each example group to explicitly load the
@@ -15,5 +15,6 @@ RSpec.configure do |config|
   end
   config.default_facts = {
     :environment => 'rp_env',
+    :domain      => 'example.com',
   }
 end
