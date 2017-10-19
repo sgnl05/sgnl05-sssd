@@ -373,6 +373,173 @@ describe 'sssd' do
     end
   end
 
+  describe 'with ensure set to valid string absent' do
+    let(:params) { { :ensure => 'absent' } }
+    it { should contain_file('sssd.conf').with_ensure('absent') }
+
+    it do
+      should contain_exec('authconfig-mkhomedir').with({
+        :command => '/usr/sbin/authconfig --disablesssd --disablesssdauth --update',
+        :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --disablesssd --disablesssdauth --test`\" = \"`/usr/sbin/authconfig --test`\"",
+      })
+    end
+  end
+
+  describe 'with config set to valid hash' do
+    let(:params) { { :config => { 'test' => { 'domains' => 'test.domain.local', 'config_file_version' => 242, 'services' => ['test1', 'test2'], }, } } }
+    it { should contain_file('sssd.conf').with_content(/^# Managed by Puppet.\n\n\[test\]\ndomains = test.domain.local\nconfig_file_version = 242\nservices = test1, test2\n/) }
+  end
+
+  describe 'with sssd_package set to valid string sssd-test' do
+    let(:params) { { :sssd_package => 'sssd-test' } }
+    it { should contain_package('sssd-test') }
+    it { should contain_package('authconfig').with_require('Package[sssd-test]') }
+  end
+
+  describe 'with sssd_package_ensure set to valid string absent' do
+    let(:params) { { :sssd_package_ensure => 'absent' } }
+    it { should contain_package('sssd').with_ensure('absent') }
+  end
+
+  describe 'with sssd_service set to valid string sssd-test' do
+    let(:params) { { :sssd_service => 'sssd-test' } }
+    it { should contain_service('sssd-test') }
+  end
+
+  describe 'with extra_packages set to valid array [test1, test2]' do
+    let(:params) { { :extra_packages => [ 'test1', 'test2' ] } }
+    it { should contain_package('test1') }
+    it { should contain_package('test2') }
+  end
+
+  describe 'with extra_packages_ensure set to valid string absent' do
+    let(:params) { { :extra_packages_ensure => 'absent' } }
+    it { should contain_package('authconfig').with_ensure('absent') }
+    it { should contain_package('oddjob-mkhomedir').with_ensure('absent') }
+  end
+
+  describe 'with config_file set to valid absolute path /test/sssd/sssd.conf' do
+    let(:params) { { :config_file => '/test/sssd/sssd.conf' } }
+    it { should contain_file('sssd.conf').with_path('/test/sssd/sssd.conf') }
+  end
+
+  describe 'with config_template set to valid string sssd/sssd.conf.sorted.erb' do
+    let(:params) { { :config_template => 'sssd/sssd.conf.sorted.erb' } }
+    it { should contain_file('sssd.conf').with_content(/# Managed by Puppet.\n\n\[domain\/example.com\]\naccess_provider = simple\nsimple_allow_users = root\n\n\[sssd\]\nconfig_file_version = 2\ndomains = example.com\nservices = nss, pam\n/) }
+  end
+
+  describe 'with mkhomedir set to valid boolean false' do
+    let(:params) { { :mkhomedir => false } }
+    it { should_not contain_service('oddjobd') }
+
+    platforms.sort.each do |k,v|
+      context "on #{k}" do
+        let(:facts) do
+          v[:facts_hash]
+        end
+
+        if v[:facts_hash][:osfamily] == 'RedHat'
+          it do
+            should contain_exec('authconfig-mkhomedir').with({
+              :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --update',
+              :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --test`\" = \"`/usr/sbin/authconfig --test`\"",
+            })
+          end
+        end
+
+        if v[:facts_hash][:osfamily] == 'Debian'
+          it { should_not contain_file('/usr/share/pam-configs/pam_mkhomedir') }
+        end
+
+        if v[:facts_hash][:osfamily] == 'Suse'
+          it { should_not contain_exec('pam-config -a --mkhomedir') }
+        end
+      end
+    end
+  end
+
+  platforms.sort.each do |k,v|
+    describe "with manage_oddjobd set to valid boolean false on #{k}" do
+      let(:facts) do
+        v[:facts_hash]
+      end
+      let(:params) { { :manage_oddjobd => false } }
+
+      if v[:service_dependencies]
+        v[:service_dependencies].each do |svc|
+          it { should contain_service(svc).with_before(nil) }
+        end
+      end
+      it { should_not contain_service('oddjobd') }
+    end
+  end
+
+  platforms.sort.each do |k,v|
+    describe "with manage_oddjobd set to valid boolean true on #{k}" do
+      let(:facts) do
+        v[:facts_hash]
+      end
+      let(:params) { { :manage_oddjobd => true } }
+
+      if v[:service_dependencies]
+        v[:service_dependencies].each do |svc|
+          it { should contain_service(svc).with_before('Service[oddjobd]') }
+        end
+      end
+      it { should contain_service('oddjobd') }
+    end
+  end
+
+  describe 'with service_ensure set to valid string stopped' do
+    let(:params) { { :service_ensure => 'stopped' } }
+    it { should contain_service('oddjobd').with_ensure('stopped') }
+    it do
+      should contain_service('sssd').with({
+        :ensure     => 'stopped',
+        :enable     => false,
+      })
+    end
+  end
+
+  describe 'with service_dependencies set to valid array [ test1, test2 ]' do
+    let(:params) { { :service_dependencies => [ 'test1', 'test2' ] } }
+    it { should contain_service('test1') }
+    it { should contain_service('test2') }
+  end
+
+  describe 'with enable_mkhomedir_flags set to valid array [ --enable1, --enable2 ]' do
+    let(:params) { { :enable_mkhomedir_flags => [ '--enable1', '--enable2' ] } }
+
+    it do
+      should contain_exec('authconfig-mkhomedir').with({
+        :command => '/usr/sbin/authconfig --enable1 --enable2 --update',
+        :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enable1 --enable2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
+      })
+    end
+  end
+
+  describe 'with disable_mkhomedir_flags set to valid array [ --disable1, --disable2 ] (and mkhomedir set to false)' do
+    let(:params) { { :disable_mkhomedir_flags => [ '--disable1', '--disable2' ], :mkhomedir => false } }
+
+    it do
+      should contain_exec('authconfig-mkhomedir').with({
+        :command => '/usr/sbin/authconfig --disable1 --disable2 --update',
+        :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --disable1 --disable2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
+      })
+    end
+  end
+
+  describe 'with ensure_absent_flags set to valid array [ --absent1, --absent2 ] (and ensure set to absent)' do
+    let(:params) { { :ensure_absent_flags => [ '--absent1', '--absent2' ], :ensure => 'absent' } }
+
+    it do
+      should contain_exec('authconfig-mkhomedir').with({
+        :command => '/usr/sbin/authconfig --absent1 --absent2 --update',
+        :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --absent1 --absent2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
+      })
+    end
+  end
+
   describe 'on unsupported version of' do
     context 'Debian (not 7 our 8 or Ubuntu 14 or 16)' do
       let(:facts) do
@@ -466,77 +633,6 @@ describe 'sssd' do
           should contain_class('sssd')
         end.to raise_error(Puppet::Error, /Suse 11's os\.release\.minor is <1> and must be 3 or 4/)
       end
-    end
-  end
-
-  describe 'on RedHat 5' do
-    let(:facts) do
-      {
-        :osfamily => 'RedHat',
-        :operatingsystem => 'RedHat',
-        :operatingsystemmajrelease => '5',
-        :os => {
-          'family' => 'RedHat',
-          'release' => {
-            'major' => '5',
-          },
-        },
-        :rubyversion => '1.9.3',
-      }
-    end
-
-    context 'with service ensure stopped' do
-      let(:params) { { :service_ensure => 'stopped' } }
-      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
-    end
-  end
-
-
-  describe 'on RedHat 6' do
-    let(:facts) do
-      {
-        :osfamily => 'RedHat',
-        :operatingsystem => 'RedHat',
-        :operatingsystemrelease => '6.6',
-        :operatingsystemmajrelease => '6',
-        :rubyversion => '1.9.3',
-        :os => {
-          'family' => 'RedHat',
-          'release' => {
-            'major' => '6',
-          },
-        },
-      }
-    end
-
-    context 'with service ensure stopped' do
-      let(:params) { { :service_ensure => 'stopped' } }
-      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
-      it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
-    end
-  end
-
-  describe 'on RedHat 7' do
-    let(:facts) do
-      {
-        :osfamily => 'RedHat',
-        :operatingsystem => 'RedHat',
-        :operatingsystemrelease => '7.1',
-        :operatingsystemmajrelease => '7',
-        :rubyversion => '1.9.3',
-        :os => {
-          'family' => 'RedHat',
-          'release' => {
-            'major' => '7',
-          },
-        },
-      }
-    end
-
-    context 'with service ensure stopped' do
-      let(:params) { { :service_ensure => 'stopped' } }
-      it { is_expected.to contain_service('sssd').with_ensure('stopped') }
-      it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
     end
   end
 end
