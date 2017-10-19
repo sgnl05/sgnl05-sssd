@@ -302,7 +302,13 @@ describe 'sssd' do
           end
         end
 
-        if v[:service_dependencies] and v[:manage_oddjobd] == true
+        if v[:service_dependencies]
+          if v[:manage_oddjobd] == true
+            before = 'Service[oddjobd]'
+          else
+            before = nil
+          end
+
           v[:service_dependencies].each do |svc|
             it do
               should contain_service(svc).with({
@@ -310,7 +316,7 @@ describe 'sssd' do
                 :hasstatus  => true,
                 :hasrestart => true,
                 :enable     => true,
-                :before     => 'Service[oddjobd]',
+                :before     => before,
               })
             end
           end
