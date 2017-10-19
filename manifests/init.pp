@@ -138,7 +138,7 @@ class sssd (
   }
 
   if ! empty($service_dependencies) {
-    if $manage_oddjobd == true {
+    if $mkhomedir and $manage_oddjobd {
       $before = 'Service[oddjobd]'
     } else {
       $before = undef
