@@ -635,4 +635,76 @@ describe 'sssd' do
       end
     end
   end
+
+  describe 'variable type and content validations' do
+    mandatory_params = {}
+
+    validations = {
+      'array' => {
+        :name    => %w(extra_packages service_dependencies enable_mkhomedir_flags disable_mkhomedir_flags ensure_absent_flags),
+        :valid   => [%w(ar ray)],
+        :invalid => ['invalid', { 'ha' => 'sh' }, 3, 2.42, true, nil],
+        :message => 'expects an Array value',
+      },
+      'absolute_path' => {
+        :name    => %w[config_file],
+        :valid   => %w[/absolute/filepath /absolute/directory/],
+        :invalid => ['./relative/path', %w(ar ray), { 'ha' => 'sh' }, 3, 2.42, true, nil],
+        :message => 'Evaluation Error: Error while evaluating a Resource Statement',
+      },
+      'boolean' => {
+        :name    => %w(mkhomedir manage_oddjobd),
+        :valid   => [true, false],
+        :invalid => ['false', %w(ar ray), { 'ha' => 'sh' }, 3, 2.42, nil],
+        :message => 'Evaluation Error: Error while evaluating a Resource Statement',
+      },
+      'hash' => {
+        :name    => %w(config),
+        :valid   => [], # valid hashes are to complex to block test them here.
+        :invalid => ['string', 3, 2.42, %w(ar ray), true, nil],
+        :message => 'expects a Hash value',
+      },
+      # testing config_template would need existing template files
+      'string' => {
+        :name    => %w[sssd_package sssd_package_ensure sssd_service extra_packages_ensure],
+        :valid   => %w[string],
+        :invalid => [%w(ar ray), { 'ha' => 'sh' }, 3, 2.42, true],
+        :message => 'expects a String',
+      },
+      'validate_re ensure' => {
+        :name    => %w[ensure],
+        :valid   => %w[absent present],
+        :invalid => ['string', %w(ar ray), { 'ha' => 'sh' }, 3, 2.42, true, nil],
+        :message => 'expects a match for Enum',
+      },
+      'validate_re service_ensure' => {
+        :name    => %w[service_ensure],
+        :valid   => [true, false, 'running', 'stopped'],
+        :invalid => ['string', %w(ar ray), { 'ha' => 'sh' }, 3, 2.42, nil],
+        :message => 'Evaluation Error: Error while evaluating a Resource Statement',
+        :message => 'expects a value of type Boolean or Enum',
+      },
+    }
+
+    validations.sort.each do |type, var|
+      var[:name].each do |var_name|
+        var[:params] = {} if var[:params].nil?
+        var[:valid].each do |valid|
+          context "when #{var_name} (#{type}) is set to valid #{valid} (as #{valid.class})" do
+            let(:params) { [mandatory_params, var[:params], { :"#{var_name}" => valid, }].reduce(:merge) }
+            it { should compile }
+          end
+        end
+
+        var[:invalid].each do |invalid|
+          context "when #{var_name} (#{type}) is set to invalid #{invalid} (as #{invalid.class})" do
+            let(:params) { [mandatory_params, var[:params], { :"#{var_name}" => invalid, }].reduce(:merge) }
+            it 'should fail' do
+              expect { should contain_class(subject) }.to raise_error(Puppet::PreformattedError, /#{var[:message]}/)
+            end
+          end
+        end
+      end # var[:name].each
+    end # validations.sort.each
+  end # describe 'variable type and content validations'
 end
