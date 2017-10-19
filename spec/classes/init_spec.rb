@@ -259,46 +259,14 @@ describe 'sssd' do
           })
         end
 
-        it do
-          should contain_file('sssd.conf').with({
-            :ensure => 'file',
-            :path   => '/etc/sssd/sssd.conf',
-            :owner  => 'root',
-            :group  => 'root',
-            :mode   => '0600',
-            :content => /^# Managed by Puppet.\n\n\[sssd\]/
-          })
-        end
-
-        it do
-          should contain_service('sssd').with({
-            :ensure     => 'running',
-            :enable     => true,
-            :hasstatus  => true,
-            :hasrestart => true,
-            :subscribe  => 'File[sssd.conf]',
-          })
-        end
-
         if v[:extra_packages]
           v[:extra_packages].each do |pkg|
             it do
               should contain_package(pkg).with({
-                :ensure => 'present',
+                :ensure  => 'present',
                 :require => 'Package[sssd]',
               })
             end
-          end
-        end
-
-        if v[:manage_oddjobd] == true
-          it do
-            should contain_service('oddjobd').with({
-              :ensure     => 'running',
-              :enable     => true,
-              :hasstatus  => true,
-              :hasrestart => true,
-            })
           end
         end
 
@@ -322,6 +290,38 @@ describe 'sssd' do
           end
         end
 
+        if v[:manage_oddjobd] == true
+          it do
+            should contain_service('oddjobd').with({
+              :ensure     => 'running',
+              :enable     => true,
+              :hasstatus  => true,
+              :hasrestart => true,
+            })
+          end
+        end
+
+        it do
+          should contain_file('sssd.conf').with({
+            :ensure  => 'file',
+            :path    => '/etc/sssd/sssd.conf',
+            :owner   => 'root',
+            :group   => 'root',
+            :mode    => '0600',
+            :content => /^# Managed by Puppet.\n\n\[sssd\]/
+          })
+        end
+
+        if v[:facts_hash][:osfamily] == 'RedHat'
+          it do
+            should contain_exec('authconfig-mkhomedir').with({
+              :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --update',
+              :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --test`\" = \"`/usr/sbin/authconfig --test`\"",
+              :require => 'File[sssd.conf]',
+            })
+          end
+        end
+
         if v[:facts_hash][:osfamily] == 'Debian'
           it do
             should contain_file('/usr/share/pam-configs/pam_mkhomedir').with({
@@ -342,16 +342,6 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:osfamily] == 'RedHat'
-          it do
-            should contain_exec('authconfig-mkhomedir').with({
-              :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --update',
-              :unless => "/usr/bin/test \"`/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --test`\" = \"`/usr/sbin/authconfig --test`\"",
-              :require => 'File[sssd.conf]',
-            })
-          end
-        end
-
         if v[:facts_hash][:osfamily] == 'Suse'
           it do
             should contain_exec('pam-config -a --mkhomedir').with({
@@ -366,6 +356,16 @@ describe 'sssd' do
               :unless => '/usr/sbin/pam-config -q --sss | grep session:',
             })
           end
+        end
+
+        it do
+          should contain_service('sssd').with({
+            :ensure     => 'running',
+            :enable     => true,
+            :hasstatus  => true,
+            :hasrestart => true,
+            :subscribe  => 'File[sssd.conf]',
+          })
         end
       end
     end
