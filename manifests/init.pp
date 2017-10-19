@@ -137,13 +137,13 @@ class sssd (
     )
   }
 
-  if $manage_oddjobd == true {
-    $before = 'Service[oddjobd]'
-  } else {
-    $before = undef
-  }
-
   if ! empty($service_dependencies) {
+    if $manage_oddjobd == true {
+      $before = 'Service[oddjobd]'
+    } else {
+      $before = undef
+    }
+
     ensure_resource('service', $service_dependencies,
       {
         ensure     => running,
