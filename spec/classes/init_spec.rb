@@ -13,7 +13,6 @@ describe 'sssd' do
         :operatingsystem => 'Debian',
         :operatingsystemrelease => '7.1',
         :operatingsystemmajrelease => '7',
-        :rubyversion => '1.9.3',
         :os => {
           'family' => 'Debian',
           'release' => {
@@ -34,7 +33,6 @@ describe 'sssd' do
         :operatingsystem => 'Debian',
         :operatingsystemrelease => '8.1',
         :operatingsystemmajrelease => '8',
-        :rubyversion => '1.9.3',
         :os => {
           'family' => 'Debian',
           'release' => {
@@ -57,7 +55,6 @@ describe 'sssd' do
             'major' => '5',
           },
         },
-        :rubyversion => '1.9.3',
       },
     },
     'el6' => {
@@ -77,7 +74,6 @@ describe 'sssd' do
             'major' => '6',
           },
         },
-        :rubyversion => '1.9.3',
       },
     },
     'el7' => {
@@ -96,7 +92,6 @@ describe 'sssd' do
             'major' => '7',
           },
         },
-        :rubyversion => '1.9.3',
       },
     },
     'fedora25' => {
@@ -115,7 +110,6 @@ describe 'sssd' do
             'major' => '25',
           },
         },
-        :rubyversion => '1.9.3',
       },
     },
     'fedora26' => {
@@ -134,7 +128,6 @@ describe 'sssd' do
             'major' => '26',
           },
         },
-        :rubyversion => '1.9.3',
       },
     },
     'suse11_3' => {
@@ -147,7 +140,6 @@ describe 'sssd' do
         :operatingsystem => 'SLES',
         :operatingsystemrelease => '11.3',
         :operatingsystemmajrelease => '11',
-        :rubyversion => '2.1.9',
         :os => {
           'family' => 'Suse',
           'release' => {
@@ -167,7 +159,6 @@ describe 'sssd' do
         :operatingsystem => 'SLES',
         :operatingsystemrelease => '11.4',
         :operatingsystemmajrelease => '11',
-        :rubyversion => '2.1.9',
         :os => {
           'family' => 'Suse',
           'release' => {
@@ -191,7 +182,6 @@ describe 'sssd' do
         :operatingsystem => 'SLES',
         :operatingsystemrelease => '12.1',
         :operatingsystemmajrelease => '12',
-        :rubyversion => '2.1.9',
         :os => {
           'family' => 'Suse',
           'release' => {
@@ -211,7 +201,6 @@ describe 'sssd' do
         :operatingsystem => 'Ubuntu',
         :operatingsystemrelease => '14.04',
         :operatingsystemmajrelease => '14',
-        :rubyversion => '1.9.3',
         :os => {
           'family' => 'Debian',
           'release' => {
@@ -231,7 +220,6 @@ describe 'sssd' do
         :operatingsystem => 'Ubuntu',
         :operatingsystemrelease => '16.04',
         :operatingsystemmajrelease => '16',
-        :rubyversion => '1.9.3',
         :os => {
           'family' => 'Debian',
           'release' => {
@@ -423,9 +411,8 @@ describe 'sssd' do
     it { should contain_file('sssd.conf').with_path('/test/sssd/sssd.conf') }
   end
 
+  # testing config_template would need an existing template files
   describe 'with config_template set to valid string sssd/sssd.conf.sorted.erb' do
-    let(:params) { { :config_template => 'sssd/sssd.conf.sorted.erb' } }
-    it { should contain_file('sssd.conf').with_content(/# Managed by Puppet.\n\n\[domain\/example.com\]\naccess_provider = simple\nsimple_allow_users = root\n\n\[sssd\]\nconfig_file_version = 2\ndomains = example.com\nservices = nss, pam\n/) }
   end
 
   describe 'with mkhomedir set to valid boolean false' do
@@ -553,7 +540,6 @@ describe 'sssd' do
               'major' => '6',
             }
           },
-          :rubyversion => '1.9.3',
         }
       end
 
@@ -575,7 +561,6 @@ describe 'sssd' do
               'major' => '4',
             }
           },
-          :rubyversion => '1.9.3',
         }
       end
 
@@ -599,7 +584,6 @@ describe 'sssd' do
               'minor' => '0',
             }
           },
-          :rubyversion => '1.9.3',
         }
       end
 
@@ -624,7 +608,6 @@ describe 'sssd' do
               'minor' => '1',
             },
           },
-          :rubyversion => '1.9.3',
         }
       end
 

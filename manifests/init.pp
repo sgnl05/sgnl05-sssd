@@ -74,7 +74,7 @@ class sssd (
   Array $extra_packages = [],
   String $extra_packages_ensure = 'present',
   Stdlib::Absolutepath $config_file = '/etc/sssd/sssd.conf',
-  Variant[Undef, String] $config_template = undef,
+  String $config_template = 'sssd/sssd.conf.erb',
   Boolean $mkhomedir = true,
   Boolean $manage_oddjobd = false,
   Variant[Boolean, Enum['running', 'stopped']] $service_ensure = 'running',
@@ -111,17 +111,6 @@ class sssd (
 
   if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['7', '8', '14', '16']) {
     fail("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 7 or 8 for Debian and 14 or 16 for Ubuntu.")
-  }
-
-  # TODO: Remove sorted hash as we no longer support ruby <= 2.1.9
-  if $config_template == undef {
-    if versioncmp($::rubyversion, '1.9.3') >= 0 {
-      $cfg_template = 'sssd/sssd.conf.erb'
-    } else {
-      $cfg_template = 'sssd/sssd.conf.sorted.erb'
-    }
-  } else {
-    $cfg_template = $config_template
   }
 
   ensure_packages($sssd_package,
@@ -180,7 +169,7 @@ class sssd (
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
-    content => template($cfg_template),
+    content => template($config_template),
   }
 
   case $::osfamily {

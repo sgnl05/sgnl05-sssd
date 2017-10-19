@@ -25,6 +25,5 @@ RSpec.configure do |config|
         'major' => '7',
       },
     },
-    :rubyversion => '1.9.3',
   }
 end
