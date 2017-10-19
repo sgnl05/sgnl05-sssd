@@ -310,7 +310,7 @@ describe 'sssd' do
             :owner   => 'root',
             :group   => 'root',
             :mode    => '0600',
-            :content => /^# Managed by Puppet.\n\n\[sssd\]/
+            :content => /^# Managed by Puppet.\n\n\[sssd\]\ndomains = example.com\nconfig_file_version = 2\nservices = nss, pam\n\n\[domain\/example.com\]\naccess_provider = simple\nsimple_allow_users = root\n/
           })
         end
 
