@@ -299,6 +299,8 @@ describe 'sssd' do
               :hasrestart => true,
             })
           end
+        else
+          it { is_expected.not_to contain_service('oddjobd') }
         end
 
         it do
@@ -483,35 +485,9 @@ describe 'sssd' do
       }
     end
 
-    context 'with defaults for all parameters' do
-
-      it { is_expected.not_to contain_package('oddjob-mkhomedir') }
-      it { is_expected.not_to contain_service('oddjobd') }
-
-      it { is_expected.to contain_service('messagebus').with_ensure('running') }
-    end
-
     context 'with service ensure stopped' do
       let(:params) { { :service_ensure => 'stopped' } }
       it { is_expected.to contain_service('sssd').with_ensure('stopped') }
-    end
-
-    context 'with ruby without ordered hashes' do
-      let(:facts) do
-        {
-          :osfamily => 'RedHat',
-          :operatingsystem => 'RedHat',
-          :operatingsystemrelease => '5.7',
-          :operatingsystemmajrelease => '5',
-          :rubyversion => '1.8.7',
-          :os => {
-            'family' => 'RedHat',
-            'release' => {
-              'major' => '5',
-            },
-          },
-        }
-      end
     end
   end
 
@@ -533,35 +509,10 @@ describe 'sssd' do
       }
     end
 
-    context 'with defaults for all parameters' do
-      it { is_expected.to contain_service('oddjobd') }
-
-      it { is_expected.to contain_service('oddjobd').with_ensure('running') }
-      it { is_expected.to contain_service('messagebus').with_ensure('running') }
-    end
-
     context 'with service ensure stopped' do
       let(:params) { { :service_ensure => 'stopped' } }
       it { is_expected.to contain_service('sssd').with_ensure('stopped') }
       it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
-    end
-
-    context 'with ruby without ordered hashes' do
-      let(:facts) do
-        {
-          :osfamily => 'RedHat',
-          :operatingsystem => 'RedHat',
-          :operatingsystemrelease => '6.6',
-          :operatingsystemmajrelease => '6',
-          :rubyversion => '1.8.7',
-          :os => {
-            'family' => 'RedHat',
-            'release' => {
-              'major' => '6',
-            },
-          },
-        }
-      end
     end
   end
 
@@ -582,59 +533,10 @@ describe 'sssd' do
       }
     end
 
-    context 'with defaults for all parameters' do
-      it { is_expected.to contain_service('oddjobd') }
-
-      it { is_expected.to contain_service('oddjobd').with_ensure('running') }
-      it { is_expected.not_to contain_service('messagebus') }
-    end
-
     context 'with service ensure stopped' do
       let(:params) { { :service_ensure => 'stopped' } }
       it { is_expected.to contain_service('sssd').with_ensure('stopped') }
       it { is_expected.to contain_service('oddjobd').with_ensure('stopped') }
-    end
-
-    context 'with ruby without ordered hashes' do
-      let(:facts) do
-        {
-          :osfamily => 'RedHat',
-          :operatingsystem => 'RedHat',
-          :operatingsystemrelease => '7.1',
-          :operatingsystemmajrelease => '7',
-          :rubyversion => '1.8.7',
-          :os => {
-            'family' => 'RedHat',
-            'release' => {
-              'major' => '7',
-            },
-          },
-        }
-      end
-    end
-  end
-
-  describe 'on Debian 8' do
-    let(:facts) do
-      {
-        :osfamily => 'Debian',
-        :operatingsystem => 'Debian',
-        :operatingsystemrelease => '8.1',
-        :operatingsystemmajrelease => '8',
-        :rubyversion => '1.9.3',
-        :os => {
-          'family' => 'Debian',
-          'release' => {
-            'major' => '8',
-          },
-        },
-      }
-    end
-
-    context 'with defaults for all parameters' do
-      it { is_expected.to contain_package('libpam-runtime').with_ensure('present') }
-      it { is_expected.not_to contain_service('oddjobd') }
-      it { is_expected.not_to contain_service('messagebus') }
     end
   end
 end
