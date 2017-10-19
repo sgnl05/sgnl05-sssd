@@ -52,6 +52,9 @@
 # [*disable_mkhomedir_flags*]
 #   Flags to use with authconfig to disable auto-creation of home directories.
 #
+# [*ensure_absent_flags*]
+#   Flags to use with authconfig when service is disabled.
+#
 class sssd (
   Enum['present', 'absent'] $ensure = 'present',
   Hash $config = {
@@ -137,13 +140,13 @@ class sssd (
     )
   }
 
-  if $manage_oddjobd == true {
-    $before = 'Service[oddjobd]'
-  } else {
-    $before = undef
-  }
-
   if ! empty($service_dependencies) {
+    if $mkhomedir and $manage_oddjobd {
+      $before = 'Service[oddjobd]'
+    } else {
+      $before = undef
+    }
+
     ensure_resource('service', $service_dependencies,
       {
         ensure     => running,

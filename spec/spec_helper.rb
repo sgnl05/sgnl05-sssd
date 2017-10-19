@@ -16,5 +16,15 @@ RSpec.configure do |config|
   config.default_facts = {
     :environment => 'rp_env',
     :domain      => 'example.com',
+    :osfamily => 'RedHat',
+    :operatingsystem => 'RedHat',
+    :operatingsystemmajrelease => '7',
+    :os => {
+      'family'  => 'RedHat',
+      'release' => {
+        'major' => '7',
+      },
+    },
+    :rubyversion => '1.9.3',
   }
 end
