@@ -4,56 +4,44 @@
 #
 # === Parameters
 #
-# [*ensure*]
-#   Ensure if the sssd config file is to be present or absent.
+# @param ensure Ensure if the sssd config file is to be present or absent.
 #
-# [*config*]
-#   Hash containing entire SSSD config.
+# @param config Hash containing entire SSSD config.
 #
-# [*sssd_package*]
-#   Name of the sssd package. Only set this if your platform is not supported or
-#   you know what you're doing.
+# @param sssd_package Name of the sssd package. Only set this if your platform
+#   is not supported or you know what you're doing.
 #
-# [*sssd_package_ensure*]
-#   Sets the ensure parameter of the sssd package.
+# @param sssd_package_ensure Sets the ensure parameter of the sssd package.
 #
-# [*sssd_service*]
-#   Name of the sssd service.
+# @parma sssd_service Name of the sssd service.
 #
-# [*extra_packages*]
-#   Array of extra packages.
+# @param extra_packages Array of extra packages.
 #
-# [*extra_packages_ensure*]
-#   String. Value of ensure parameter for extra packages.
+# @param extra_packages_ensure Value of ensure parameter for extra packages.
 #
-# [*config_file*]
-#   Path to the sssd config file.
+# @param config_file Path to the sssd config file.
 #
-# [*config_template*]
-#   Defines the template used for the sssd config.
+# @param config_template Defines the template used for the sssd config.
 #
-# [*mkhomedir*]
-#   Boolean. Manage auto-creation of home directories on user login.
+# @param mkhomedir Whether or not to manage auto-creation of home directories on
+#   user login.
 #
-# [*manage_oddjobd*]
-#   Boolean. Manage the oddjobd service.
+# @param manage_oddjobd Whether or not to manage the oddjobd service.
 #
-# [*service_ensure*]
-#   Ensure if services should be running/stopped
+# @param service_ensure Ensure if services should be running/stopped.
 #
-# [*service_dependencies*]
-#   Array of service resource names to manage before managing sssd related
-#   services. Intended to be used to manage messagebus service to prevent
-#   `Error: Could not start Service[oddjobd]`.
+# @param service_dependencies Array of service resource names to manage before
+#   managing sssd related services. Intended to be used to manage messagebus
+#   service to prevent `Error: Could not start Service[oddjobd]`.
 #
-# [*enable_mkhomedir_flags*]
-#   Flags to use with authconfig to enable auto-creation of home directories.
+# @param enable_mkhomedir_flags Array of flags to use with authconfig to enable
+#   auto-creation of home directories.
 #
-# [*disable_mkhomedir_flags*]
-#   Flags to use with authconfig to disable auto-creation of home directories.
+# @param disable_mkhomedir_flags Array of flags to use with authconfig to disable
+#   auto-creation of home directories.
 #
-# [*ensure_absent_flags*]
-#   Flags to use with authconfig when service is disabled.
+# @param ensure_absent_flags Array of flags to use with authconfig when service
+#   is disabled.
 #
 class sssd (
   Enum['present', 'absent'] $ensure = 'present',
