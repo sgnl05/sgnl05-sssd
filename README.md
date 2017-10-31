@@ -19,6 +19,10 @@ This module installs and configures SSSD (System Security Services Daemon)
 
 [SSSD][0] is used to provide access to identity and authentication remote resource through a common framework that can provide caching and offline support to the system.
 
+## Documented with Puppet Strings
+
+[Puppet Strings documentation](http://sgnl05.github.io/sgnl05-sssd/doc/)
+
 ## Usage
 
 Example configuration:
