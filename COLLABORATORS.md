@@ -15,4 +15,4 @@
 1. `git checkout gh-pages && bundle exec rake doc && git commit -am
    'Docs for release x.y.z' && git push upstream gh-pages`
 
-1. Post in PR "@sgnl05 please release version x.y.z to the Forge"
+Tags will automatically be pushed to the Puppet Forge [sgnl05/sssd](https://forge.puppet.com/sgnl05/sssd)
