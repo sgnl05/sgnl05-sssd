@@ -8,10 +8,11 @@
   "project_page": "https://github.com/sgnl05/sgnl05-sssd",
   "issues_url": "https://github.com/sgnl05/sgnl05-sssd/issues",
   "tags": ["sssd", "authentication", "ldap", "active-directory", "ad", "freeipa", "ipa", "idm"],
+  "data_provider": "hiera",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": ["5","6","7"]
+      "operatingsystemrelease": ["5","6","7","25","26"]
     },
     {
       "operatingsystem": "CentOS",
@@ -35,7 +36,7 @@
     }
   ],
   "requirements": [
-    {"name":"puppet","version_requirement":">= 4.0.0 < 6.0.0" }
+    {"name":"puppet","version_requirement":">= 4.9.0 < 6.0.0" }
   ],
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 4.16.0 < 5.0.0"}
