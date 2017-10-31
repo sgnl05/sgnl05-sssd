@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.9
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="puppet_class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-sssd">sssd</h1>
+
+<p><a href="https://travis-ci.org/sgnl05/sgnl05-sssd"><img
+src="https://travis-ci.org/sgnl05/sgnl05-sssd.svg"></a> <a
+href="https://forge.puppetlabs.com/sgnl05/sssd"><img
+src="https://img.shields.io/puppetforge/v/sgnl05/sssd.svg"></a> <a
+href="https://forge.puppetlabs.com/sgnl05/sssd"><img
+src="https://img.shields.io/puppetforge/dt/sgnl05/sssd.svg"></a> <a
+href="https://forge.puppetlabs.com/sgnl05/sssd/scores"><img
+src="https://img.shields.io/puppetforge/f/sgnl05/sssd.svg"></a></p>
+
+<h4 id="label-Table+of+Contents">Table of Contents</h4>
+<ol><li>
+<p><a href="#overview">Overview</a></p>
+</li><li>
+<p><a href="#usage">Usage - Configuration options and additional
+functionality</a></p>
+</li><li>
+<p><a href="#reference">Reference - An under-the-hood peek at what the module
+is doing and how</a></p>
+</li><li>
+<p><a href="#limitations">Limitations - OS compatibility, etc.</a></p>
+</li><li>
+<p><a href="#credits">Credits</a></p>
+</li></ol>
+
+<h2 id="label-Overview">Overview</h2>
+
+<p>This module installs and configures SSSD (System Security Services Daemon)</p>
+
+<p><a href="https://docs.pagure.org/SSSD.sssd/">SSSD</a> is used to provide
+access to identity and authentication remote resource through a common
+framework that can provide caching and offline support to the system.</p>
+
+<h2 id="label-Documented+with+Puppet+Strings">Documented with Puppet Strings</h2>
+
+<p><a href="http://sgnl05.github.io/sgnl05-sssd/doc/">Puppet Strings
+documentation</a></p>
+
+<h2 id="label-Usage">Usage</h2>
+
+<p>Example configuration:</p>
+
+<pre class="code ruby"><code class="ruby">class {&#39;::sssd&#39;:
+  config =&gt; {
+    &#39;sssd&#39; =&gt; {
+      &#39;domains&#39;             =&gt; &#39;ad.example.com&#39;,
+      &#39;config_file_version&#39; =&gt; 2,
+      &#39;services&#39;            =&gt; [&#39;nss&#39;, &#39;pam&#39;],
+    },
+    &#39;domain/ad.example.com&#39; =&gt; {
+      &#39;ad_domain&#39;                      =&gt; &#39;ad.example.com&#39;,
+      &#39;ad_server&#39;                      =&gt; [&#39;server01.ad.example.com&#39;, &#39;server02.ad.example.com&#39;],
+      &#39;krb5_realm&#39;                     =&gt; &#39;AD.EXAMPLE.COM&#39;,
+      &#39;realmd_tags&#39;                    =&gt; &#39;joined-with-samba&#39;,
+      &#39;cache_credentials&#39;              =&gt; true,
+      &#39;id_provider&#39;                    =&gt; &#39;ad&#39;,
+      &#39;krb5_store_password_if_offline&#39; =&gt; true,
+      &#39;default_shell&#39;                  =&gt; &#39;/bin/bash&#39;,
+      &#39;ldap_id_mapping&#39;                =&gt; false,
+      &#39;use_fully_qualified_names&#39;      =&gt; false,
+      &#39;fallback_homedir&#39;               =&gt; &#39;/home/%d/%u&#39;,
+      &#39;access_provider&#39;                =&gt; &#39;simple&#39;,
+      &#39;simple_allow_groups&#39;            =&gt; [&#39;admins&#39;, &#39;users&#39;],
+    }
+  }
+}
+</code></pre>
+
+<p>…or the same config in Hiera:</p>
+
+<pre class="code ruby"><code class="ruby">sssd::config:
+  &#39;sssd&#39;:
+    &#39;domains&#39;: &#39;ad.example.com&#39;
+    &#39;config_file_version&#39;: 2
+    &#39;services&#39;:
+      - &#39;nss&#39;
+      - &#39;pam&#39;
+  &#39;domain/ad.example.com&#39;:
+    &#39;ad_domain&#39;: &#39;ad.example.com&#39;
+    &#39;ad_server&#39;:
+      - &#39;server01.ad.example.com&#39;
+      - &#39;server02.ad.example.com&#39;
+    &#39;krb5_realm&#39;: &#39;AD.EXAMPLE.COM&#39;
+    &#39;realmd_tags&#39;: &#39;joined-with-samba&#39;
+    &#39;cache_credentials&#39;: true
+    &#39;id_provider&#39;: &#39;ad&#39;
+    &#39;krb5_store_password_if_offline&#39;: true
+    &#39;default_shell&#39;: &#39;/bin/bash&#39;
+    &#39;ldap_id_mapping&#39;: false
+    &#39;use_fully_qualified_names&#39;: false
+    &#39;fallback_homedir&#39;: &#39;/home/%d/%u&#39;
+    &#39;access_provider&#39;: &#39;simple&#39;
+    &#39;simple_allow_groups&#39;:
+      - &#39;admins&#39;
+      - &#39;users&#39;</code></pre>
+
+<p>Will be represented in sssd.conf like this:</p>
+
+<pre class="code ruby"><code class="ruby">[sssd]
+domains = ad.example.com
+config_file_version = 2
+services = nss, pam
+
+[domain/ad.example.com]
+ad_domain = ad.example.com
+ad_server = server01.ad.example.com, server02.ad.example.com
+krb5_realm = AD.EXAMPLE.COM
+realmd_tags = joined-with-samba
+cache_credentials = true
+id_provider = ad
+krb5_store_password_if_offline = true
+default_shell = /bin/bash
+ldap_id_mapping = false
+use_fully_qualified_names = false
+fallback_homedir = /home/%d/%u
+access_provider = simple
+simple_allow_groups = admins, users</code></pre>
+
+<p>Tip: Using &#39;ad&#39; as <code>id_provider</code> require you to run
+&#39;adcli join domain&#39; on the target node. <em>adcli join</em> creates
+a computer account in the domain for the local machine, and sets up a
+keytab for the machine.</p>
+
+<p>Example:</p>
+
+<pre class="code ruby"><code class="ruby">$ sudo adcli join ad.example.com</code></pre>
+
+<p>Or you can use a relevant <a
+href="https://forge.puppet.com/modules?sort=rank&q=adcli">module</a> for
+automation.</p>
+
+<h2 id="label-Reference">Reference</h2>
+
+<h5 id="label-ensure"><code>ensure</code></h5>
+
+<p>Defines if sssd and its relevant packages are to be installed or removed.
+Valid values are &#39;present&#39; and &#39;absent&#39;. Type: string
+Default: present</p>
+
+<h5 id="label-config"><code>config</code></h5>
+
+<p>Configuration options structured like the sssd.conf file. Array values will
+be joined into comma-separated lists. Type: hash Default: <code>puppet
+config =&gt; {   &#39;sssd&#39; =&gt; {     &#39;config_file_version&#39;
+=&gt; &#39;2&#39;,     &#39;services&#39;            =&gt; &#39;nss,
+pam&#39;,     &#39;domains&#39;             =&gt; &#39;ad.example.com&#39;,
+},     &#39;domain/ad.example.com&#39; =&gt; {       &#39;id_provider&#39; 
+=&gt; &#39;ad&#39;,       &#39;krb5_realm&#39;        =&gt;
+&#39;AD.EXAMPLE.COM&#39;,       &#39;cache_credentials&#39; =&gt; true,  
+}, } </code></p>
+
+<h5 id="label-mkhomedir"><code>mkhomedir</code></h5>
+
+<p>Set to &#39;true&#39; to enable auto-creation of home directories on user
+login. Type: boolean Default: true</p>
+
+<h2 id="label-Limitations">Limitations</h2>
+
+<p>Tested on: * Fedora 22-25 * (RHEL|CentOS|OracleLinux) 5,6,7 * Ubuntu 14.04
+&amp; 16.04 * Suse 11 &amp; 12</p>
+
+<h2 id="label-Versioning">Versioning</h2>
+
+<p>The v1 series of this module will support both Puppet v3 and v4. The v2
+series of this module will drop support for Puppet v3.</p>
+
+<h2 id="label-Credits">Credits</h2>
+<ul><li>
+<p>sssd.conf template from <a
+href="https://github.com/walkamongus/sssd">walkamongus-sssd</a> by Chadwick
+Banning</p>
+</li><li>
+<p>See CHANGELOG file for additional credits</p>
+</li></ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Tue Oct 31 11:23:46 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.9 (ruby-2.1.9).
+</div>
+
+    </div>
+  </body>
+</html>

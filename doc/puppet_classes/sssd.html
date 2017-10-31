@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Puppet Class: sssd
+  
+    &mdash; Documentation by YARD 0.9.9
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "puppet_classes::sssd";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../puppet_class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (s)</a> &raquo;
+    <span class='title'><span class='object_link'>Puppet Classes</span></span>
+     &raquo; 
+    <span class="title">sssd</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="../puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Puppet Class: sssd</h1>
+<div class="box_info">
+  
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      manifests/init.pp
+    </dd>
+  </dl>
+</div>
+
+  <h2>Summary</h2>
+  Base sssd class
+
+<h2>Overview</h2>
+<div class="docstring">
+  <div class="discussion">
+    
+<p>Installs and configures SSSD</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Declaring the class</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_sssd'>sssd</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ensure</span>
+      
+      
+        <span class='type'>(<tt>Enum['present', 'absent']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;present&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Ensure if the sssd config file is to be present or absent.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{
+    &#39;sssd&#39;               =&gt; {
+      &#39;domains&#39;             =&gt; $::domain,
+      &#39;config_file_version&#39; =&gt; 2,
+      &#39;services&#39;            =&gt; [&#39;nss&#39;, &#39;pam&#39;],
+    },
+    &quot;domain/${::domain}&quot; =&gt; {
+      &#39;access_provider&#39;    =&gt; &#39;simple&#39;,
+      &#39;simple_allow_users&#39; =&gt; [&#39;root&#39;],
+    },
+  }</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Hash containing entire SSSD config.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sssd_package</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;sssd&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Name of the sssd package. Only set this if your platform is not supported
+or you know what you&#39;re doing.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sssd_package_ensure</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;present&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Sets the ensure parameter of the sssd package.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sssd_service</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;sssd&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Name of the sssd service.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>extra_packages</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Array of extra packages.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>extra_packages_ensure</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;present&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Value of ensure parameter for extra packages.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config_file</span>
+      
+      
+        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;/etc/sssd/sssd.conf&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Path to the sssd config file.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config_template</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;sssd/sssd.conf.erb&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Defines the template used for the sssd config.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>mkhomedir</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether or not to manage auto-creation of home directories on user login.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>manage_oddjobd</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether or not to manage the oddjobd service.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service_ensure</span>
+      
+      
+        <span class='type'>(<tt>Variant[Boolean, Enum['running', 'stopped']]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;running&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Ensure if services should be running/stopped.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service_dependencies</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Array of service resource names to manage before managing sssd related
+services. Intended to be used to manage messagebus service to prevent
+<code>Error: Could not start Service[oddjobd]</code>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>enable_mkhomedir_flags</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[
+    &#39;--enablesssd&#39;,
+    &#39;--enablesssdauth&#39;,
+    &#39;--enablemkhomedir&#39;,
+  ]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Array of flags to use with authconfig to enable auto-creation of home
+directories.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>disable_mkhomedir_flags</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[
+    &#39;--enablesssd&#39;,
+    &#39;--enablesssdauth&#39;,
+    &#39;--disablemkhomedir&#39;,
+  ]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Array of flags to use with authconfig to disable auto-creation of home
+directories.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ensure_absent_flags</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[
+    &#39;--disablesssd&#39;,
+    &#39;--disablesssdauth&#39;,
+  ]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Array of flags to use with authconfig when service is disabled.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><div class="method_details_list">
+  <table class="source_code">
+    <tr>
+      <td>
+        <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242</pre>
+      </td>
+      <td>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 47</span>
+
+class sssd (
+  Enum[&#39;present&#39;, &#39;absent&#39;] $ensure = &#39;present&#39;,
+  Hash $config = {
+    &#39;sssd&#39;               =&gt; {
+      &#39;domains&#39;             =&gt; $::domain,
+      &#39;config_file_version&#39; =&gt; 2,
+      &#39;services&#39;            =&gt; [&#39;nss&#39;, &#39;pam&#39;],
+    },
+    &quot;domain/${::domain}&quot; =&gt; {
+      &#39;access_provider&#39;    =&gt; &#39;simple&#39;,
+      &#39;simple_allow_users&#39; =&gt; [&#39;root&#39;],
+    },
+  },
+  String $sssd_package = &#39;sssd&#39;,
+  String $sssd_package_ensure = &#39;present&#39;,
+  String $sssd_service = &#39;sssd&#39;,
+  Array $extra_packages = [],
+  String $extra_packages_ensure = &#39;present&#39;,
+  Stdlib::Absolutepath $config_file = &#39;/etc/sssd/sssd.conf&#39;,
+  String $config_template = &#39;sssd/sssd.conf.erb&#39;,
+  Boolean $mkhomedir = true,
+  Boolean $manage_oddjobd = false,
+  Variant[Boolean, Enum[&#39;running&#39;, &#39;stopped&#39;]] $service_ensure = &#39;running&#39;,
+  Array $service_dependencies = [],
+  Array $enable_mkhomedir_flags = [
+    &#39;--enablesssd&#39;,
+    &#39;--enablesssdauth&#39;,
+    &#39;--enablemkhomedir&#39;,
+  ],
+  Array $disable_mkhomedir_flags = [
+    &#39;--enablesssd&#39;,
+    &#39;--enablesssdauth&#39;,
+    &#39;--disablemkhomedir&#39;,
+  ],
+  Array $ensure_absent_flags = [
+    &#39;--disablesssd&#39;,
+    &#39;--disablesssdauth&#39;,
+  ],
+) {
+
+  # Fail on unsupported platforms
+  if ($::facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39;) and !($::facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;] in [&#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;25&#39;, &#39;26&#39;]) {
+    fail(&quot;osfamily RedHat&#39;s os.release.major is &lt;${::facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}&gt; and must be 5, 6 or 7 for EL and 25 or 26 for Fedora.&quot;)
+  }
+
+  if $::facts[&#39;os&#39;][&#39;family&#39;] == &#39;Suse&#39; {
+    if !($::facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;] in [&#39;11&#39;, &#39;12&#39;]) {
+      fail(&quot;osfamily Suse&#39;s os.release.major is &lt;${::facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}&gt; and must be 11 or 12.&quot;)
+    }
+    if ($::facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;] == &#39;11&#39;) and !($::facts[&#39;os&#39;][&#39;release&#39;][&#39;minor&#39;] in [&#39;3&#39;, &#39;4&#39;]) {
+      fail(&quot;Suse 11&#39;s os.release.minor is &lt;${::facts[&#39;os&#39;][&#39;release&#39;][&#39;minor&#39;]}&gt; and must be 3 or 4.&quot;)
+    }
+  }
+
+  if ($::facts[&#39;os&#39;][&#39;family&#39;] == &#39;Debian&#39;) and !($::facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;] in [&#39;7&#39;, &#39;8&#39;, &#39;14&#39;, &#39;16&#39;]) {
+    fail(&quot;osfamily Debian&#39;s os.release.major is &lt;${::facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;]}&gt; and must be 7 or 8 for Debian and 14 or 16 for Ubuntu.&quot;)
+  }
+
+  ensure_packages($sssd_package,
+    {
+      ensure =&gt; $sssd_package_ensure,
+      before =&gt; File[&#39;sssd.conf&#39;],
+    }
+  )
+
+  if $extra_packages {
+    ensure_packages($extra_packages,
+      {
+        ensure  =&gt; $extra_packages_ensure,
+        require =&gt; Package[$sssd_package],
+      }
+    )
+  }
+
+  if ! empty($service_dependencies) {
+    if $mkhomedir and $manage_oddjobd {
+      $before = &#39;Service[oddjobd]&#39;
+    } else {
+      $before = undef
+    }
+
+    ensure_resource(&#39;service&#39;, $service_dependencies,
+      {
+        ensure     =&gt; running,
+        hasstatus  =&gt; true,
+        hasrestart =&gt; true,
+        enable     =&gt; true,
+        before     =&gt; $before,
+      }
+    )
+  }
+
+  if $mkhomedir and $manage_oddjobd {
+    ensure_resource(&#39;service&#39;, &#39;oddjobd&#39;,
+      {
+        ensure     =&gt; $service_ensure,
+        enable     =&gt; true,
+        hasstatus  =&gt; true,
+        hasrestart =&gt; true,
+      }
+    )
+  }
+
+  $file_ensure = $ensure ? {
+    &#39;present&#39; =&gt; &#39;file&#39;,
+    default   =&gt; $ensure,
+  }
+
+  file { &#39;sssd.conf&#39;:
+    ensure  =&gt; $file_ensure,
+    path    =&gt; $config_file,
+    owner   =&gt; &#39;root&#39;,
+    group   =&gt; &#39;root&#39;,
+    mode    =&gt; &#39;0600&#39;,
+    content =&gt; template($config_template),
+  }
+
+  case $::osfamily {
+    &#39;RedHat&#39;: {
+      if $ensure == &#39;present&#39; {
+        $authconfig_flags = $mkhomedir ? {
+          true  =&gt; join($enable_mkhomedir_flags, &#39; &#39;),
+          false =&gt; join($disable_mkhomedir_flags, &#39; &#39;),
+        }
+      }
+      else {
+        $authconfig_flags = join($ensure_absent_flags, &#39; &#39;)
+      }
+
+      $authconfig_update_cmd = &quot;/usr/sbin/authconfig ${authconfig_flags} --update&quot;
+      $authconfig_test_cmd   = &quot;/usr/sbin/authconfig ${authconfig_flags} --test&quot;
+      $authconfig_check_cmd  = &quot;/usr/bin/test \&quot;`${authconfig_test_cmd}`\&quot; = \&quot;`/usr/sbin/authconfig --test`\&quot;&quot;
+
+      exec { &#39;authconfig-mkhomedir&#39;:
+        command =&gt; $authconfig_update_cmd,
+        unless  =&gt; $authconfig_check_cmd,
+        require =&gt; File[&#39;sssd.conf&#39;],
+      }
+    }
+    &#39;Debian&#39;: {
+      if $mkhomedir {
+        file { &#39;/usr/share/pam-configs/pam_mkhomedir&#39;:
+          ensure =&gt; &#39;file&#39;,
+          owner  =&gt; &#39;root&#39;,
+          group  =&gt; &#39;root&#39;,
+          mode   =&gt; &#39;0644&#39;,
+          source =&gt; &#39;puppet:///modules/sssd/pam_mkhomedir&#39;,
+          notify =&gt; Exec[&#39;pam-auth-update&#39;],
+        }
+
+        exec { &#39;pam-auth-update&#39;:
+          path        =&gt; &#39;/bin:/usr/bin:/sbin:/usr/sbin&#39;,
+          refreshonly =&gt; true,
+        }
+      }
+    }
+    &#39;Suse&#39;: {
+      $pamconfig_mkhomedir_check_cmd  = &#39;/usr/sbin/pam-config -q --mkhomedir | grep session:&#39;
+      $pamconfig_check_cmd  = &#39;/usr/sbin/pam-config -q --sss | grep session:&#39;
+
+      if $mkhomedir {
+
+        exec { &#39;pam-config -a --mkhomedir&#39;:
+          path   =&gt; &#39;/bin:/usr/bin:/sbin:/usr/sbin&#39;,
+          unless =&gt; $pamconfig_mkhomedir_check_cmd,
+        }
+      }
+
+      exec { &#39;pam-config -a --sss&#39;:
+        path   =&gt; &#39;/bin:/usr/bin:/sbin:/usr/sbin&#39;,
+        unless =&gt; $pamconfig_check_cmd,
+      }
+    }
+    default: { }
+  }
+
+  $service_ensure_real = $sssd::ensure ? {
+    &#39;absent&#39; =&gt; &#39;stopped&#39;,
+    default  =&gt; $sssd::service_ensure,
+  }
+
+  $service_enable = $service_ensure ? {
+    &#39;stopped&#39; =&gt; false,
+    default   =&gt; true,
+  }
+
+  ensure_resource(&#39;service&#39;, $sssd_service,
+    {
+      ensure     =&gt; $service_ensure_real,
+      enable     =&gt; $service_enable,
+      hasstatus  =&gt; true,
+      hasrestart =&gt; true,
+      subscribe  =&gt; File[&#39;sssd.conf&#39;],
+    }
+  )
+}</pre>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+
+      <div id="footer">
+  Generated on Tue Oct 31 11:23:47 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.9 (ruby-2.1.9).
+</div>
+
+    </div>
+  </body>
+</html>
