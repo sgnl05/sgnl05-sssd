@@ -46,8 +46,9 @@ if puppetversion && puppetversion < '5.0'
   gem 'semantic_puppet', :require => false
 end
 
-gem 'metadata-json-lint',           :require => false
-gem 'public_suffix', '1.4.6',        :require => false
+gem 'metadata-json-lint',     :require => false
+gem 'public_suffix', '1.4.6', :require => false
+gem 'puppet-strings',         :require => false
 
 if RUBY_VERSION < '2.2.5'
   # beaker 3.1+ requires ruby 2.2.5.  Lock to 2.0
