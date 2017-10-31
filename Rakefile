@@ -35,6 +35,13 @@ task :success do
   puts "\n\e[32mAll tests passing...\e[0m"
 end
 
+# Puppet Strings (Documentation generation from inline comments)
+# See: https://github.com/puppetlabs/puppet-strings#rake-tasks
+require 'puppet-strings/tasks'
+
+desc 'Alias for strings:generate'
+task :doc => ['strings:generate']
+
 desc 'Run all'
 task :all => [
   :clean,
@@ -44,7 +51,7 @@ task :all => [
 
 desc 'Run validate, lint and spec tests.'
 task :test do
-  [:lint, :validate, :syntax, :spec].each do |test|
+  [:lint, :validate, :syntax, :spec, :doc].each do |test|
     Rake::Task[test].invoke
   end
 end

@@ -1,8 +1,9 @@
-# == Class: sssd
+# @summary Base sssd class
 #
 # Installs and configures SSSD
 #
-# === Parameters
+# @example Declaring the class
+#   include sssd
 #
 # @param ensure Ensure if the sssd config file is to be present or absent.
 #
@@ -13,7 +14,7 @@
 #
 # @param sssd_package_ensure Sets the ensure parameter of the sssd package.
 #
-# @parma sssd_service Name of the sssd service.
+# @param sssd_service Name of the sssd service.
 #
 # @param extra_packages Array of extra packages.
 #
