@@ -48,3 +48,10 @@ task :test do
     Rake::Task[test].invoke
   end
 end
+
+# Puppet Strings (Documentation generation from inline comments)
+# See: https://github.com/puppetlabs/puppet-strings#rake-tasks
+require 'puppet-strings/tasks'
+
+desc 'Alias for strings:generate'
+task :doc => ['strings:generate']
