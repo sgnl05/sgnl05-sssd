@@ -190,7 +190,7 @@ describe 'sssd' do
         },
       },
     },
-    'ubuntu14' => {
+    'ubuntu14_04' => {
       :extra_packages => [
         'libpam-runtime',
         'libpam-sss',
@@ -200,16 +200,16 @@ describe 'sssd' do
         :osfamily => 'Debian',
         :operatingsystem => 'Ubuntu',
         :operatingsystemrelease => '14.04',
-        :operatingsystemmajrelease => '14',
+        :operatingsystemmajrelease => '14.04',
         :os => {
           'family' => 'Debian',
           'release' => {
-            'major' => '14',
+            'major' => '14.04',
           },
         },
       },
     },
-    'ubuntu16' => {
+    'ubuntu16_04' => {
       :extra_packages => [
         'libpam-runtime',
         'libpam-sss',
@@ -219,11 +219,11 @@ describe 'sssd' do
         :osfamily => 'Debian',
         :operatingsystem => 'Ubuntu',
         :operatingsystemrelease => '16.04',
-        :operatingsystemmajrelease => '16',
+        :operatingsystemmajrelease => '16.04',
         :os => {
           'family' => 'Debian',
           'release' => {
-            'major' => '16',
+            'major' => '16.04',
           },
         },
       },
@@ -528,7 +528,7 @@ describe 'sssd' do
   end
 
   describe 'on unsupported version of' do
-    context 'Debian (not 7 our 8 or Ubuntu 14 or 16)' do
+    context 'Debian (not 7 our 8 or Ubuntu 14.04 or 16.04)' do
       let(:facts) do
         {
           :osfamily => 'Debian',
@@ -546,7 +546,7 @@ describe 'sssd' do
       it 'unsupported Debian / Ubuntu should fail' do
         expect do
           should contain_class('sssd')
-        end.to raise_error(Puppet::Error, /osfamily Debian's os\.release\.major is <6> and must be 7 or 8 for Debian and 14 or 16 for Ubuntu/)
+        end.to raise_error(Puppet::Error, /osfamily Debian's os\.release\.major is <6> and must be 7 or 8 for Debian and 14.04 or 16.04 for Ubuntu/)
       end
     end
     context 'RedHat (not 5, 6 or 7 or Fedora 25 or 26)' do
