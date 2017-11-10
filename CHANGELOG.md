@@ -1,3 +1,7 @@
+### 2017-11-10 (2.2.1)
+  * Fixed bug that prevented Ubuntu systems from being recognized.
+    (Garrett Honeycutt)
+
 ### 2017-10-31 (2.2.0)
   * Test all supported platforms!! (Phil Friderici)
   * Deprecate params pattern in favor of data in modules with Hiera 5 (Garrett Honeycutt)
