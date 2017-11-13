@@ -8,7 +8,6 @@
   "project_page": "https://github.com/sgnl05/sgnl05-sssd",
   "issues_url": "https://github.com/sgnl05/sgnl05-sssd/issues",
   "tags": ["sssd", "authentication", "ldap", "active-directory", "ad", "freeipa", "ipa", "idm"],
-  "data_provider": "hiera",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
