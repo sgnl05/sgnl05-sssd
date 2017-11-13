@@ -1,5 +1,8 @@
+### 2017-11-13 (2.3.0)
+  * Add support for Debian 9 (Garrett Honeycutt)
+
 ### 2017-11-13 (2.2.2)
-  * Remove deprecated key from metadata
+  * Remove deprecated key from metadata (Garrett Honeycutt)
 
 ### 2017-11-10 (2.2.1)
   * Fixed bug that prevented Ubuntu systems from being recognized.
