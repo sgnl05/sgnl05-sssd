@@ -1,3 +1,6 @@
+### 2017-11-13 (2.2.2)
+  * Remove deprecated key from metadata
+
 ### 2017-11-10 (2.2.1)
   * Fixed bug that prevented Ubuntu systems from being recognized.
     (Garrett Honeycutt)

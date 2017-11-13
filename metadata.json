@@ -1,6 +1,6 @@
 {
   "name": "sgnl05-sssd",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "author": "sgnl05",
   "summary": "Install and configure SSSD",
   "license": "GPL-3.0+",
