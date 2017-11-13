@@ -41,6 +41,26 @@ describe 'sssd' do
         },
       },
     },
+    'debian9' => {
+      :extra_packages => [
+        'libpam-runtime',
+        'libpam-sss',
+        'libnss-sss',
+      ],
+      :manage_oddjobd => false,
+      :facts_hash => {
+        :osfamily => 'Debian',
+        :operatingsystem => 'Debian',
+        :operatingsystemrelease => '9.0',
+        :operatingsystemmajrelease => '9',
+        :os => {
+          'family' => 'Debian',
+          'release' => {
+            'major' => '9',
+          },
+        },
+      },
+    },
     'el5' => {
       :extra_packages => ['authconfig'],
       :service_dependencies => ['messagebus'],
@@ -528,7 +548,7 @@ describe 'sssd' do
   end
 
   describe 'on unsupported version of' do
-    context 'Debian (not 7 our 8 or Ubuntu 14.04 or 16.04)' do
+    context 'Debian (not 7, 8 or 9 or Ubuntu 14.04 or 16.04)' do
       let(:facts) do
         {
           :osfamily => 'Debian',
@@ -546,7 +566,7 @@ describe 'sssd' do
       it 'unsupported Debian / Ubuntu should fail' do
         expect do
           should contain_class('sssd')
-        end.to raise_error(Puppet::Error, /osfamily Debian's os\.release\.major is <6> and must be 7 or 8 for Debian and 14.04 or 16.04 for Ubuntu/)
+        end.to raise_error(Puppet::Error, /osfamily Debian's os\.release\.major is <6> and must be 7, 8 or 9 for Debian and 14.04 or 16.04 for Ubuntu/)
       end
     end
     context 'RedHat (not 5, 6 or 7 or Fedora 25 or 26)' do
