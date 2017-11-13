@@ -98,8 +98,8 @@ class sssd (
     }
   }
 
-  if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['7', '8', '14.04', '16.04']) {
-    fail("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 7 or 8 for Debian and 14.04 or 16.04 for Ubuntu.")
+  if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['7', '8', '9', '14.04', '16.04']) {
+    fail("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 7, 8 or 9 for Debian and 14.04 or 16.04 for Ubuntu.")
   }
 
   ensure_packages($sssd_package,
