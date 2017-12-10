@@ -1,3 +1,6 @@
+### 2017-12-10 (2.4.0)
+  * Add support for Gentoo (Garrett Honeycutt)
+
 ### 2017-11-13 (2.3.0)
   * Add support for Debian 9 (Garrett Honeycutt)
 
