@@ -150,6 +150,38 @@ describe 'sssd' do
         },
       },
     },
+    'gentoo3' => {
+      :manage_oddjobd => false,
+      :facts_hash => {
+        :osfamily => 'Gentoo',
+        :operatingsystem => 'Gentoo',
+        :operatingsystemrelease => '3.14.36-gentoo',
+        :operatingsystemmajrelease => '3',
+        :os => {
+          'family' => 'Gentoo',
+          'release' => {
+            'major' => '3',
+            'minor' => '14',
+          },
+        },
+      },
+    },
+    'gentoo4' => {
+      :manage_oddjobd => false,
+      :facts_hash => {
+        :osfamily => 'Gentoo',
+        :operatingsystem => 'Gentoo',
+        :operatingsystemrelease => '4.14.4-gentoo',
+        :operatingsystemmajrelease => '4',
+        :os => {
+          'family' => 'Gentoo',
+          'release' => {
+            'major' => '4',
+            'minor' => '14',
+          },
+        },
+      },
+    },
     'suse11_3' => {
       :extra_packages => [
         'sssd-32bit',

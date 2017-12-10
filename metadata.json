@@ -18,6 +18,10 @@
       "operatingsystemrelease": ["5","6","7"]
     },
     {
+      "operatingsystem": "Gentoo",
+      "operatingsystemrelease": ["3","4"]
+    },
+    {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": ["5","6","7"]
     },

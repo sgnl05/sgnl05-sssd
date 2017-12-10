@@ -152,8 +152,10 @@ Default: true
 ## Limitations
 
 Tested on:
+* Debian 7,8,9
 * Fedora 22-25
 * (RHEL|CentOS|OracleLinux) 5,6,7
+* Gentoo 3 & 4
 * Ubuntu 14.04 & 16.04
 * Suse 11 & 12
 
