@@ -1,3 +1,6 @@
+### 2017-12-27
+  * Fix Hiera bug (John Strong)
+
 ### 2017-12-10 (2.4.0)
   * Add support for Gentoo (Garrett Honeycutt)
 
