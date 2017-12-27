@@ -4,5 +4,5 @@
 :yaml:
   :datadir: "data"
 :hierarchy:
-  - "os/%{facts.os.family}/%{facts.os.release.major}"
-  - "osfamily/%{facts.os.family}"
+  - "os/%{facts.os.family}/%{facts.os.release.major}.yaml"
+  - "osfamily/%{facts.os.family}.yaml"
