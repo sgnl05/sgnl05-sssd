@@ -1,4 +1,7 @@
-### 2017-12-27
+### 2018-01-13 (2.5.0)
+  * Add support for Amazon Linux 2 (Eric Olsen and Garrett Honeycutt)
+
+### 2017-12-27 (2.4.1)
   * Fix Hiera bug (John Strong)
 
 ### 2017-12-10 (2.4.0)
