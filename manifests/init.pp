@@ -3,7 +3,7 @@
 # Installs and configures SSSD
 #
 # @example Declaring the class
-#   include sssd
+#   include ::sssd
 #
 # @param ensure Ensure if the sssd config file is to be present or absent.
 #
