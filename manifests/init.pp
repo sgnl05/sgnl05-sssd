@@ -3,7 +3,7 @@
 # Installs and configures SSSD
 #
 # @example Declaring the class
-#   include sssd
+#   include ::sssd
 #
 # @param ensure Ensure if the sssd config file is to be present or absent.
 #
@@ -89,8 +89,8 @@ class sssd (
     if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
       fail("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
     }
-    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['5', '6', '7', '25', '26']) {
-      fail("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 5, 6 or 7 for EL and 25 or 26 for Fedora.")
+    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['5', '6', '7', '26']) {
+      fail("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 5, 6 or 7 for EL and 26 for Fedora.")
     }
   }
 
