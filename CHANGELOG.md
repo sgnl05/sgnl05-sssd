@@ -1,3 +1,6 @@
+### 2018-01-13 (2.6.0)
+  * Drop Support for Fedora 25 since it is end of life. (GH)
+
 ### 2018-01-13 (2.5.0)
   * Add support for Amazon Linux 2 (Eric Olsen and Garrett Honeycutt)
 
