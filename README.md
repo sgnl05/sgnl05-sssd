@@ -152,6 +152,7 @@ Default: true
 ## Limitations
 
 Tested on:
+* Amazon Linux 2
 * Debian 7,8,9
 * Fedora 22-25
 * (RHEL|CentOS|OracleLinux) 5,6,7

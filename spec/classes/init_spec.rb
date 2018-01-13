@@ -1,6 +1,25 @@
 require 'spec_helper'
 describe 'sssd' do
   platforms = {
+    'amazon_linux2' => {
+      :extra_packages => [
+        'authconfig',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Amazon',
+        :operatingsystemmajrelease => '2',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Amazon',
+          'release' => {
+            'major' => '2',
+          },
+        },
+      },
+    },
     'debian7' => {
       :extra_packages => [
         'libpam-runtime',
@@ -580,6 +599,29 @@ describe 'sssd' do
   end
 
   describe 'on unsupported version of' do
+    context 'Amazon Linux (not 2)' do
+      let(:facts) do
+        {
+          :osfamily => 'RedHat',
+          :operatingsystem => 'Amazon',
+          :operatingsystemmajrelease => '1',
+          :os => {
+            'family' => 'RedHat',
+            'name'   => 'Amazon',
+            'release' => {
+              'major' => '1',
+            }
+          },
+        }
+      end
+
+      it 'unsupported Amazon Linux should fail' do
+        expect do
+          should contain_class('sssd')
+        end.to raise_error(Puppet::Error, /osname Amazon's os\.release\.major is <1> and must be 2/)
+      end
+    end
+
     context 'Debian (not 7, 8 or 9 or Ubuntu 14.04 or 16.04)' do
       let(:facts) do
         {
@@ -601,6 +643,7 @@ describe 'sssd' do
         end.to raise_error(Puppet::Error, /osfamily Debian's os\.release\.major is <6> and must be 7, 8 or 9 for Debian and 14.04 or 16.04 for Ubuntu/)
       end
     end
+
     context 'RedHat (not 5, 6 or 7 or Fedora 25 or 26)' do
       let(:facts) do
         {
