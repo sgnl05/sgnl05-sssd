@@ -15,7 +15,7 @@
     },
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": ["5","6","7","25","26"]
+      "operatingsystemrelease": ["5","6","7","26"]
     },
     {
       "operatingsystem": "CentOS",
