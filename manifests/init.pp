@@ -85,8 +85,13 @@ class sssd (
 ) {
 
   # Fail on unsupported platforms
-  if ($::facts['os']['family'] == 'RedHat') and !($::facts['os']['release']['major'] in ['5', '6', '7', '25', '26']) {
-    fail("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 5, 6 or 7 for EL and 25 or 26 for Fedora.")
+  if ($::facts['os']['family'] == 'RedHat') {
+    if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
+      fail("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
+    }
+    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['5', '6', '7', '25', '26']) {
+      fail("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 5, 6 or 7 for EL and 25 or 26 for Fedora.")
+    }
   }
 
   if $::facts['os']['family'] == 'Suse' {
@@ -100,6 +105,15 @@ class sssd (
 
   if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['7', '8', '9', '14.04', '16.04']) {
     fail("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 7, 8 or 9 for Debian and 14.04 or 16.04 for Ubuntu.")
+  }
+
+  # Manually set service provider to systemd on Amazon Linux 2
+  # which is based off el7 and includes systemd.
+  # See issue PUP-8248 - https://tickets.puppetlabs.com/browse/PUP-8248
+  if ($::facts['os']['name'] == 'Amazon') and ($::facts['os']['release']['major'] == '2') {
+    $service_provider = 'systemd'
+  } else {
+    $service_provider = undef
   }
 
   ensure_packages($sssd_package,
@@ -143,6 +157,7 @@ class sssd (
         enable     => true,
         hasstatus  => true,
         hasrestart => true,
+        provider   => $service_provider,
       }
     )
   }

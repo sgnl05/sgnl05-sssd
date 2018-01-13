@@ -150,6 +150,25 @@ describe 'sssd' do
         },
       },
     },
+    'al2' => {
+      :extra_packages => [
+        'authconfig',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Amazon',
+        :operatingsystemmajrelease => '2',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Amazon',
+          'release' => {
+            'major' => '2',
+          },
+        },
+      },
+    },
     'gentoo3' => {
       :manage_oddjobd => false,
       :facts_hash => {
