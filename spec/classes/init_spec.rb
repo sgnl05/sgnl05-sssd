@@ -151,6 +151,24 @@ describe 'sssd' do
         },
       },
     },
+    'fedora27' => {
+      :extra_packages => [
+        'authconfig',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'RedHat',
+        :operatingsystemmajrelease => '27',
+        :os => {
+          'family' => 'RedHat',
+          'release' => {
+            'major' => '27',
+          },
+        },
+      },
+    },
     'gentoo3' => {
       :manage_oddjobd => false,
       :facts_hash => {
@@ -626,7 +644,7 @@ describe 'sssd' do
       end
     end
 
-    context 'RedHat (not 5, 6 or 7 or Fedora 26)' do
+    context 'RedHat (not 5, 6 or 7 or Fedora 26 or 27)' do
       let(:facts) do
         {
           :osfamily => 'RedHat',
@@ -644,7 +662,7 @@ describe 'sssd' do
       it 'unsupported EL should fail' do
         expect do
           should contain_class('sssd')
-        end.to raise_error(Puppet::Error, /osfamily RedHat's os\.release\.major is <4> and must be 5, 6 or 7 for EL and 26 for Fedora/)
+        end.to raise_error(Puppet::Error, /osfamily RedHat's os\.release\.major is <4> and must be 5, 6 or 7 for EL and 26 or 27 for Fedora/)
       end
     end
 
