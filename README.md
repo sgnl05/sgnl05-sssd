@@ -154,7 +154,7 @@ Default: true
 Tested on:
 * Amazon Linux 2
 * Debian 7,8,9
-* Fedora 26
+* Fedora 26 and 27
 * (RHEL|CentOS|OracleLinux) 5,6,7
 * Gentoo 3 & 4
 * Ubuntu 14.04 & 16.04

@@ -1,3 +1,6 @@
+### 2018-02-02 (2.7.0)
+  * Add support for Fedora 27 (@dnaeon - Marin Atanasov Nikolov)
+
 ### 2018-01-13 (2.6.0)
   * Drop Support for Fedora 25 since it is end of life. (GH)
 
