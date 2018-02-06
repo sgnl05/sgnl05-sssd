@@ -85,11 +85,11 @@ class sssd (
 ) {
 
   # Fail on unsupported platforms
-  if ($osfamily == 'RedHat') {
-    if ($osfamily== 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
+  if ($::facts['os']['family'] == 'RedHat') {
+    if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
       fail("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
     }
-    if !($osfamily == 'Amazon') and !($::facts['os']['release']['major'] in ['5', '6', '7', '26', '27']) {
+    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['5', '6', '7', '26', '27']) {
       fail("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 5, 6 or 7 for EL and 26 or 27 for Fedora.")
     }
   }
