@@ -62,7 +62,7 @@ class sssd (
   String $sssd_service = 'sssd',
   Array $extra_packages = [],
   String $extra_packages_ensure = 'present',
-  Stdlib::Absolutepath $config_file = '/etc/sssd/sssd.conf',
+  String $config_file = '/etc/sssd/sssd.conf',
   String $config_template = 'sssd/sssd.conf.erb',
   Boolean $mkhomedir = true,
   Boolean $manage_oddjobd = false,
