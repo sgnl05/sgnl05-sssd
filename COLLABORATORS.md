@@ -4,9 +4,9 @@
 
 1. Update the `CHANGELOG.md`
 
-1. `git commit -am 'Release x.y.z`
+1. `git commit -am 'Release x.y.z'`
 
-1. `git tag -a 'x.y.z' -m 'x.y.z`
+1. `git tag -a 'x.y.z' -m 'x.y.z'`
 
 1. `git push upstream master`
 
