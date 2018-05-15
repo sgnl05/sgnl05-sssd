@@ -1,3 +1,6 @@
+### 2018-05-15 (2.8.0)
+  * Add support for Ubuntu 18.04 (@dnlsng)
+
 ### 2018-02-02 (2.7.0)
   * Add support for Fedora 27 (@dnaeon - Marin Atanasov Nikolov)
 
