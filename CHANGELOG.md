@@ -1,3 +1,8 @@
+### 2018-05-21 (2.9.0)
+  * Warn instead of failing on errors. This allows older, EOL platforms
+    to be used while allowing us to not have to support them.
+  * Test with ruby 2.4.3 when using Puppet 5
+
 ### 2018-05-15 (2.8.0)
   * Add support for Ubuntu 18.04 (@dnlsng)
 
