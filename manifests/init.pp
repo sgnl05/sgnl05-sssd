@@ -158,6 +158,7 @@ class sssd (
         hasstatus  => true,
         hasrestart => true,
         provider   => $service_provider,
+        require    => Package[$extra_packages],
       }
     )
   }
