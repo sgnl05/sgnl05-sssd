@@ -1,3 +1,6 @@
+### 2019-01-07 (2.10.0)
+  * Support Puppet 6 and stdlib 5
+
 ### 2018-05-21 (2.9.0)
   * Warn instead of failing on errors. This allows older, EOL platforms
     to be used while allowing us to not have to support them.
