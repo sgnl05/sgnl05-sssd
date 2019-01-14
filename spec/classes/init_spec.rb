@@ -409,7 +409,7 @@ describe 'sssd' do
               :owner  => 'root',
               :group  => 'root',
               :mode   => '0644',
-              :source => "puppet:///modules/sssd/pam_mkhomedir",
+              :content => %r{pam_mkhomedir.so umask=0022},
               :notify => 'Exec[pam-auth-update]',
             })
           end
@@ -427,6 +427,13 @@ describe 'sssd' do
             should contain_exec('pam-config -a --mkhomedir').with({
               :path   => '/bin:/usr/bin:/sbin:/usr/sbin',
               :unless => '/usr/sbin/pam-config -q --mkhomedir | grep session:',
+            })
+          end
+
+          it do
+            should contain_exec('pam-config -a --mkhomedir-umask=0022').with({
+              :path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+              :unless => '/usr/sbin/pam-config -q --mkhomedir | grep umask=0022',
             })
           end
 
