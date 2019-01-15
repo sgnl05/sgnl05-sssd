@@ -624,6 +624,41 @@ describe 'sssd' do
     end
   end
 
+  describe 'with pam_mkhomedir_umask set to 0077' do
+    let(:params) {{:pam_mkhomedir_umask => '0077'}}
+
+    platforms.sort.each do |k, v|
+      context "on #{k}" do
+        let(:facts) do
+          v[:facts_hash]
+        end
+
+        if v[:facts_hash][:osfamily] == 'Debian'
+          it do
+            should contain_file('/usr/share/pam-configs/pam_mkhomedir').with({
+              :ensure => 'file',
+              :owner => 'root',
+              :group => 'root',
+              :mode => '0644',
+              :content => %r{pam_mkhomedir.so umask=0077},
+              :notify => 'Exec[pam-auth-update]',
+            })
+          end
+        end
+
+        if v[:facts_hash][:osfamily] == 'Suse'
+          it do
+            should contain_exec('pam-config -a --mkhomedir-umask=0077').with({
+              :path => '/bin:/usr/bin:/sbin:/usr/sbin',
+              :unless => '/usr/sbin/pam-config -q --mkhomedir | grep umask=0077',
+            })
+          end
+        end
+      end
+    end
+  end
+
+
   describe 'on unsupported version of' do
     context 'Amazon Linux (not 2)' do
       let(:facts) do
