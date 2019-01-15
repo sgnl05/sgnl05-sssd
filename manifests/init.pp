@@ -41,6 +41,8 @@
 # @param disable_mkhomedir_flags Array of flags to use with authconfig to disable
 #   auto-creation of home directories.
 #
+# @param pam_mkhomedir_umask Umask to set for pam_mkhomedir (oddjobd-mkhomedir on RedHat uses UMASK from login.defs)
+#
 # @param ensure_absent_flags Array of flags to use with authconfig when service
 #   is disabled.
 #
@@ -78,6 +80,7 @@ class sssd (
     '--enablesssdauth',
     '--disablemkhomedir',
   ],
+  String $pam_mkhomedir_umask = '0022',
   Array $ensure_absent_flags = [
     '--disablesssd',
     '--disablesssdauth',
@@ -202,12 +205,12 @@ class sssd (
     'Debian': {
       if $mkhomedir {
         file { '/usr/share/pam-configs/pam_mkhomedir':
-          ensure => 'file',
-          owner  => 'root',
-          group  => 'root',
-          mode   => '0644',
-          source => 'puppet:///modules/sssd/pam_mkhomedir',
-          notify => Exec['pam-auth-update'],
+          ensure  => 'file',
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          content => template('sssd/pam_mkhomedir.erb'),
+          notify  => Exec['pam-auth-update'],
         }
 
         exec { 'pam-auth-update':
@@ -218,6 +221,7 @@ class sssd (
     }
     'Suse': {
       $pamconfig_mkhomedir_check_cmd  = '/usr/sbin/pam-config -q --mkhomedir | grep session:'
+      $pamconfig_mkhomedir_umask_check_cmd  = "/usr/sbin/pam-config -q --mkhomedir | grep umask=${pam_mkhomedir_umask}"
       $pamconfig_check_cmd  = '/usr/sbin/pam-config -q --sss | grep session:'
 
       if $mkhomedir {
@@ -225,6 +229,10 @@ class sssd (
         exec { 'pam-config -a --mkhomedir':
           path   => '/bin:/usr/bin:/sbin:/usr/sbin',
           unless => $pamconfig_mkhomedir_check_cmd,
+        }
+        exec { "pam-config -a --mkhomedir-umask=${pam_mkhomedir_umask}":
+          path   => '/bin:/usr/bin:/sbin:/usr/sbin',
+          unless => $pamconfig_mkhomedir_umask_check_cmd,
         }
       }
 
