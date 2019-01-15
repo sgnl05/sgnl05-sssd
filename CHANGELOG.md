@@ -1,3 +1,7 @@
+### 2019-01-15 (2.11.0)
+  * Add parameter `pam_mkhomedir_umask` to make the umask configurable
+    for pam_mkhomedir
+
 ### 2019-01-14 (2.10.1)
   * Require `extra_packages` be installed before starting oddjobd
 
