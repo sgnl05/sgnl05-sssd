@@ -377,6 +377,13 @@ describe 'sssd' do
               :hasrestart => true,
             })
           end
+          if v[:extra_packages]
+            it do
+              should contain_service('oddjobd').that_requires(
+                v[:extra_packages].collect { |pkg| "Package[#{pkg}]" }
+              )
+            end
+          end
         else
           it { is_expected.not_to contain_service('oddjobd') }
         end
