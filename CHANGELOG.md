@@ -1,3 +1,6 @@
+### 2019-01-14 (2.10.1)
+  * Require `extra_packages` be installed before starting oddjobd
+
 ### 2019-01-07 (2.10.0)
   * Support Puppet 6 and stdlib 5
 
