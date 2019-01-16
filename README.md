@@ -120,12 +120,12 @@ Or you can use a relevant [module][1] for automation.
 
 ## Reference
 
-#####`ensure`
+##### `ensure`
 Defines if sssd and its relevant packages are to be installed or removed. Valid values are 'present' and 'absent'.
 Type: string
 Default: present
 
-#####`config`
+##### `config`
 Configuration options structured like the sssd.conf file. Array values will be joined into comma-separated lists.
 Type: hash
 Default:
@@ -144,7 +144,7 @@ config => {
 }
 ```
 
-#####`mkhomedir`
+##### `mkhomedir`
 Set to 'true' to enable auto-creation of home directories on user login.
 Type: boolean
 Default: true
