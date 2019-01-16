@@ -9,7 +9,6 @@
 
 1. [Overview](#overview)
 2. [Usage - Configuration options and additional functionality](#usage)
-3. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Credits](#credits)
 
@@ -118,37 +117,6 @@ $ sudo adcli join ad.example.com
 
 Or you can use a relevant [module][1] for automation.
 
-## Reference
-
-##### `ensure`
-Defines if sssd and its relevant packages are to be installed or removed. Valid values are 'present' and 'absent'.
-Type: string
-Default: present
-
-##### `config`
-Configuration options structured like the sssd.conf file. Array values will be joined into comma-separated lists.
-Type: hash
-Default:
-```puppet
-config => {
-  'sssd' => {
-    'config_file_version' => '2',
-    'services'            => 'nss, pam',
-    'domains'             => 'ad.example.com',
-  },
-    'domain/ad.example.com' => {
-      'id_provider'       => 'ad',
-      'krb5_realm'        => 'AD.EXAMPLE.COM',
-      'cache_credentials' => true,
-  },
-}
-```
-
-##### `mkhomedir`
-Set to 'true' to enable auto-creation of home directories on user login.
-Type: boolean
-Default: true
-
 ## Limitations
 
 Tested on:
@@ -167,7 +135,7 @@ series of this module will drop support for Puppet v3.
 ## Credits
 
 * sssd.conf template from [walkamongus-sssd][2] by Chadwick Banning
-* See CHANGELOG file for additional credits
+* See `CHANGELOG.md` file for additional credits
 
 [0]: https://docs.pagure.org/SSSD.sssd/
 [1]: https://forge.puppet.com/modules?sort=rank&q=adcli
