@@ -41,6 +41,11 @@ require 'puppet-strings/tasks'
 desc 'Alias for strings:generate'
 task :doc => ['strings:generate']
 
+desc 'Generate REFERENCE.md'
+task :reference do
+  sh 'puppet strings generate --format markdown'
+end
+
 desc 'Run all'
 task :all => [
   :clean,
@@ -50,7 +55,7 @@ task :all => [
 
 desc 'Run validate, lint and spec tests.'
 task :test do
-  [:lint, :validate, :syntax, :spec, :doc].each do |test|
+  [:lint, :validate, :syntax, :spec, :doc, :reference].each do |test|
     Rake::Task[test].invoke
   end
 end
