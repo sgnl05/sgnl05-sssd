@@ -1,3 +1,6 @@
+### 2019-01-15 (2.12.0)
+  * Add ability to generate REFERENCE.md
+
 ### 2019-01-15 (2.11.0)
   * Add parameter `pam_mkhomedir_umask` to make the umask configurable
     for pam_mkhomedir
