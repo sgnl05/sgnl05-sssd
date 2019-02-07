@@ -1,8 +1,0 @@
----
-# A Hiera version 3.3 config file for puppet-rspec
-:backends: yaml
-:yaml:
-  :datadir: "data"
-:hierarchy:
-  - "os/%{facts.os.family}/%{facts.os.release.major}.yaml"
-  - "osfamily/%{facts.os.family}.yaml"
