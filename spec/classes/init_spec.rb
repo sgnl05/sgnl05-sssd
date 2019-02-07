@@ -201,6 +201,66 @@ describe 'sssd' do
         },
       },
     },
+    'suse11_3_i386' => {
+      :extra_packages => [
+        'sssd-tools',
+      ],
+      :facts_hash => {
+        :osfamily => 'Suse',
+        :operatingsystem => 'SLES',
+        :operatingsystemrelease => '11.3',
+        :operatingsystemmajrelease => '11',
+        :os => {
+          'family'       => 'Suse',
+          'architecture' => 'i386',
+          'release' => {
+            'major' => '11',
+            'minor' => '3',
+          },
+        },
+      },
+    },
+    'suse11_4_i386' => {
+      :extra_packages => [
+        'sssd-tools',
+      ],
+      :facts_hash => {
+        :osfamily => 'Suse',
+        :operatingsystem => 'SLES',
+        :operatingsystemrelease => '11.4',
+        :operatingsystemmajrelease => '11',
+        :os => {
+          'family'       => 'Suse',
+          'architecture' => 'i386',
+          'release' => {
+            'major' => '11',
+            'minor' => '4',
+          },
+        },
+      },
+    },
+    'suse12_i386' => {
+      :extra_packages => [
+        'sssd-krb5',
+        'sssd-ad',
+        'sssd-ipa',
+        'sssd-tools',
+        'sssd-ldap',
+      ],
+      :facts_hash => {
+        :osfamily => 'Suse',
+        :operatingsystem => 'SLES',
+        :operatingsystemrelease => '12.1',
+        :operatingsystemmajrelease => '12',
+        :os => {
+          'family'       => 'Suse',
+          'architecture' => 'i386',
+          'release' => {
+            'major' => '12',
+          },
+        },
+      },
+    },
     'suse11_3' => {
       :extra_packages => [
         'sssd-32bit',
@@ -212,7 +272,8 @@ describe 'sssd' do
         :operatingsystemrelease => '11.3',
         :operatingsystemmajrelease => '11',
         :os => {
-          'family' => 'Suse',
+          'family'       => 'Suse',
+          'architecture' => 'x86_64',
           'release' => {
             'major' => '11',
             'minor' => '3',
@@ -231,7 +292,8 @@ describe 'sssd' do
         :operatingsystemrelease => '11.4',
         :operatingsystemmajrelease => '11',
         :os => {
-          'family' => 'Suse',
+          'family'       => 'Suse',
+          'architecture' => 'x86_64',
           'release' => {
             'major' => '11',
             'minor' => '4',
@@ -254,7 +316,8 @@ describe 'sssd' do
         :operatingsystemrelease => '12.1',
         :operatingsystemmajrelease => '12',
         :os => {
-          'family' => 'Suse',
+          'family'       => 'Suse',
+          'architecture' => 'x86_64',
           'release' => {
             'major' => '12',
           },
@@ -430,6 +493,17 @@ describe 'sssd' do
         end
 
         if v[:facts_hash][:osfamily] == 'Suse'
+
+          if v[:facts_hash][:os]['architecture'] == 'i386'
+            it do
+              should_not contain_package('sssd-32bit').with_ensure('present')
+            end
+          else
+            it do
+              should contain_package('sssd-32bit').with_ensure('present')
+            end
+          end
+
           it do
             should contain_exec('pam-config -a --mkhomedir').with({
               :path   => '/bin:/usr/bin:/sbin:/usr/sbin',
@@ -828,7 +902,6 @@ describe 'sssd' do
         :valid   => [true, false, 'running', 'stopped'],
         :invalid => ['string', %w(ar ray), { 'ha' => 'sh' }, 3, 2.42, nil],
         :message => 'Evaluation Error: Error while evaluating a Resource Statement',
-        :message => 'expects a value of type Boolean or Enum',
       },
     }
 
