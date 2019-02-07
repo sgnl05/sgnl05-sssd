@@ -1,3 +1,6 @@
+### 2019-02-07 (2.13.0)
+  * Add support for running on 32bit Suse systems.
+
 ### 2019-01-15 (2.12.0)
   * Add ability to generate REFERENCE.md
 
