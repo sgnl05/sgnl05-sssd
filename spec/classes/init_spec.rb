@@ -396,8 +396,10 @@ describe 'sssd' do
         it do
           should contain_package('sssd').with({
             :ensure => 'present',
-            :before => 'File[sssd.conf]',
           })
+	end
+	it do
+	  should contain_package('sssd').that_comes_before('File[sssd.conf]')
         end
 
         if v[:extra_packages]
@@ -405,8 +407,10 @@ describe 'sssd' do
             it do
               should contain_package(pkg).with({
                 :ensure  => 'present',
-                :require => 'Package[sssd]',
               })
+            end
+            it do
+              should contain_package(pkg).that_requires('Package[sssd]')
             end
           end
         end
@@ -559,7 +563,7 @@ describe 'sssd' do
   describe 'with sssd_package set to valid string sssd-test' do
     let(:params) { { :sssd_package => 'sssd-test' } }
     it { should contain_package('sssd-test') }
-    it { should contain_package('authconfig').with_require('Package[sssd-test]') }
+    it { should contain_package('authconfig').that_requires('Package[sssd-test]') }
   end
 
   describe 'with sssd_package_ensure set to valid string absent' do

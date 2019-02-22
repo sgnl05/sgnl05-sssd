@@ -122,17 +122,17 @@ class sssd (
   ensure_packages($sssd_package,
     {
       ensure => $sssd_package_ensure,
-      before => File['sssd.conf'],
     }
   )
+  Package[$sssd_package] -> File['sssd.conf']
 
   if $extra_packages {
     ensure_packages($extra_packages,
       {
         ensure  => $extra_packages_ensure,
-        require => Package[$sssd_package],
       }
     )
+    Package[$sssd_package] -> Package[$extra_packages]
   }
 
   if ! empty($service_dependencies) {
