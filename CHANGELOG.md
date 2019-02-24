@@ -1,3 +1,9 @@
+### 2019-02-24 (3.0.0)
+  * While this is a major release, it is totally backward compatible and
+      only deprecates EOL platforms and versions of Puppet.
+  * Drop support for Puppet 4
+  * Drop support for EOL platforms
+
 ### 2019-02-24 (2.13.1)
   * Add acceptance tests
   * Fix bug when setting service_ensure to 'stopped'
