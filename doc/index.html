@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.16
+    &mdash; Documentation by YARD 0.9.18
   
 </title>
 
@@ -124,7 +124,8 @@ documentation</a></p>
       &#39;simple_allow_groups&#39;            =&gt; [&#39;admins&#39;, &#39;users&#39;],
     }
   }
-}</code></pre>
+}
+</code></pre>
 
 <p>…or the same config in Hiera:</p>
 
@@ -152,7 +153,8 @@ documentation</a></p>
     &#39;access_provider&#39;: &#39;simple&#39;
     &#39;simple_allow_groups&#39;:
       - &#39;admins&#39;
-      - &#39;users&#39;</code></pre>
+      - &#39;users&#39;
+</code></pre>
 
 <p>Will be represented in sssd.conf like this:</p>
 
@@ -174,7 +176,8 @@ ldap_id_mapping = false
 use_fully_qualified_names = false
 fallback_homedir = /home/%d/%u
 access_provider = simple
-simple_allow_groups = admins, users</code></pre>
+simple_allow_groups = admins, users
+</code></pre>
 
 <p>Tip: Using &#39;ad&#39; as <code>id_provider</code> require you to run
 &#39;adcli join domain&#39; on the target node. <em>adcli join</em> creates
@@ -183,7 +186,8 @@ keytab for the machine.</p>
 
 <p>Example:</p>
 
-<pre class="code ruby"><code class="ruby">$ sudo adcli join ad.example.com</code></pre>
+<pre class="code ruby"><code class="ruby">$ sudo adcli join ad.example.com
+</code></pre>
 
 <p>Or you can use a relevant <a
 href="https://forge.puppet.com/modules?sort=rank&q=adcli">module</a> for
