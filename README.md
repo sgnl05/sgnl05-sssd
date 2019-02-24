@@ -119,6 +119,9 @@ Or you can use a relevant [module][1] for automation.
 
 ## Limitations
 
+This module tracks the latest release of the latest two major releases,
+currently Puppet versions 5 and 6.
+
 ### Tested on
 
 * Amazon Linux 2
