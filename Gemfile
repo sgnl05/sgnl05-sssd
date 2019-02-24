@@ -38,8 +38,13 @@ group :development do
 end
 
 group :system_tests do
-  # gem 'vagrant-wrapper', :require => false
-  gem 'serverspec', :require => false
+  gem 'beaker', '~> 4.x',             :require => false
+  gem 'beaker-rspec',                 :require => false
+  gem 'beaker-puppet',                :require => false
+  gem 'beaker-docker',                :require => false
+  gem 'serverspec',                   :require => false
+  gem 'beaker-puppet_install_helper', :require => false
+  gem 'beaker-module_install_helper', :require => false
 end
 
 if puppetversion && puppetversion < '5.0'
@@ -49,12 +54,5 @@ end
 gem 'metadata-json-lint',     :require => false
 gem 'public_suffix', '1.4.6', :require => false
 gem 'puppet-strings',         :require => false
-
-if RUBY_VERSION < '2.2.5'
-  # beaker 3.1+ requires ruby 2.2.5.  Lock to 2.0
-  gem 'beaker', '~> 2.0', :require => false
-  # beaker-rspec 6.0.0 requires beaker 3.0. Lock to 5.6.0
-  gem 'beaker-rspec', '= 5.6.0', :require => false
-end
 
 # vim:ft=ruby

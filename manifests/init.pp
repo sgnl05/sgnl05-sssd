@@ -119,6 +119,11 @@ class sssd (
     $service_provider = undef
   }
 
+  $service_enable = $service_ensure ? {
+    'stopped' => false,
+    default   => true,
+  }
+
   ensure_packages($sssd_package,
     {
       ensure => $sssd_package_ensure,
@@ -147,7 +152,7 @@ class sssd (
         ensure     => running,
         hasstatus  => true,
         hasrestart => true,
-        enable     => true,
+        enable     => $service_enable,
         before     => $before,
       }
     )
@@ -157,7 +162,7 @@ class sssd (
     ensure_resource('service', 'oddjobd',
       {
         ensure     => $service_ensure,
-        enable     => true,
+        enable     => $service_enable,
         hasstatus  => true,
         hasrestart => true,
         provider   => $service_provider,
@@ -247,11 +252,6 @@ class sssd (
   $service_ensure_real = $sssd::ensure ? {
     'absent' => 'stopped',
     default  => $sssd::service_ensure,
-  }
-
-  $service_enable = $service_ensure ? {
-    'stopped' => false,
-    default   => true,
   }
 
   ensure_resource('service', $sssd_service,
