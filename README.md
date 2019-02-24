@@ -119,14 +119,35 @@ Or you can use a relevant [module][1] for automation.
 
 ## Limitations
 
-Tested on:
+This module tracks the latest release of the latest two major releases,
+currently Puppet versions 5 and 6.
+
+### Tested on
+
 * Amazon Linux 2
-* Debian 7,8,9
-* Fedora 26 and 27
-* (RHEL|CentOS|OracleLinux) 5,6,7
-* Gentoo 3 & 4
-* Ubuntu 14.04 & 16.04
-* Suse 11 & 12
+* Debian 8
+* Debian 9
+* EL 6
+* EL 7
+* Gentoo 4
+* Suse 11
+* Suse 12
+* Ubuntu 14.04
+* Ubuntu 16.04
+* Ubuntu 18.04
+
+### May work with
+
+These platforms are end of life (EOL) and once worked with the module
+and probably still do. We keep the data for them and if you use them a
+warning will appear instead of a failure. In order to speed up testing,
+we no longer run tests for EOL platforms.
+
+* Debian 7
+* EL 5
+* Fedora 26
+* Fedora 27
+* Gentoo 3
 
 ## Versioning
 The v1 series of this module will support both Puppet v3 and v4. The v2
