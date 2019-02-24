@@ -1,3 +1,8 @@
+### 2019-02-24 (2.13.1)
+  * Add acceptance tests
+  * Fix bug when setting service_ensure to 'stopped'
+  * Fix ordering bug when using extra_packages
+
 ### 2019-02-07 (2.13.0)
   * Add support for running on 32bit Suse systems.
 
