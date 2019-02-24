@@ -92,8 +92,8 @@ class sssd (
     if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
       warning("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
     }
-    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['5', '6', '7', '26', '27']) {
-      warning("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 5, 6 or 7 for EL and 26 or 27 for Fedora.")
+    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['6', '7']) {
+      warning("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6 or 7.")
     }
   }
 
@@ -106,8 +106,8 @@ class sssd (
     }
   }
 
-  if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['7', '8', '9', '14.04', '16.04', '18.04']) {
-    warning("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 7, 8 or 9 for Debian and 14.04, 16.04 or 18.04 for Ubuntu.")
+  if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['8', '9', '14.04', '16.04', '18.04']) {
+    warning("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 8 or 9 for Debian and 14.04, 16.04 or 18.04 for Ubuntu.")
   }
 
   # Manually set service provider to systemd on Amazon Linux 2

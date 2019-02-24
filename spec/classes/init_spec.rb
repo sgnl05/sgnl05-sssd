@@ -20,26 +20,6 @@ describe 'sssd' do
         },
       },
     },
-    'debian7' => {
-      :extra_packages => [
-        'libpam-runtime',
-        'libpam-sss',
-        'libnss-sss',
-      ],
-      :manage_oddjobd => false,
-      :facts_hash => {
-        :osfamily => 'Debian',
-        :operatingsystem => 'Debian',
-        :operatingsystemrelease => '7.1',
-        :operatingsystemmajrelease => '7',
-        :os => {
-          'family' => 'Debian',
-          'release' => {
-            'major' => '7',
-          },
-        },
-      },
-    },
     'debian8' => {
       :extra_packages => [
         'libpam-runtime',
@@ -80,22 +60,6 @@ describe 'sssd' do
         },
       },
     },
-    'el5' => {
-      :extra_packages => ['authconfig'],
-      :service_dependencies => ['messagebus'],
-      :manage_oddjobd => false,
-      :facts_hash => {
-        :osfamily => 'RedHat',
-        :operatingsystem => 'RedHat',
-        :operatingsystemmajrelease => '5',
-        :os => {
-          'family' => 'RedHat',
-          'release' => {
-            'major' => '5',
-          },
-        },
-      },
-    },
     'el6' => {
       :extra_packages => [
         'authconfig',
@@ -129,58 +93,6 @@ describe 'sssd' do
           'family' => 'RedHat',
           'release' => {
             'major' => '7',
-          },
-        },
-      },
-    },
-    'fedora26' => {
-      :extra_packages => [
-        'authconfig',
-        'oddjob-mkhomedir',
-      ],
-      :manage_oddjobd => true,
-      :facts_hash => {
-        :osfamily => 'RedHat',
-        :operatingsystem => 'RedHat',
-        :operatingsystemmajrelease => '26',
-        :os => {
-          'family' => 'RedHat',
-          'release' => {
-            'major' => '26',
-          },
-        },
-      },
-    },
-    'fedora27' => {
-      :extra_packages => [
-        'authconfig',
-        'oddjob-mkhomedir',
-      ],
-      :manage_oddjobd => true,
-      :facts_hash => {
-        :osfamily => 'RedHat',
-        :operatingsystem => 'RedHat',
-        :operatingsystemmajrelease => '27',
-        :os => {
-          'family' => 'RedHat',
-          'release' => {
-            'major' => '27',
-          },
-        },
-      },
-    },
-    'gentoo3' => {
-      :manage_oddjobd => false,
-      :facts_hash => {
-        :osfamily => 'Gentoo',
-        :operatingsystem => 'Gentoo',
-        :operatingsystemrelease => '3.14.36-gentoo',
-        :operatingsystemmajrelease => '3',
-        :os => {
-          'family' => 'Gentoo',
-          'release' => {
-            'major' => '3',
-            'minor' => '14',
           },
         },
       },
@@ -768,7 +680,7 @@ describe 'sssd' do
       end
     end
 
-    context 'Debian (not 7, 8 or 9 or Ubuntu 14.04, 16.04 or 18.04)' do
+    context 'Debian (not 8 or 9 or Ubuntu 14.04, 16.04 or 18.04)' do
       let(:facts) do
         {
           :osfamily => 'Debian',
@@ -790,7 +702,7 @@ describe 'sssd' do
       end
     end
 
-    context 'RedHat (not 5, 6 or 7 or Fedora 26 or 27)' do
+    context 'RedHat (not 6 or 7)' do
       let(:facts) do
         {
           :osfamily => 'RedHat',
