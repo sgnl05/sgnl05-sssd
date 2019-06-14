@@ -73,6 +73,7 @@ describe 'sssd' do
         :operatingsystemmajrelease => '6',
         :os => {
           'family' => 'RedHat',
+          'name'   => 'RedHat',
           'release' => {
             'major' => '6',
           },
@@ -91,8 +92,47 @@ describe 'sssd' do
         :operatingsystemmajrelease => '7',
         :os => {
           'family' => 'RedHat',
+          'name'   => 'RedHat',
           'release' => {
             'major' => '7',
+          },
+        },
+      },
+    },
+    'Fedora 29' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '29',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '29',
+          },
+        },
+      },
+    },
+    'Fedora 30' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '30',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '30',
           },
         },
       },
@@ -378,11 +418,21 @@ describe 'sssd' do
           })
         end
 
-        if v[:facts_hash][:osfamily] == 'RedHat'
+        if v[:facts_hash][:os]['name'] == 'RedHat'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --update',
               :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --test`\" = \"`/usr/sbin/authconfig --test`\"",
+              :require => 'File[sssd.conf]',
+            })
+          end
+        end
+
+        if v[:facts_hash][:os]['name'] == 'Fedora'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+              :command => '/bin/authselect select sssd with-mkhomedir --force',
+              :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"sssd with-mkhomedir\"",
               :require => 'File[sssd.conf]',
             })
           end
@@ -519,11 +569,20 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
-        if v[:facts_hash][:osfamily] == 'RedHat'
+        if v[:facts_hash][:os]['name'] == 'RedHat'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --update',
               :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --test`\" = \"`/usr/sbin/authconfig --test`\"",
+            })
+          end
+        end
+
+        if v[:facts_hash][:os]['name'] == 'Fedora'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+              :command => '/bin/authselect select sssd --force',
+              :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"sssd\"",
             })
           end
         end

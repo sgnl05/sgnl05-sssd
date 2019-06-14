@@ -147,8 +147,8 @@ Default value: []
 
 Data type: `Array`
 
-Array of flags to use with authconfig to enable
-auto-creation of home directories.
+Array of flags to use with authconfig
+or authselect to enable auto-creation of home directories.
 
 Default value: [
     '--enablesssd',
@@ -160,8 +160,8 @@ Default value: [
 
 Data type: `Array`
 
-Array of flags to use with authconfig to disable
-auto-creation of home directories.
+Array of flags to use with authconfig
+or authselect to disable auto-creation of home directories.
 
 Default value: [
     '--enablesssd',
