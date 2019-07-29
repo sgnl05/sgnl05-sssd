@@ -99,6 +99,25 @@ describe 'sssd' do
         },
       },
     },
+    'el8' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'RedHat',
+        :operatingsystemmajrelease => '7',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'RedHat',
+          'release' => {
+            'major' => '8',
+          },
+        },
+      },
+    },
     'Fedora 29' => {
       :extra_packages => [
         'authselect',
@@ -697,6 +716,15 @@ describe 'sssd' do
             })
           end
         end
+
+        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os][:release][:major] == '8'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+            :command => '/bin/authselect select enable1 enable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
+            })
+          end
+        end
       end
     end
   end
@@ -715,6 +743,15 @@ describe 'sssd' do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select disable1 disable2 --force',
             :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"disable1 disable2\"",
+            })
+          end
+        end
+
+        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os][:release][:major] == '8'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+            :command => '/bin/authselect select disable1 disable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
             })
           end
         end
@@ -878,7 +915,7 @@ describe 'sssd' do
 
     validations = {
       'array' => {
-        :name    => %w(extra_packages service_dependencies enable_mkhomedir_flags disable_mkhomedir_flags ensure_absent_flags),
+        :name    => %w(extra_packages service_dependencies authconfig_enable_mkhomedir_flags authconfig_disable_mkhomedir_flags authconfig_ensure_absent_flags authselect_enable_mkhomedir_options authselect_disable_mkhomedir_options),
         :valid   => [%w(ar ray)],
         :invalid => ['invalid', { 'ha' => 'sh' }, 3, 2.42, true, nil],
         :message => 'expects an Array value',
