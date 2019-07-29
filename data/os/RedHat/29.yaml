@@ -5,7 +5,7 @@ sssd::extra_packages:
 
 sssd::manage_oddjobd: true
 
-sssd::enable_mkhomedir_flags:
+sssd::authselect_enable_mkhomedir_options:
+  - 'sssd'
   - 'with-mkhomedir'
 
-sssd::disable_mkhomedir_flags: []
