@@ -437,7 +437,7 @@ describe 'sssd' do
           })
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat'
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --update',
@@ -450,8 +450,8 @@ describe 'sssd' do
         if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
-              :command => '/usr/sbin/authselect select sssd with-mkhomedir --force',
-              :unless  => "/usr/bin/test \"`/usr/sbin/authselect current --raw`\" = \"sssd with-mkhomedir\"",
+              :command => '/bin/authselect select sssd with-mkhomedir --force',
+              :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"sssd with-mkhomedir\"",
               :require => 'File[sssd.conf]',
             })
           end
@@ -598,7 +598,7 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat'
+        if v[:facts_hash][:os]['name'] == 'RedHat' and  v[:facts_hash][:os]['release']['major'] <= '7'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --update',
