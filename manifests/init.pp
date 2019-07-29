@@ -35,16 +35,22 @@
 #   managing sssd related services. Intended to be used to manage messagebus
 #   service to prevent `Error: Could not start Service[oddjobd]`.
 #
-# @param enable_mkhomedir_flags Array of flags to use with authconfig
-#   or authselect to enable auto-creation of home directories.
+# @param authconfig_enable_mkhomedir_flags Array of flags to use with authconfig
+#   to enable auto-creation of home directories.
 #
-# @param disable_mkhomedir_flags Array of flags to use with authconfig
-#   or authselect to disable auto-creation of home directories.
+# @param authconfig_disable_mkhomedir_flags Array of flags to use with authconfig
+#   to disable auto-creation of home directories.
+#
+# @param authconfig_ensure_absent_flags Array of flags to use with authconfig when service
+#   is disabled.
+#
+# @param authselect_enable_mkhomedir_options Array of options to use with authselect
+#  to enable auto-creation of home directories.
+#
+# @param authselect_disable_mkhomedir_options Array of flags to use with authselect
+# to disable auto-creation of home directories.
 #
 # @param pam_mkhomedir_umask Umask to set for pam_mkhomedir (oddjobd-mkhomedir on RedHat uses UMASK from login.defs)
-#
-# @param ensure_absent_flags Array of flags to use with authconfig when service
-#   is disabled.
 #
 class sssd (
   Enum['present', 'absent'] $ensure = 'present',
@@ -70,21 +76,28 @@ class sssd (
   Boolean $manage_oddjobd = false,
   Variant[Boolean, Enum['running', 'stopped']] $service_ensure = 'running',
   Array $service_dependencies = [],
-  Array $enable_mkhomedir_flags = [
+  Array $authconfig_enable_mkhomedir_flags = [
     '--enablesssd',
     '--enablesssdauth',
     '--enablemkhomedir',
   ],
-  Array $disable_mkhomedir_flags = [
+  Array $authconfig_disable_mkhomedir_flags = [
     '--enablesssd',
     '--enablesssdauth',
     '--disablemkhomedir',
   ],
-  String $pam_mkhomedir_umask = '0022',
-  Array $ensure_absent_flags = [
+  Array $authconfig_ensure_absent_flags = [
     '--disablesssd',
     '--disablesssdauth',
   ],
+  Array $authselect_enable_mkhomedir_options = [
+    'sssd',
+    'with-mkhomedir',
+  ],
+  Array $authselect_disable_mkhomedir_options = [
+    'sssd',
+  ],
+  String $pam_mkhomedir_umask = '0022',
 ) {
 
   # Warn on unsupported platforms
@@ -92,8 +105,11 @@ class sssd (
     if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
       warning("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
     }
-    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['6', '7']) {
-      warning("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6 or 7.")
+    if !($::facts['os']['name'] == 'RedHat') and !($::facts['os']['release']['major'] in ['6', '7', '8']) {
+      warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
+    }
+    if !($::facts['os']['name'] == 'Fedora') and !($::facts['os']['release']['major'] >= '28') {
+      warning("osname Fedora's os.release.major is <${::facts['os']['release']['major']}> and >= 28")
     }
   }
 
@@ -187,19 +203,14 @@ class sssd (
 
   case $::osfamily {
     'RedHat': {
-      if $::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0 {
-        $authselect_options = join(
-          concat(
-            ['sssd'],
-            $mkhomedir ? {
-              true  => $enable_mkhomedir_flags,
-              false => $disable_mkhomedir_flags,
-            }
-          ),
-          ' ',
-        )
-
-        $authselect_exec = '/bin/authselect'
+      if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
+         ( $::facts['os']['name'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
+      $authselect_options = $mkhomedir ? {
+        true  => join($authselect_enable_mkhomedir_options, ' '),
+        false => join($authselect_disable_mkhomedir_options, ' '),
+      }
+           
+      $authselect_exec = '/bin/authselect'
 
         # The --force option is required in the event that the
         # previous configuration contained in /etc/pam.d was not
@@ -213,8 +224,8 @@ class sssd (
       } else {
         if $ensure == 'present' {
           $authconfig_flags = $mkhomedir ? {
-            true  => join($enable_mkhomedir_flags, ' '),
-            false => join($disable_mkhomedir_flags, ' '),
+            true  => join($authconfig_enable_mkhomedir_flags, ' '),
+            false => join($authconfig_disable_mkhomedir_flags, ' '),
           }
         }
         else {
