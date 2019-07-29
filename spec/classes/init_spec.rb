@@ -447,7 +447,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os][:release][:major] == '8'
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
               :command => '/usr/sbin/authselect select sssd with-mkhomedir--force',
@@ -607,7 +607,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os][:release][:major] == '8'
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
               :command => '/bin/authselect select sssd --force',
@@ -736,7 +736,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os][:release][:major] == '8'
+        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select enable1 enable2 --force',
@@ -766,7 +766,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os][:release][:major] == '8'
+        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select disable1 disable2 --force',
