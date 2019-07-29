@@ -143,12 +143,11 @@ service to prevent `Error: Could not start Service[oddjobd]`.
 
 Default value: []
 
-##### `enable_mkhomedir_flags`
+##### `authconfig_enable_mkhomedir_flags`
 
 Data type: `Array`
 
-Array of flags to use with authconfig
-or authselect to enable auto-creation of home directories.
+Array of flags to use with authconfig to enable auto-creation of home directories.
 
 Default value: [
     '--enablesssd',
@@ -156,17 +155,48 @@ Default value: [
     '--enablemkhomedir',
   ]
 
-##### `disable_mkhomedir_flags`
+##### `authconfig_disable_mkhomedir_flags`
 
 Data type: `Array`
 
-Array of flags to use with authconfig
-or authselect to disable auto-creation of home directories.
+Array of flags to use with authconfig to disable auto-creation of home directories.
 
 Default value: [
     '--enablesssd',
     '--enablesssdauth',
     '--disablemkhomedir',
+  ]
+
+##### `authconfig_ensure_absent_flags`
+
+Data type: `Array`
+
+Array of flags to use with authconfig when service is disabled.
+
+Default value: [
+    '--disablesssd',
+    '--disablesssdauth',
+  ]
+
+##### `authselect_enable_mkhomedir_options`
+
+Data type: `Array`
+
+Array of options to use with authselect to enable auto-creation of home directories.
+
+Default value: [
+    'sssd',
+    'with-mkhomedir',
+  ]
+
+##### `authselect_disable_mkhomedir_options`
+
+Data type: `Array`
+
+Array of flags to use with authselect to enable auto-creation of home directories.
+
+Default value: [
+    'sssd',
   ]
 
 ##### `pam_mkhomedir_umask`
@@ -176,16 +206,4 @@ Data type: `String`
 Umask to set for pam_mkhomedir (oddjobd-mkhomedir on RedHat uses UMASK from login.defs)
 
 Default value: '0022'
-
-##### `ensure_absent_flags`
-
-Data type: `Array`
-
-Array of flags to use with authconfig when service
-is disabled.
-
-Default value: [
-    '--disablesssd',
-    '--disablesssdauth',
-  ]
 
