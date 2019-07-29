@@ -204,13 +204,13 @@ class sssd (
   case $::osfamily {
     'RedHat': {
       if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
-        ( $::facts['os']['name'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
-      $authselect_options = $mkhomedir ? {
-        true  => join($authselect_enable_mkhomedir_options, ' '),
-        false => join($authselect_disable_mkhomedir_options, ' '),
-      }
+      ( $::facts['os']['name'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
+        $authselect_options = $mkhomedir ? {
+          true  => join($authselect_enable_mkhomedir_options, ' '),
+          false => join($authselect_disable_mkhomedir_options, ' '),
+        }
 
-      $authselect_exec = '/bin/authselect'
+        $authselect_exec = '/bin/authselect'
 
         # The --force option is required in the event that the
         # previous configuration contained in /etc/pam.d was not
@@ -229,7 +229,7 @@ class sssd (
           }
         }
         else {
-          $authconfig_flags = join($ensure_absent_flags, ' ')
+          $authconfig_flags = join($authconfig_ensure_absent_flags, ' ')
         }
 
         $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
