@@ -447,6 +447,16 @@ describe 'sssd' do
           end
         end
 
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os][:release][:major] == '8'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+              :command => '/usr/sbin/authselect select sssd with-mkhomedir--force',
+              :unless  => "/usr/bin/test \"`/usr/sbin/authselect current --raw`\" = \"sssd with-mkhomedir\"",
+              :require => 'File[sssd.conf]',
+            })
+          end
+        end
+
         if v[:facts_hash][:os]['name'] == 'Fedora'
           it do
             should contain_exec('authselect-mkhomedir').with({
@@ -593,6 +603,15 @@ describe 'sssd' do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --update',
               :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --test`\" = \"`/usr/sbin/authconfig --test`\"",
+            })
+          end
+        end
+
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os][:release][:major == '8'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+              :command => '/bin/authselect select sssd --force',
+              :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"sssd\"",
             })
           end
         end
