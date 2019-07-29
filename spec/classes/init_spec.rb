@@ -108,7 +108,7 @@ describe 'sssd' do
       :facts_hash => {
         :osfamily => 'RedHat',
         :operatingsystem => 'RedHat',
-        :operatingsystemmajrelease => '7',
+        :operatingsystemmajrelease => '8',
         :os => {
           'family' => 'RedHat',
           'name'   => 'RedHat',
@@ -450,7 +450,7 @@ describe 'sssd' do
         if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
-              :command => '/usr/sbin/authselect select sssd with-mkhomedir--force',
+              :command => '/usr/sbin/authselect select sssd with-mkhomedir --force',
               :unless  => "/usr/bin/test \"`/usr/sbin/authselect current --raw`\" = \"sssd with-mkhomedir\"",
               :require => 'File[sssd.conf]',
             })
