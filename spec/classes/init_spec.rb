@@ -669,28 +669,6 @@ describe 'sssd' do
     end
   end
 
-  describe 'with authselect_enable_mkhomedir_options set to valid array [ enable1, enable2 ]' do
-    let(:params) { { :authselect_enable_mkhomedir_options => [ 'enable1', 'enable2' ] } }
-
-    it do
-      should contain_exec('authselect-mkhomedir').with({
-        :command => '/bin/authselect select enable1 enable2 --force',
-        :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
-      })
-    end
-  end
-
-  describe 'with authselect_disable_mkhomedir_options set to valid array [ disable1, disable2 ] (and mkhomedir set to false)' do
-    let(:params) { { :authselect_disable_mkhomedir_options => [ 'disable1', 'disable2' ], :mkhomedir => false } }
-
-    it do
-      should contain_exec('authconfig-mkhomedir').with({
-        :command => '/bin/authselect select disable1 disable2 --force',
-        :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"disable1 disable2\"",
-      })
-    end
-  end
-
   describe 'with authconfig_ensure_absent_flags set to valid array [ --absent1, --absent2 ] (and ensure set to absent)' do
     let(:params) { { :authconfig_ensure_absent_flags => [ '--absent1', '--absent2' ], :ensure => 'absent' } }
 
@@ -699,6 +677,48 @@ describe 'sssd' do
         :command => '/usr/sbin/authconfig --absent1 --absent2 --update',
         :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --absent1 --absent2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
       })
+    end
+  end
+
+  describe 'with authselect_enable_mkhomedir_options set to valid array [ enable1, enable2 ]' do
+    let(:params) { { :authselect_enable_mkhomedir_options => [ 'enable1', 'enable2' ] } }
+
+    platforms.sort.each do |k, v|
+      context "on #{k}" do
+        let(:facts) do
+          v[:facts_hash]
+        end
+
+        if v[:facts_hash][:os][:name] == 'Fedora'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+            :command => '/bin/authselect select enable1 enable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
+            })
+          end
+        end
+      end
+    end
+  end
+
+  describe 'with authselect_disable_mkhomedir_options set to valid array [ disable1, disable2 ] (and mkhomedir set to false)' do
+    let(:params) { { :authselect_disable_mkhomedir_options => [ 'disable1', 'disable2' ], :mkhomedir => false } }
+
+    platforms.sort.each do |k, v|
+      context "on #{k}" do
+        let(:facts) do
+          v[:facts_hash]
+        end
+
+        if v[:facts_hash][:os][:name] == 'Fedora'
+          it do
+            should contain_exec('authselect-mkhomedir').with({
+            :command => '/bin/authselect select disable1 disable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"disable1 disable2\"",
+            })
+          end
+        end
+      end
     end
   end
 
