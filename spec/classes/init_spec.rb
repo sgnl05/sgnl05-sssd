@@ -647,8 +647,8 @@ describe 'sssd' do
     it { should contain_service('test2') }
   end
 
-  describe 'with enable_mkhomedir_flags set to valid array [ --enable1, --enable2 ]' do
-    let(:params) { { :enable_mkhomedir_flags => [ '--enable1', '--enable2' ] } }
+  describe 'with authconfig_enable_mkhomedir_flags set to valid array [ --enable1, --enable2 ]' do
+    let(:params) { { :authconfig_enable_mkhomedir_flags => [ '--enable1', '--enable2' ] } }
 
     it do
       should contain_exec('authconfig-mkhomedir').with({
@@ -658,8 +658,8 @@ describe 'sssd' do
     end
   end
 
-  describe 'with disable_mkhomedir_flags set to valid array [ --disable1, --disable2 ] (and mkhomedir set to false)' do
-    let(:params) { { :disable_mkhomedir_flags => [ '--disable1', '--disable2' ], :mkhomedir => false } }
+  describe 'with authconfig_disable_mkhomedir_flags set to valid array [ --disable1, --disable2 ] (and mkhomedir set to false)' do
+    let(:params) { { :authconfig_disable_mkhomedir_flags => [ '--disable1', '--disable2' ], :mkhomedir => false } }
 
     it do
       should contain_exec('authconfig-mkhomedir').with({
@@ -669,8 +669,30 @@ describe 'sssd' do
     end
   end
 
-  describe 'with ensure_absent_flags set to valid array [ --absent1, --absent2 ] (and ensure set to absent)' do
-    let(:params) { { :ensure_absent_flags => [ '--absent1', '--absent2' ], :ensure => 'absent' } }
+  describe 'with authselect_enable_mkhomedir_options set to valid array [ enable1, enable2 ]' do
+    let(:params) { { :authselect_enable_mkhomedir_options => [ 'enable1', 'enable2' ] } }
+
+    it do
+      should contain_exec('authselect-mkhomedir').with({
+        :command => '/bin/authselect select enable1 enable2 --force',
+        :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
+      })
+    end
+  end
+
+  describe 'with authselect_disable_mkhomedir_options set to valid array [ disable1, disable2 ] (and mkhomedir set to false)' do
+    let(:params) { { :authselect_disable_mkhomedir_options => [ 'disable1', 'disable2' ], :mkhomedir => false } }
+
+    it do
+      should contain_exec('authconfig-mkhomedir').with({
+        :command => '/bin/authselect select disable1 disable2 --force',
+        :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"disable1 disable2\"",
+      })
+    end
+  end
+
+  describe 'with authconfig_ensure_absent_flags set to valid array [ --absent1, --absent2 ] (and ensure set to absent)' do
+    let(:params) { { :authconfig_ensure_absent_flags => [ '--absent1', '--absent2' ], :ensure => 'absent' } }
 
     it do
       should contain_exec('authconfig-mkhomedir').with({
