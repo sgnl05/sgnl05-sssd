@@ -214,7 +214,7 @@ class sssd (
         # installations.
         exec { 'authselect-mkhomedir':
           command => "${authselect_exec} select ${authselect_options} --force",
-            unless  => "/usr/bin/test \"`${authselect_exec} current --raw`\" = \"${authselect_options}\"",
+          unless  => "/usr/bin/test \"`${authselect_exec} current --raw`\" = \"${authselect_options}\"",
           require => File['sssd.conf'],
         }
       } else {
