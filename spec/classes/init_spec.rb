@@ -685,41 +685,8 @@ describe 'sssd' do
     it { should contain_service('test2') }
   end
 
-  describe 'with authconfig_enable_mkhomedir_flags set to valid array [ --enable1, --enable2 ]' do
-    let(:params) { { :authconfig_enable_mkhomedir_flags => [ '--enable1', '--enable2' ] } }
-
-    it do
-      should contain_exec('authconfig-mkhomedir').with({
-        :command => '/usr/sbin/authconfig --enable1 --enable2 --update',
-        :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enable1 --enable2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
-      })
-    end
-  end
-
-  describe 'with authconfig_disable_mkhomedir_flags set to valid array [ --disable1, --disable2 ] (and mkhomedir set to false)' do
-    let(:params) { { :authconfig_disable_mkhomedir_flags => [ '--disable1', '--disable2' ], :mkhomedir => false } }
-
-    it do
-      should contain_exec('authconfig-mkhomedir').with({
-        :command => '/usr/sbin/authconfig --disable1 --disable2 --update',
-        :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --disable1 --disable2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
-      })
-    end
-  end
-
-  describe 'with authconfig_ensure_absent_flags set to valid array [ --absent1, --absent2 ] (and ensure set to absent)' do
-    let(:params) { { :authconfig_ensure_absent_flags => [ '--absent1', '--absent2' ], :ensure => 'absent' } }
-
-    it do
-      should contain_exec('authconfig-mkhomedir').with({
-        :command => '/usr/sbin/authconfig --absent1 --absent2 --update',
-        :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --absent1 --absent2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
-      })
-    end
-  end
-
-  describe 'with authselect_enable_mkhomedir_options set to valid array [ enable1, enable2 ]' do
-    let(:params) { { :authselect_enable_mkhomedir_options => [ 'enable1', 'enable2' ] } }
+  describe 'with enable_mkhomedir_flags set to valid array [ --enable1, --enable2 ] and authselect_profile set to valid string profile' do
+    let(:params) { { :enable_mkhomedir_flags => [ '--enable1', '--enable2' ] , :authselect_profile => 'profile' } }
 
     platforms.sort.each do |k, v|
       context "on #{k}" do
@@ -727,11 +694,19 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
+          it do
+            should contain_exec('authconfig-mkhomedir').with({
+              :command => '/usr/sbin/authconfig --enable1 --enable2 --update',
+              :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --enable1 --enable2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
+            })
+          end
+        end
         if v[:facts_hash][:os][:name] == 'Fedora'
           it do
             should contain_exec('authselect-mkhomedir').with({
-            :command => '/bin/authselect select enable1 enable2 --force',
-            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
+            :command => '/bin/authselect select profile --enable1 --enable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"profile --enable1 --enable2\"",
             })
           end
         end
@@ -739,8 +714,8 @@ describe 'sssd' do
         if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
-            :command => '/bin/authselect select enable1 enable2 --force',
-            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
+            :command => '/bin/authselect select profile --enable1 --enable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"profile --enable1 --enable2\"",
             })
           end
         end
@@ -748,8 +723,8 @@ describe 'sssd' do
     end
   end
 
-  describe 'with authselect_disable_mkhomedir_options set to valid array [ disable1, disable2 ] (and mkhomedir set to false)' do
-    let(:params) { { :authselect_disable_mkhomedir_options => [ 'disable1', 'disable2' ], :mkhomedir => false } }
+  describe 'with disable_mkhomedir_flags set to valid array [ --disable1, --disable2 ] and mkhomedir set to false and authselect_profile set to profile' do
+    let(:params) { { :disable_mkhomedir_flags => [ '--disable1', '--disable2' ], :mkhomedir => false, :authselect_profile => 'profile' } }
 
     platforms.sort.each do |k, v|
       context "on #{k}" do
@@ -757,11 +732,19 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
+          it do
+            should contain_exec('authconfig-mkhomedir').with({
+              :command => '/usr/sbin/authconfig --disable1 --disable2 --update',
+              :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --disable1 --disable2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
+            })
+          end
+        end
         if v[:facts_hash][:os][:name] == 'Fedora'
           it do
             should contain_exec('authselect-mkhomedir').with({
-            :command => '/bin/authselect select disable1 disable2 --force',
-            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"disable1 disable2\"",
+            :command => '/bin/authselect select profile --disable1 --disable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"profile --disable1 --disable2\"",
             })
           end
         end
@@ -769,8 +752,29 @@ describe 'sssd' do
         if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
-            :command => '/bin/authselect select disable1 disable2 --force',
-            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"enable1 enable2\"",
+            :command => '/bin/authselect select profile --disable1 --disable2 --force',
+            :unless  => "/usr/bin/test \"`/bin/authselect current --raw`\" = \"profile --disable1 --disable2\"",
+            })
+          end
+        end
+      end
+    end
+  end
+
+  describe 'with ensure_absent_flags set to valid array [ --absent1, --absent2 ] (and ensure set to absent)' do
+    let(:params) { { :ensure_absent_flags => [ '--absent1', '--absent2' ], :ensure => 'absent' } }
+
+    platforms.sort.each do |k, v|
+      context "on #{k}" do
+        let(:facts) do
+          v[:facts_hash]
+        end
+
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
+          it do
+            should contain_exec('authconfig-mkhomedir').with({
+              :command => '/usr/sbin/authconfig --absent1 --absent2 --update',
+              :unless  => "/usr/bin/test \"`/usr/sbin/authconfig --absent1 --absent2 --test`\" = \"`/usr/sbin/authconfig --test`\"",
             })
           end
         end
@@ -934,7 +938,7 @@ describe 'sssd' do
 
     validations = {
       'array' => {
-        :name    => %w(extra_packages service_dependencies authconfig_enable_mkhomedir_flags authconfig_disable_mkhomedir_flags authconfig_ensure_absent_flags authselect_enable_mkhomedir_options authselect_disable_mkhomedir_options),
+        :name    => %w(extra_packages service_dependencies enable_mkhomedir_flags disable_mkhomedir_flags ensure_absent_flags ),
         :valid   => [%w(ar ray)],
         :invalid => ['invalid', { 'ha' => 'sh' }, 3, 2.42, true, nil],
         :message => 'expects an Array value',
@@ -959,7 +963,7 @@ describe 'sssd' do
       },
       # testing config_template would need existing template files
       'string' => {
-        :name    => %w[sssd_package sssd_package_ensure sssd_service extra_packages_ensure],
+        :name    => %w[sssd_package sssd_package_ensure sssd_service extra_packages_ensure authselect_profile],
         :valid   => %w[string],
         :invalid => [%w(ar ray), { 'ha' => 'sh' }, 3, 2.42, true],
         :message => 'expects a String',

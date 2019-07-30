@@ -222,12 +222,12 @@ class sssd (
       } else {
         if $ensure == 'present' {
           $authconfig_flags = $mkhomedir ? {
-            true  => join($authconfig_enable_mkhomedir_flags, ' '),
-            false => join($authconfig_disable_mkhomedir_flags, ' '),
+            true  => join($enable_mkhomedir_flags, ' '),
+            false => join($disable_mkhomedir_flags, ' '),
           }
         }
         else {
-          $authconfig_flags = join($authconfig_ensure_absent_flags, ' ')
+          $authconfig_flags = join($ensure_absent_flags, ' ')
         }
 
         $authconfig_update_cmd = "/usr/sbin/authconfig ${authconfig_flags} --update"
