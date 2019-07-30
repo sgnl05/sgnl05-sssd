@@ -702,7 +702,7 @@ describe 'sssd' do
             })
           end
         end
-        if v[:facts_hash][:os][:name] == 'Fedora'
+        if v[:facts_hash][:os]['name'] == 'Fedora'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select profile --enable1 --enable2 --force',
@@ -711,7 +711,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select profile --enable1 --enable2 --force',
@@ -740,7 +740,7 @@ describe 'sssd' do
             })
           end
         end
-        if v[:facts_hash][:os][:name] == 'Fedora'
+        if v[:facts_hash][:os]['name'] == 'Fedora'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select profile --disable1 --disable2 --force',
@@ -749,7 +749,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os][:name] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
+        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select profile --disable1 --disable2 --force',
