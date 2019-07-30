@@ -212,12 +212,10 @@ class sssd (
         # previous configuration contained in /etc/pam.d was not
         # created by authselect. This condition is true on fresh
         # installations.
-        if $ensure == 'present' {
-          exec { 'authselect-mkhomedir':
-            command => "${authselect_exec} select ${authselect_options} --force",
+        exec { 'authselect-mkhomedir':
+          command => "${authselect_exec} select ${authselect_options} --force",
             unless  => "/usr/bin/test \"`${authselect_exec} current --raw`\" = \"${authselect_options}\"",
-            require => File['sssd.conf'],
-          }
+          require => File['sssd.conf'],
         }
       } else {
         if $ensure == 'present' {
