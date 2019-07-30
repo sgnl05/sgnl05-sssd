@@ -207,7 +207,7 @@ class sssd (
             ' ',
           )
         } else {
-          $authselect_options = join($ensure_absent_flags, ' ')
+          $authselect_options = join(concat([$authselect_profile],$ensure_absent_flags), ' ')
         }
         $authselect_exec = '/bin/authselect'
 
