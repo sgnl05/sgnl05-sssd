@@ -195,17 +195,20 @@ class sssd (
     'RedHat': {
       if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
       ( $::facts['os']['name'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
-        $authselect_options = join(
-          concat(
-            [$authselect_profile],
-            $mkhomedir ? {
-              true  => $enable_mkhomedir_flags,
-              false => $disable_mkhomedir_flags,
-            }
-          ),
-          ' ',
-        )
-
+        if $ensure == 'present' {
+          $authselect_options = join(
+            concat(
+              [$authselect_profile],
+              $mkhomedir ? {
+                true  => $enable_mkhomedir_flags,
+                false => $disable_mkhomedir_flags,
+              }
+            ),
+            ' ',
+          )
+        } else {
+          $authselect_options = join($ensure_absent_flags, ' ')
+        }
         $authselect_exec = '/bin/authselect'
 
         # The --force option is required in the event that the
