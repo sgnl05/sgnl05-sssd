@@ -98,9 +98,6 @@ class sssd (
     if !($::facts['os']['name'] == 'RedHat') and !($::facts['os']['release']['major'] in ['6', '7', '8']) {
       warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
     }
-    if !($::facts['os']['name'] == 'Fedora') and !($::facts['os']['release']['major'] >= '28') {
-      warning("osname Fedora's os.release.major is <${::facts['os']['release']['major']}> and >= 28")
-    }
   }
 
   if $::facts['os']['family'] == 'Suse' {

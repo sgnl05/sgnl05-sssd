@@ -189,11 +189,3 @@ Default value: [
     '--disablesssdauth',
   ]
 
-##### `authselect_profile`
-
-Data type: `String`
-
-Profile to use for authselect
-
-Default value: 'sssd'
-
