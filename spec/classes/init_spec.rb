@@ -598,7 +598,7 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and  v[:facts_hash][:os]['release']['major'] <= '7'
+        if v[:facts_hash][:os]['name'] == 'RedHat' and  v[:facts_hash][:os]['release']['major'] < '8'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --update',
