@@ -43,6 +43,18 @@ matrix:
   - rvm: 2.4.4
     sudo: required
     services: docker
+    env: BEAKER_set="centos-8" BEAKER_PUPPET_COLLECTION=puppet5
+    bundler_args:
+    script: bundle exec rake beaker
+  - rvm: 2.5.1
+    sudo: required
+    services: docker
+    env: BEAKER_set="centos-8" BEAKER_PUPPET_COLLECTION=puppet6
+    bundler_args:
+    script: bundle exec rake beaker
+- rvm: 2.4.4
+    sudo: required
+    services: docker
     env: BEAKER_set="debian-8" BEAKER_PUPPET_COLLECTION=puppet5
     bundler_args:
     script: bundle exec rake beaker
@@ -112,7 +124,12 @@ matrix:
     env: BEAKER_set="ubuntu-1804" BEAKER_PUPPET_COLLECTION=puppet6
     bundler_args:
     script: bundle exec rake beaker
-
+  allow_failures:
+  # waiting for centos 8 release
+  - rvm: 2.4.4
+    env: BEAKER_set="centos-8" BEAKER_PUPPET_COLLECTION=puppet5
+  - rvm: 2.5.1
+    env: BEAKER_set="centos-8" BEAKER_PUPPET_COLLECTION=puppet6
 
 notifications:
   email: false
