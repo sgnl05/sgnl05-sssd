@@ -99,6 +99,25 @@ describe 'sssd' do
         },
       },
     },
+    'el8' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'RedHat',
+        :operatingsystemmajrelease => '8',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'RedHat',
+          'release' => {
+            'major' => '8',
+          },
+        },
+      },
+    },
     'Fedora 29' => {
       :extra_packages => [
         'authselect',
