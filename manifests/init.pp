@@ -253,6 +253,7 @@ class sssd (
         exec { 'pam-auth-update':
           path        => '/bin:/usr/bin:/sbin:/usr/sbin',
           refreshonly => true,
+          require     => Package[$sssd_package],
         }
       }
     }
