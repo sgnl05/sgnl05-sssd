@@ -1,3 +1,7 @@
+### 2020-01-28 (3.1.0)
+  * Add support for RHEL 8 and newer Fedora versions (robertc99)
+  * Add missing dependency (Thodoris Sotiropoulos)
+
 ### 2019-02-24 (3.0.0)
   * While this is a major release, it is totally backward compatible and
       only deprecates EOL platforms and versions of Puppet.
