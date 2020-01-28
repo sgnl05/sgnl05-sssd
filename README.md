@@ -129,6 +129,7 @@ currently Puppet versions 5 and 6.
 * Debian 9
 * EL 6
 * EL 7
+* EL 8
 * Fedora 29
 * Fedora 30
 * Gentoo 4

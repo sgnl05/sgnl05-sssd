@@ -46,6 +46,8 @@
 # @param ensure_absent_flags Array of flags to use with authconfig when service
 #   is disabled.
 #
+# @param authselect_profile  Name of authselect profile to use
+#
 class sssd (
   Enum['present', 'absent'] $ensure = 'present',
   Hash $config = {
@@ -85,6 +87,7 @@ class sssd (
     '--disablesssd',
     '--disablesssdauth',
   ],
+  String $authselect_profile='sssd',
 ) {
 
   # Warn on unsupported platforms
@@ -92,8 +95,8 @@ class sssd (
     if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
       warning("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
     }
-    if !($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['6', '7']) {
-      warning("osfamily RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6 or 7.")
+    if !($::facts['os']['name'] == 'RedHat') and !($::facts['os']['release']['major'] in ['6', '7', '8']) {
+      warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
     }
   }
 
@@ -187,18 +190,22 @@ class sssd (
 
   case $::osfamily {
     'RedHat': {
-      if $::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0 {
-        $authselect_options = join(
-          concat(
-            ['sssd'],
-            $mkhomedir ? {
-              true  => $enable_mkhomedir_flags,
-              false => $disable_mkhomedir_flags,
-            }
-          ),
-          ' ',
-        )
-
+      if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
+      ( $::facts['os']['name'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
+        if $ensure == 'present' {
+          $authselect_options = join(
+            concat(
+              [$authselect_profile],
+              $mkhomedir ? {
+                true  => $enable_mkhomedir_flags,
+                false => $disable_mkhomedir_flags,
+              }
+            ),
+            ' ',
+          )
+        } else {
+          $authselect_options = join(concat([$authselect_profile],$ensure_absent_flags), ' ')
+        }
         $authselect_exec = '/bin/authselect'
 
         # The --force option is required in the event that the
