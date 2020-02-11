@@ -116,6 +116,7 @@ describe 'sssd' do
             'major' => '8',
           },
         },
+        :service_provider => 'systemd',
       },
     },
     'Fedora 29' => {
@@ -437,7 +438,7 @@ describe 'sssd' do
           })
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] < '8'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --enablemkhomedir --update',
@@ -447,7 +448,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
               :command => '/bin/authselect select sssd with-mkhomedir --force',
@@ -598,7 +599,7 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and  v[:facts_hash][:os]['release']['major'] < '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and  v[:facts_hash][:os]['release']['major'] < '8'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enablesssd --enablesssdauth --disablemkhomedir --update',
@@ -607,7 +608,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
               :command => '/bin/authselect select sssd --force',
@@ -694,7 +695,7 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] < '8'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --enable1 --enable2 --update',
@@ -711,7 +712,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select profile --enable1 --enable2 --force',
@@ -732,7 +733,7 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] < '8'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --disable1 --disable2 --update',
@@ -749,7 +750,7 @@ describe 'sssd' do
           end
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] == '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] == '8'
           it do
             should contain_exec('authselect-mkhomedir').with({
             :command => '/bin/authselect select profile --disable1 --disable2 --force',
@@ -770,7 +771,7 @@ describe 'sssd' do
           v[:facts_hash]
         end
 
-        if v[:facts_hash][:os]['name'] == 'RedHat' and v[:facts_hash][:os]['release']['major'] < '8'
+        if ['CentOS', 'RedHat'].include? v[:facts_hash][:os]['name'] and v[:facts_hash][:os]['release']['major'] < '8'
           it do
             should contain_exec('authconfig-mkhomedir').with({
               :command => '/usr/sbin/authconfig --absent1 --absent2 --update',

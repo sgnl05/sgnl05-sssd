@@ -95,8 +95,8 @@ class sssd (
     if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
       warning("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
     }
-    if !($::facts['os']['name'] == 'RedHat') and !($::facts['os']['release']['major'] in ['6', '7', '8']) {
-      warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
+    if !($::facts['os']['name'] in ['CentOS', 'RedHat']) and !($::facts['os']['release']['major'] in ['6', '7', '8']) {
+      warning("osname ${facts['os']['name']}'s os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
     }
   }
 
@@ -191,7 +191,7 @@ class sssd (
   case $::osfamily {
     'RedHat': {
       if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
-      ( $::facts['os']['name'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
+      ( $::facts['os']['name'] in ['CentOS', 'RedHat'] and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
         if $ensure == 'present' {
           $authselect_options = join(
             concat(
