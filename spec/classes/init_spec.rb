@@ -116,6 +116,7 @@ describe 'sssd' do
             'major' => '8',
           },
         },
+        :service_provider => 'systemd',
       },
     },
     'Fedora 29' => {
