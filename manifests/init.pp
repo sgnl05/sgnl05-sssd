@@ -191,7 +191,7 @@ class sssd (
   case $::osfamily {
     'RedHat': {
       if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
-      ( $::facts['os']['name'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
+      ( $::facts['os']['family'] == 'Redhat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
         if $ensure == 'present' {
           $authselect_options = join(
             concat(
