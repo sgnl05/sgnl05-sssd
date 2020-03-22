@@ -145,9 +145,9 @@ class sssd (
 
   if ! empty($service_dependencies) {
     if $mkhomedir and $manage_oddjobd {
-      $before = 'Service[oddjobd]'
+      $_before = ['Service[oddjobd]'] << $before
     } else {
-      $before = undef
+      $_before = $before
     }
 
     ensure_resource('service', $service_dependencies,
@@ -156,10 +156,11 @@ class sssd (
         hasstatus  => true,
         hasrestart => true,
         enable     => $service_enable,
-        before     => $before,
+        before     => $_before,
       }
     )
   }
+
 
   if $mkhomedir and $manage_oddjobd {
     ensure_resource('service', 'oddjobd',
