@@ -103,6 +103,42 @@ matrix:
   - rvm: 2.4.4
     sudo: required
     services: docker
+    env: BEAKER_set="fedora-31" BEAKER_PUPPET_COLLECTION=puppet5
+    bundler_args:
+    script: bundle exec rake beaker
+  - rvm: 2.5.3
+    sudo: required
+    services: docker
+    env: BEAKER_set="fedora-31" BEAKER_PUPPET_COLLECTION=puppet6
+    bundler_args:
+    script: bundle exec rake beaker
+  - rvm: 2.4.4
+    sudo: required
+    services: docker
+    env: BEAKER_set="fedora-32" BEAKER_PUPPET_COLLECTION=puppet5
+    bundler_args:
+    script: bundle exec rake beaker
+  - rvm: 2.5.3
+    sudo: required
+    services: docker
+    env: BEAKER_set="fedora-32" BEAKER_PUPPET_COLLECTION=puppet6
+    bundler_args:
+    script: bundle exec rake beaker
+  - rvm: 2.4.4
+    sudo: required
+    services: docker
+    env: BEAKER_set="fedora-33" BEAKER_PUPPET_COLLECTION=puppet5
+    bundler_args:
+    script: bundle exec rake beaker
+  - rvm: 2.5.3
+    sudo: required
+    services: docker
+    env: BEAKER_set="fedora-33" BEAKER_PUPPET_COLLECTION=puppet6
+    bundler_args:
+    script: bundle exec rake beaker
+  - rvm: 2.4.4
+    sudo: required
+    services: docker
     env: BEAKER_set="ubuntu-1604" BEAKER_PUPPET_COLLECTION=puppet5
     bundler_args:
     script: bundle exec rake beaker

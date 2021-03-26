@@ -156,6 +156,63 @@ describe 'sssd' do
         },
       },
     },
+    'Fedora 31' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '31',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '31',
+          },
+        },
+      },
+    },
+    'Fedora 32' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '32',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '32',
+          },
+        },
+      },
+    },
+    'Fedora 33' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '33',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '33',
+          },
+        },
+      },
+    },
     'gentoo4' => {
       :manage_oddjobd => false,
       :facts_hash => {
