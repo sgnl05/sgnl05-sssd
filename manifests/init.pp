@@ -101,7 +101,7 @@ class sssd (
         warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
       }
     } elsif ($::facts['os']['name'] == 'Fedora') {
-      if !($::facts['os']['release']['major'] in ['29', '30', '31', '32', '33']) {
+      if !($::facts['os']['release']['major'] in ['30', '31', '32', '33']) {
         warning("osname Fedora's os.release.major is <${::facts['os']['release']['major']}> and must be 29, 30, 31, 32 or 33.")
       }
     } else {

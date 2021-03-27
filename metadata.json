@@ -23,7 +23,7 @@
     },
     {
       "operatingsystem": "Fedora",
-      "operatingsystemrelease": ["26","27","29","30","31","32","33"]
+      "operatingsystemrelease": ["30","31","32","33"]
     },
     {
       "operatingsystem": "Gentoo",
