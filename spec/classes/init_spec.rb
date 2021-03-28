@@ -118,25 +118,6 @@ describe 'sssd' do
         },
       },
     },
-    'Fedora 29' => {
-      :extra_packages => [
-        'authselect',
-        'oddjob-mkhomedir',
-      ],
-      :manage_oddjobd => true,
-      :facts_hash => {
-        :osfamily => 'RedHat',
-        :operatingsystem => 'Fedora',
-        :operatingsystemmajrelease => '29',
-        :os => {
-          'family' => 'RedHat',
-          'name'   => 'Fedora',
-          'release' => {
-            'major' => '29',
-          },
-        },
-      },
-    },
     'Fedora 30' => {
       :extra_packages => [
         'authselect',
@@ -152,6 +133,63 @@ describe 'sssd' do
           'name'   => 'Fedora',
           'release' => {
             'major' => '30',
+          },
+        },
+      },
+    },
+    'Fedora 31' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '31',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '31',
+          },
+        },
+      },
+    },
+    'Fedora 32' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '32',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '32',
+          },
+        },
+      },
+    },
+    'Fedora 33' => {
+      :extra_packages => [
+        'authselect',
+        'oddjob-mkhomedir',
+      ],
+      :manage_oddjobd => true,
+      :facts_hash => {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'Fedora',
+        :operatingsystemmajrelease => '33',
+        :os => {
+          'family' => 'RedHat',
+          'name'   => 'Fedora',
+          'release' => {
+            'major' => '33',
           },
         },
       },

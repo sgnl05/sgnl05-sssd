@@ -1,16 +1,16 @@
 HOSTS:
-  fedora29-64-1:
+  fedora31-64-1:
     roles:
       - agent
-    platform: fedora-29-x86_64
+    platform: fedora-31-x86_64
     hypervisor: docker
-    image: fedora:29
+    image: fedora:31
     docker_preserve_image: true
     docker_cmd:
       - "/sbin/init"
     docker_image_commands:
       - 'dnf install -y findutils wget'
-    docker_container_name: 'sssd-fc29'
+    docker_container_name: 'sssd-fc31'
 CONFIG:
   log_level: debug
   type: foss

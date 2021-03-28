@@ -92,11 +92,20 @@ class sssd (
 
   # Warn on unsupported platforms
   if ($::facts['os']['family'] == 'RedHat') {
-    if ($::facts['os']['name'] == 'Amazon') and !($::facts['os']['release']['major'] in ['2']) {
-      warning("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
-    }
-    if !($::facts['os']['name'] == 'RedHat') and !($::facts['os']['release']['major'] in ['6', '7', '8']) {
-      warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
+    if ($::facts['os']['name'] == 'Amazon') {
+      if !($::facts['os']['release']['major'] in ['2']) {
+        warning("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
+      }
+    } elsif ($::facts['os']['name'] in ['RedHat', 'CentOS']) {
+      if !($::facts['os']['release']['major'] in ['6', '7', '8']) {
+        warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7 or 8.")
+      }
+    } elsif ($::facts['os']['name'] == 'Fedora') {
+      if !($::facts['os']['release']['major'] in ['30', '31', '32', '33']) {
+        warning("osname Fedora's os.release.major is <${::facts['os']['release']['major']}> and must be 29, 30, 31, 32 or 33.")
+      }
+    } else {
+      warning("osname, \"${::facts['os']['name']}\", is recongnized as part of the RedHat family but is unsupported")
     }
   }
 

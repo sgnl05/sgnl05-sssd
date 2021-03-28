@@ -36,3 +36,6 @@ coverage/
 spec/fixtures/manifests/*
 spec/fixtures/modules/*
 log/
+
+# Emacs
+*~
