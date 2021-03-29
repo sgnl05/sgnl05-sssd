@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  spec:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - { check: test, ruby_version: 2.4.10, puppet_gem_version: 5.0 }
+          - { check: test, ruby_version: 2.5.8, puppet_gem_version: 6.0 }
+          - { check: test, ruby_version: 2.7.2, puppet_gem_version: 7.0 }
+      fail-fast: true
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{matrix.ruby_version}}
+    - name: Spec Tests
+      uses: puppetlabs/action-litmus_spec@master
+      env:
+        SPEC_OPTS: "--format documentation"
+      with:
+        puppet_gem_version: ${{matrix.puppet_gem_version}}
+        check: ${{matrix.check}}
+  accept:
+    needs: spec
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - { beaker_set: centos-7, collection: puppet5 }
+          - { beaker_set: centos-7, collection: puppet6 }
+          - { beaker_set: centos-7, collection: puppet7 }
+          - { beaker_set: centos-8, collection: puppet5 }
+          - { beaker_set: centos-8, collection: puppet6 }
+          - { beaker_set: centos-8, collection: puppet7 }
+          - { beaker_set: debian-8, collection: puppet5 }
+          - { beaker_set: debian-9, collection: puppet6 }
+          - { beaker_set: fedora-30, collection: puppet6 }
+          - { beaker_set: fedora-30, collection: puppet7 }
+          - { beaker_set: fedora-31, collection: puppet6 }
+          - { beaker_set: fedora-31, collection: puppet7 }
+          - { beaker_set: fedora-32, collection: puppet6 }
+          - { beaker_set: fedora-32, collection: puppet7 }
+          - { beaker_set: fedora-33, collection: puppet6 }
+          - { beaker_set: fedora-33, collection: puppet7 }
+          - { beaker_set: ubuntu-1604, collection: puppet5 }
+          - { beaker_set: ubuntu-1604, collection: puppet6 }
+          - { beaker_set: ubuntu-1804, collection: puppet5 }
+          - { beaker_set: ubuntu-1804, collection: puppet6 }
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
+    - name: Acceptance Tests
+      env:
+        BEAKER_set: ${{matrix.beaker_set}}
+        BEAKER_PUPPET_COLLECTION: ${{matrix.collection}}
+      run: |
+        bundler install
+        bundler exec rake beaker
