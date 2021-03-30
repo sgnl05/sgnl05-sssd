@@ -2,7 +2,7 @@ HOSTS:
   fedora30-64-1:
     roles:
       - agent
-    platform: fedora-29-x86_64
+    platform: fedora-30-x86_64
     hypervisor: docker
     image: fedora:30
     docker_preserve_image: true
