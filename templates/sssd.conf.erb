@@ -6,7 +6,7 @@
 <%     v.map do |ki, vi| -%>
 <%       if vi.is_a?(Array) -%>
 <%=        ki %> = <%= vi.join(', ') %>
-<%       elsif vi != :undef -%>
+<%       elsif !vi.nil? && vi != :undef -%>
 <%=        ki %> = <%= vi %>
 <%       end -%>
 <%     end -%>
