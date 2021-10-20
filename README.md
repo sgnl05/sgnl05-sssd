@@ -137,6 +137,7 @@ currently Puppet versions 5 and 6.
 * Gentoo 4
 * Suse 11
 * Suse 12
+* Suse 15
 * Ubuntu 14.04
 * Ubuntu 16.04
 * Ubuntu 18.04

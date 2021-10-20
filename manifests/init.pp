@@ -110,7 +110,7 @@ class sssd (
   }
 
   if $::facts['os']['family'] == 'Suse' {
-    if !($::facts['os']['release']['major'] in ['11', '12']) {
+    if !($::facts['os']['release']['major'] in ['11', '12', '15']) {
       warning("osfamily Suse's os.release.major is <${::facts['os']['release']['major']}> and must be 11 or 12.")
     }
     if ($::facts['os']['release']['major'] == '11') and !($::facts['os']['release']['minor'] in ['3', '4']) {
