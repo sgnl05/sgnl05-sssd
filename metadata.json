@@ -43,7 +43,7 @@
     },
     {
       "operatingsystem": "Suse",
-      "operatingsystemrelease": ["11", "12"]
+      "operatingsystemrelease": ["11", "12", "15"]
     }
   ],
   "requirements": [

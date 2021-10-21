@@ -333,6 +333,29 @@ describe 'sssd' do
         },
       },
     },
+    'suse15' => {
+      :extra_packages => [
+        'sssd-krb5',
+        'sssd-ad',
+        'sssd-ipa',
+        'sssd-32bit',
+        'sssd-tools',
+        'sssd-ldap',
+      ],
+      :facts_hash => {
+        :osfamily => 'Suse',
+        :operatingsystem => 'SLES',
+        :operatingsystemrelease => '15.3',
+        :operatingsystemmajrelease => '15.3',
+        :os => {
+          'family'       => 'Suse',
+          'architecture' => 'x86_64',
+          'release' => {
+            'major' => '15',
+          },
+        },
+      },
+    },
     'ubuntu14_04' => {
       :extra_packages => [
         'libpam-runtime',

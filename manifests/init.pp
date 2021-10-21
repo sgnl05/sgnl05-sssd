@@ -110,8 +110,8 @@ class sssd (
   }
 
   if $::facts['os']['family'] == 'Suse' {
-    if !($::facts['os']['release']['major'] in ['11', '12']) {
-      warning("osfamily Suse's os.release.major is <${::facts['os']['release']['major']}> and must be 11 or 12.")
+    if !($::facts['os']['release']['major'] in ['11', '12', '15']) {
+      warning("osfamily Suse's os.release.major is <${::facts['os']['release']['major']}> and must be 11, 12 or 15.")
     }
     if ($::facts['os']['release']['major'] == '11') and !($::facts['os']['release']['minor'] in ['3', '4']) {
       warning("Suse 11's os.release.minor is <${::facts['os']['release']['minor']}> and must be 3 or 4.")
