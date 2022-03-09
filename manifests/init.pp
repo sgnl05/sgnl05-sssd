@@ -118,8 +118,8 @@ class sssd (
     }
   }
 
-  if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['8', '9', '14.04', '16.04', '18.04']) {
-    warning("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 8 or 9 for Debian and 14.04, 16.04 or 18.04 for Ubuntu.")
+  if ($::facts['os']['family'] == 'Debian') and !($::facts['os']['release']['major'] in ['8', '9', '14.04', '16.04', '18.04', '20.04']) {
+    warning("osfamily Debian's os.release.major is <${::facts['os']['release']['major']}> and must be 8 or 9 for Debian and 14.04, 16.04, 18.04 or 20.04 for Ubuntu.")
   }
 
   # Manually set service provider to systemd on Amazon Linux 2
@@ -200,7 +200,7 @@ class sssd (
   case $::osfamily {
     'RedHat': {
       if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
-      ( $::facts['os']['family'] == 'RedHat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
+      ( $::facts['os']['family'] == 'RedHat' and versioncmp($::facts['os']['release']['major'], '9') >= 0) {
         if $ensure == 'present' {
           $authselect_options = join(
             concat(
