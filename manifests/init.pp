@@ -96,7 +96,7 @@ class sssd (
       if !($::facts['os']['release']['major'] in ['2']) {
         warning("osname Amazon's os.release.major is <${::facts['os']['release']['major']}> and must be 2.")
       }
-    } elsif ($::facts['os']['name'] in ['RedHat', 'CentOS']) {
+    } elsif ($::facts['os']['name'] in ['RedHat', 'CentOS', 'AlmaLinux', 'Rocky']) {
       if !($::facts['os']['release']['major'] in ['6', '7', '8', '9']) {
         warning("osname RedHat's os.release.major is <${::facts['os']['release']['major']}> and must be 6, 7, 8, or 9.")
       }
