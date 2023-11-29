@@ -136,7 +136,7 @@ class sssd (
     default   => true,
   }
 
-  ensure_packages($sssd_package,
+  stdlib::ensure_packages($sssd_package,
     {
       ensure => $sssd_package_ensure,
     }
@@ -144,7 +144,7 @@ class sssd (
   Package[$sssd_package] -> File['sssd.conf']
 
   if $extra_packages {
-    ensure_packages($extra_packages,
+    stdlib::ensure_packages($extra_packages,
       {
         ensure  => $extra_packages_ensure,
       }
@@ -197,7 +197,7 @@ class sssd (
     content => template($config_template),
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
       ( $::facts['os']['family'] == 'RedHat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
