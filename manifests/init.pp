@@ -136,7 +136,7 @@ class sssd (
     default   => true,
   }
 
-  ensure_packages($sssd_package,
+  stdlib::ensure_packages($sssd_package,
     {
       ensure => $sssd_package_ensure,
     }
@@ -144,7 +144,7 @@ class sssd (
   Package[$sssd_package] -> File['sssd.conf']
 
   if $extra_packages {
-    ensure_packages($extra_packages,
+    stdlib::ensure_packages($extra_packages,
       {
         ensure  => $extra_packages_ensure,
       }
